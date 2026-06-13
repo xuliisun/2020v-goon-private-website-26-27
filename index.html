@@ -20,7 +20,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: var(--navy);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%) fixed, var(--navy);
     color: var(--white);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
@@ -87,6 +87,8 @@
 
   .nav-links a:hover { color: var(--aqua); }
   .nav-links a:hover::after { width: 100%; }
+  .nav-links a.active { color: var(--aqua); text-shadow: 0 0 12px rgba(0,212,200,0.55); }
+  .nav-links a.active::after { width: 100%; }
 
   .hero {
     position: relative;
@@ -343,7 +345,7 @@
   }
 
   .robot-section {
-    background: var(--dark-blue);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%) fixed, var(--dark-blue);
     max-width: 100%;
     padding: 6rem 3rem;
   }
@@ -403,7 +405,7 @@
 
 
 
-  .achievements-section { background: var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
+  .achievements-section { background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%) fixed, var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
   .achievements-inner { max-width: 1200px; margin: 0 auto; }
 
   .achievements-list {
@@ -455,7 +457,7 @@
 
   /* ── SPONSORSHIP SECTION ── */
   .sponsor-section {
-    background: var(--navy);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%) fixed, var(--navy);
     max-width: 100%;
     padding: 6rem 3rem;
     position: relative;
@@ -1098,6 +1100,168 @@
     50%       { box-shadow: 0 0 0 6px rgba(0,212,200,0); background: #fff; }
   }
   .scanline-dot { animation: dotPulse 2.5s ease-in-out infinite; }
+
+  /* ── FORM TABS (combined contact/sponsor) ── */
+  .form-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(0,212,200,0.15);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 0.65rem 1.25rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.25s, border-color 0.25s;
+  }
+
+  .form-tab:hover { color: var(--white); }
+  .form-tab.active { color: var(--aqua); border-bottom-color: var(--aqua); }
+
+  .contact-sponsor-pitch {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0,212,200,0.1);
+  }
+
+  .contact-sponsor-pitch .section-label { margin-bottom: 0.75rem; }
+
+  .contact-sponsor-pitch p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .contact-sponsor-pitch p strong { color: var(--white); font-weight: 500; }
+
+  .apply-benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .apply-benefit-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--aqua);
+    margin-top: 7px;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(0,212,200,0.6);
+  }
+
+  .apply-benefit-text {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .apply-benefit-text strong { color: var(--white); font-weight: 500; }
+
+  /* Sponsor form */
+  .sponsor-form {
+    background: var(--navy);
+    border: 1px solid rgba(0,212,200,0.18);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sponsor-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--aqua), var(--electric), var(--aqua));
+    background-size: 200% 100%;
+    animation: shimmerBorder 3s linear infinite;
+  }
+
+  @keyframes shimmerBorder {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .sponsor-form-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--aqua);
+    text-transform: uppercase;
+    margin-bottom: 1.75rem;
+  }
+
+  .sponsor-form .form-group { margin-bottom: 1rem; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group select {
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.2);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2382B0CC' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .form-group select:focus { border-color: var(--aqua); box-shadow: 0 0 0 3px rgba(0,212,200,0.12); }
+  .form-group select option { background: var(--dark-blue); color: var(--white); }
+
+  .sponsor-submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--aqua);
+    color: var(--navy);
+    border: none;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 0.75rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+
+  .sponsor-submit-btn:hover { background: var(--aqua-dim); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,212,200,0.3); }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1rem;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -1596,14 +1760,15 @@
   </div>
 </div>
 
-<!-- CONTACT -->
+<!-- CONTACT & PARTNERSHIP -->
 <section id="contact">
-  <div class="section-label">// 06 - Contact</div>
-  <h2 class="section-title">Get in Touch.</h2>
+  <div class="section-label">// 06 - Contact & Partnership</div>
+  <h2 class="section-title">Let's Connect.</h2>
   <div class="section-rule"></div>
   <div class="contact-grid">
+
     <div class="contact-info">
-      <p>Want to partner with us, sponsor the team, or just ask a question about our robot build? We're always open to connecting with the VEX community.</p>
+      <p>Have a question about our robot, want to connect with the team, or interested in sponsoring our journey to Worlds? We'd love to hear from you.</p>
       <div class="contact-detail">
         <span class="contact-detail-label">Team</span>
         <span>2020V - Twenty-Twenty Vision</span>
@@ -1614,28 +1779,95 @@
       </div>
       <div class="contact-detail">
         <span class="contact-detail-label">Email</span>
-        <span>team2020v@vexrobotics.com</span>
+        <span>xuliang@silverknights.ca</span>
       </div>
       <div class="contact-detail">
         <span class="contact-detail-label">Region</span>
         <span>Markham, Ontario</span>
       </div>
+
+      <div class="contact-sponsor-pitch">
+        <div class="section-label">// Sponsorship</div>
+        <p>Interested in partnering with us? Switch to the <strong>Sponsorship Inquiry</strong> tab - your support goes toward parts, registration, and travel, and your brand gets real visibility at competitions.</p>
+        <div class="apply-benefit">
+          <div class="apply-benefit-dot"></div>
+          <div class="apply-benefit-text"><strong>Logo on robot, uniforms & banner</strong> at every event we attend.</div>
+        </div>
+        <div class="apply-benefit">
+          <div class="apply-benefit-dot"></div>
+          <div class="apply-benefit-text"><strong>Social media coverage</strong> - season recaps, highlights, and sponsor shoutouts.</div>
+        </div>
+        <div class="apply-benefit">
+          <div class="apply-benefit-dot"></div>
+          <div class="apply-benefit-text"><strong>Direct investment</strong> in the next generation of engineers and problem-solvers.</div>
+        </div>
+      </div>
     </div>
-    <form class="contact-form" id="contact-form" onsubmit="sendContactEmail(event);">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Your name" required>
+
+    <div>
+      <div class="form-tabs">
+        <button class="form-tab active" onclick="switchFormTab('general', this)">General Message</button>
+        <button class="form-tab" onclick="switchFormTab('sponsor', this)">Sponsorship Inquiry</button>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="your@email.com" required>
+
+      <div id="tab-general">
+        <form class="contact-form" id="contact-form" onsubmit="sendContactEmail(event);">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="What's on your mind?" required></textarea>
+          </div>
+          <button class="submit-btn" type="submit">Send Message</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" placeholder="What's on your mind?" required></textarea>
+
+      <div id="tab-sponsor" style="display:none;">
+        <div class="sponsor-form">
+          <form id="sponsor-form" onsubmit="sendSponsorEmail(event);">
+            <div class="form-row">
+              <div class="form-group">
+                <label style="font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--aqua);display:block;margin-bottom:0.4rem;" for="s-contact">Contact Name</label>
+                <input style="width:100%;" type="text" id="s-contact" placeholder="Your name" required>
+              </div>
+              <div class="form-group">
+                <label style="font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--aqua);display:block;margin-bottom:0.4rem;" for="s-company">Company / Organization</label>
+                <input style="width:100%;" type="text" id="s-company" placeholder="Your company" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label style="font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--aqua);display:block;margin-bottom:0.4rem;" for="s-email">Email</label>
+                <input style="width:100%;" type="email" id="s-email" placeholder="your@email.com" required>
+              </div>
+              <div class="form-group">
+                <label style="font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--aqua);display:block;margin-bottom:0.4rem;" for="s-tier">Interested Tier</label>
+                <select id="s-tier">
+                  <option value="Exploring">Just Exploring</option>
+                  <option value="Bronze">Bronze - $100 to $250</option>
+                  <option value="Silver">Silver - $250 to $500</option>
+                  <option value="Gold">Gold - $500 to $1000</option>
+                  <option value="Diamond">Diamond - $1000+</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label style="font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--aqua);display:block;margin-bottom:0.4rem;" for="s-message">Message (optional)</label>
+              <textarea style="width:100%;background:var(--dark-blue);border:1px solid rgba(0,212,200,0.2);color:var(--white);padding:0.75rem 1rem;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;border-radius:10px;transition:border-color 0.3s,box-shadow 0.3s;resize:vertical;min-height:100px;" id="s-message" placeholder="Tell us about your company or any questions you have..."></textarea>
+            </div>
+            <button class="sponsor-submit-btn" type="submit">Send Sponsorship Inquiry</button>
+            <p class="form-note">We'll follow up within 2 business days with a full package.</p>
+          </form>
+        </div>
       </div>
-      <button class="submit-btn" type="submit">Send Message</button>
-    </form>
+    </div>
+
   </div>
 </section>
 
@@ -1646,6 +1878,29 @@
 </footer>
 
 <script>
+  function switchFormTab(tab, btn) {
+    document.getElementById('tab-general').style.display = tab === 'general' ? 'block' : 'none';
+    document.getElementById('tab-sponsor').style.display  = tab === 'sponsor'  ? 'block' : 'none';
+    document.querySelectorAll('.form-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function sendSponsorEmail(e) {
+    e.preventDefault();
+    const contact = document.getElementById('s-contact').value.trim();
+    const company = document.getElementById('s-company').value.trim();
+    const email   = document.getElementById('s-email').value.trim();
+    const tier    = document.getElementById('s-tier').value;
+    const message = document.getElementById('s-message').value.trim();
+    const subject = encodeURIComponent('Sponsorship Inquiry from ' + company + ' - ' + tier + ' Tier');
+    const body    = encodeURIComponent(
+      'Contact: ' + contact + '\nCompany: ' + company + '\nEmail: ' + email +
+      '\nInterested Tier: ' + tier +
+      (message ? '\n\nMessage:\n' + message : '')
+    );
+    window.location.href = 'mailto:xuliang@silverknights.ca?subject=' + subject + '&body=' + body;
+  }
+
   function sendContactEmail(e) {
     e.preventDefault();
     const name    = document.getElementById('name').value.trim();
@@ -1679,6 +1934,25 @@
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
+
+  // Scrollspy
+  const scrollSectionIds = ['about', 'robot', 'team', 'achievements', 'sponsors', 'contact'];
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+  function updateActiveNav() {
+    const scrollY = window.scrollY + 120;
+    let currentId = '';
+    scrollSectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollY) currentId = id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
 
   const ruleObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
