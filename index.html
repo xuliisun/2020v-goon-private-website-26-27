@@ -354,42 +354,7 @@
 
   .feature-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
 
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
 
-  .member-card {
-    background: var(--dark-blue);
-    border: 1px solid rgba(0,212,200,0.1);
-    padding: 1.5rem;
-    text-align: center;
-    border-radius: 16px;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  }
-
-  .member-card:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,212,200,0.1); }
-
-  .member-avatar {
-    width: 70px; height: 70px;
-    border-radius: 50%;
-    background: var(--mid-blue);
-    border: 2px solid var(--aqua);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--aqua);
-  }
-
-  .member-name { font-weight: 600; font-size: 0.95rem; color: var(--white); margin-bottom: 0.25rem; }
-  .member-role { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.5rem; }
-  .member-grade { font-size: 0.8rem; color: var(--muted); }
 
   .achievements-section { background: var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
   .achievements-inner { max-width: 1200px; margin: 0 auto; }
@@ -798,6 +763,207 @@
     .sponsor-cta-actions { flex-direction: column; width: 100%; }
     .btn-primary, .btn-outline { justify-content: center; }
   }
+
+  /* ── ROBOT IMAGE SHOWCASE ── */
+  .robot-showcase {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .robot-img-wrap {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(0,212,200,0.2);
+    background: var(--navy);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .robot-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .robot-img-wrap:hover img { transform: scale(1.04); }
+
+  .robot-img-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: rgba(0,212,200,0.35);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .robot-img-placeholder svg {
+    width: 56px; height: 56px;
+    stroke: rgba(0,212,200,0.3);
+  }
+
+  .robot-img-corner {
+    position: absolute;
+    width: 18px; height: 18px;
+    border-color: var(--aqua);
+    border-style: solid;
+    opacity: 0.6;
+  }
+
+  .robot-img-corner.tl { top: 10px; left: 10px; border-width: 2px 0 0 2px; border-radius: 3px 0 0 0; }
+  .robot-img-corner.tr { top: 10px; right: 10px; border-width: 2px 2px 0 0; border-radius: 0 3px 0 0; }
+  .robot-img-corner.bl { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; border-radius: 0 0 0 3px; }
+  .robot-img-corner.br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; border-radius: 0 0 3px 0; }
+
+  .robot-img-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(5,13,46,0.92));
+    padding: 1.5rem 1rem 0.9rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--aqua);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .robot-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .robot-gallery-thumb {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0,212,200,0.15);
+    background: var(--navy);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+
+  .robot-gallery-thumb:hover { border-color: rgba(0,212,200,0.5); transform: translateY(-3px); }
+
+  .robot-gallery-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .robot-gallery-thumb .robot-img-placeholder {
+    font-size: 0.6rem;
+    gap: 0.5rem;
+  }
+
+  .robot-gallery-thumb .robot-img-placeholder svg { width: 32px; height: 32px; }
+
+  /* ── EXPANDED TEAM CARDS ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .member-card {
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .member-card:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,212,200,0.1); }
+
+  .member-photo-wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    position: relative;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .member-photo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .member-card:hover .member-photo-wrap img { transform: scale(1.06); }
+
+  .member-photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%; height: 100%;
+    padding: 1.5rem;
+  }
+
+  .member-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: var(--mid-blue);
+    border: 2px solid var(--aqua);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--aqua);
+  }
+
+  .member-info {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .member-name { font-weight: 600; font-size: 0.95rem; color: var(--white); margin-bottom: 0.25rem; }
+  .member-role { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.25rem; }
+  .member-grade { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.75rem; }
+
+  .member-bio {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+    border-top: 1px solid rgba(0,212,200,0.1);
+    padding-top: 0.75rem;
+    text-align: left;
+  }
+
+  @media (max-width: 900px) {
+    .robot-showcase { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -885,7 +1051,59 @@
     <div class="section-label">// 02 — The Machine</div>
     <h2 class="section-title">This Season's Robot.</h2>
     <div class="section-rule"></div>
-    <div class="robot-features">
+    <!-- Robot image showcase -->
+    <div class="robot-showcase">
+      <div class="robot-img-wrap">
+        <!-- Replace src with your robot photo path e.g. src="robot-main.jpg" -->
+        <img src="" alt="Team 2020V Robot" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+        <div class="robot-img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+          Add your robot photo<br>
+          <span style="font-size:0.55rem;opacity:0.6;">Replace src="" with your image path</span>
+        </div>
+        <div class="robot-img-corner tl"></div>
+        <div class="robot-img-corner tr"></div>
+        <div class="robot-img-corner bl"></div>
+        <div class="robot-img-corner br"></div>
+        <div class="robot-img-caption">2020V — 2025/26 Competition Robot</div>
+      </div>
+
+      <div class="robot-gallery">
+        <!-- Add up to 4 additional robot photos below — replace src="" with your image paths -->
+        <div class="robot-gallery-thumb">
+          <img src="" alt="Robot detail 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+          <div class="robot-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Drivetrain
+          </div>
+        </div>
+        <div class="robot-gallery-thumb">
+          <img src="" alt="Robot detail 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+          <div class="robot-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Intake
+          </div>
+        </div>
+        <div class="robot-gallery-thumb">
+          <img src="" alt="Robot detail 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+          <div class="robot-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Scoring
+          </div>
+        </div>
+        <div class="robot-gallery-thumb">
+          <img src="" alt="Robot detail 4" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+          <div class="robot-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Auton
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="robot-features" style="margin-top:2rem;">
       <div class="feature-card">
         <div class="feature-icon">DRIVETRAIN</div>
         <div class="feature-title">6-Motor Tank Drive</div>
@@ -916,6 +1134,26 @@
         <div class="feature-title">Brain + V5 Smart Motors</div>
         <p class="feature-desc">Full V5 ecosystem with real-time telemetry monitoring. Rotation sensors on all critical subsystems for data-driven tuning.</p>
       </div>
+      <div class="feature-card">
+        <div class="feature-icon">STRUCTURE</div>
+        <div class="feature-title">Aluminium C-Channel Frame</div>
+        <p class="feature-desc">Full aluminium C-channel construction keeps weight low while maintaining rigidity. Every joint double-braced against match impacts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">SENSORS</div>
+        <div class="feature-title">Inertial + Vision Sensor</div>
+        <p class="feature-desc">IMU-assisted turning for consistent autonomous heading. Vision sensor used for target tracking and game object detection.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">NOTEBOOK</div>
+        <div class="feature-title">Engineering Documentation</div>
+        <p class="feature-desc">Full engineering notebook documenting every design decision, test result, and iteration — built for Excellence Award judging.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">STRATEGY</div>
+        <div class="feature-title">Match Scouting System</div>
+        <p class="feature-desc">Custom scouting spreadsheet tracking opponent cycles, autonomous consistency, and endgame success rates across all events.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -926,30 +1164,68 @@
   <h2 class="section-title">The People Behind the Robot.</h2>
   <div class="section-rule"></div>
   <div class="team-grid">
+
     <div class="member-card">
-      <div class="member-avatar">DR</div>
-      <div class="member-name">Driver / Captain</div>
-      <div class="member-role">Lead Driver</div>
-      <div class="member-grade">Head of Strategy</div>
+      <div class="member-photo-wrap">
+        <!-- Replace src="" with your photo path e.g. src="photos/driver.jpg" -->
+        <img src="" alt="Driver" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">DR</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Your Name Here</div>
+        <div class="member-role">Lead Driver</div>
+        <div class="member-grade">Head of Strategy</div>
+        <p class="member-bio">Add a short bio here — your role on the team, what you handle, and what drives you to compete.</p>
+      </div>
     </div>
+
     <div class="member-card">
-      <div class="member-avatar">ME</div>
-      <div class="member-name">Mechanical Lead</div>
-      <div class="member-role">Build Captain</div>
-      <div class="member-grade">Robot Design & CAD</div>
+      <div class="member-photo-wrap">
+        <img src="" alt="Mechanical Lead" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">ME</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Your Name Here</div>
+        <div class="member-role">Build Captain</div>
+        <div class="member-grade">Robot Design & CAD</div>
+        <p class="member-bio">Add a short bio here — your role on the team, what you build, and what engineering challenges you enjoy most.</p>
+      </div>
     </div>
+
     <div class="member-card">
-      <div class="member-avatar">SW</div>
-      <div class="member-name">Software Lead</div>
-      <div class="member-role">Code & Auton</div>
-      <div class="member-grade">PID / Odometry Dev</div>
+      <div class="member-photo-wrap">
+        <img src="" alt="Software Lead" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">SW</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Your Name Here</div>
+        <div class="member-role">Code & Auton</div>
+        <div class="member-grade">PID / Odometry Dev</div>
+        <p class="member-bio">Add a short bio here — your role, your programming focus, and how you approach autonomous routines.</p>
+      </div>
     </div>
+
     <div class="member-card">
-      <div class="member-avatar">NB</div>
-      <div class="member-name">Notebooker</div>
-      <div class="member-role">Documentation</div>
-      <div class="member-grade">Engineering Notebook</div>
+      <div class="member-photo-wrap">
+        <img src="" alt="Notebooker" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">NB</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Your Name Here</div>
+        <div class="member-role">Documentation</div>
+        <div class="member-grade">Engineering Notebook</div>
+        <p class="member-bio">Add a short bio here — your role, what you document, and why the engineering process matters to you.</p>
+      </div>
     </div>
+
   </div>
 </section>
 
