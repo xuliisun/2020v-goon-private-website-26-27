@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team 2020V – VEX Robotics</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #050D2E;
+    --dark-blue: #0A1A52;
+    --mid-blue: #1040A0;
+    --electric: #2979FF;
+    --aqua: #00D4C8;
+    --aqua-dim: #00A89E;
+    --white: #F0F8FF;
+    --muted: #7BA8C8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(5, 13, 46, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 212, 200, 0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--aqua);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--aqua); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 6rem 2rem 4rem;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,200,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,200,0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(41,121,255,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    border: 1px solid rgba(0,212,200,0.4);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-number {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(5rem, 16vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--aqua);
+    position: relative;
+  }
+
+  .hero-number::after {
+    content: '2020V';
+    position: absolute;
+    inset: 0;
+    color: var(--electric);
+    -webkit-text-stroke: 0;
+    clip-path: inset(0 0 50% 0);
+    transition: clip-path 0.3s;
+  }
+
+  .hero-tagline {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero-tagline span { color: var(--aqua); }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 2.5rem;
+    background: transparent;
+    border: 1.5px solid var(--aqua);
+    color: var(--aqua);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .hero-cta:hover {
+    background: var(--aqua);
+    color: var(--navy);
+  }
+
+  .hero-cta svg { width: 16px; height: 16px; }
+
+  /* ── SCAN LINE DECORATION ── */
+  .scanline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+    opacity: 0.4;
+  }
+
+  .scanline::before, .scanline::after {
+    content: '';
+    flex: 1;
+    max-width: 180px;
+    height: 1px;
+    background: var(--aqua);
+  }
+
+  .scanline-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--aqua);
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .section-rule {
+    width: 60px;
+    height: 2px;
+    background: var(--aqua);
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(0,212,200,0.15);
+    border: 1px solid rgba(0,212,200,0.15);
+  }
+
+  .stat-cell {
+    background: var(--dark-blue);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: var(--aqua);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ── ROBOT ── */
+  .robot-section {
+    background: var(--dark-blue);
+    max-width: 100%;
+    padding: 6rem 3rem;
+  }
+
+  .robot-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .robot-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: var(--navy);
+    border: 1px solid rgba(0,212,200,0.12);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--aqua);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover { border-color: rgba(0,212,200,0.4); }
+  .feature-card:hover::before { transform: scaleY(1); }
+
+  .feature-icon {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--electric);
+    margin-bottom: 1rem;
+  }
+
+  .feature-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── TEAM ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .member-card {
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .member-card:hover {
+    border-color: rgba(0,212,200,0.4);
+    transform: translateY(-4px);
+  }
+
+  .member-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: var(--mid-blue);
+    border: 2px solid var(--aqua);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--aqua);
+  }
+
+  .member-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+
+  .member-role {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 0.5rem;
+  }
+
+  .member-grade {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── ACHIEVEMENTS ── */
+  .achievements-section {
+    background: var(--dark-blue);
+    max-width: 100%;
+    padding: 6rem 3rem;
+  }
+
+  .achievements-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .achievements-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: rgba(0,212,200,0.1);
+  }
+
+  .achievement-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    background: var(--navy);
+    padding: 1.5rem 2rem;
+    transition: background 0.2s;
+  }
+
+  .achievement-row:hover { background: var(--dark-blue); }
+
+  .achievement-year {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--electric);
+    letter-spacing: 0.1em;
+  }
+
+  .achievement-name {
+    font-weight: 500;
+    color: var(--white);
+    font-size: 0.95rem;
+  }
+
+  .achievement-event {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .achievement-badge {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--aqua);
+    color: var(--aqua);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge-gold { border-color: #E8B923; color: #E8B923; }
+  .badge-silver { border-color: #A8B5C0; color: #A8B5C0; }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .contact-info p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .contact-detail-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--aqua);
+    min-width: 80px;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--aqua);
+  }
+
+  .form-group input, .form-group textarea {
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.2);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--aqua);
+  }
+
+  .form-group textarea { min-height: 120px; }
+
+  .submit-btn {
+    padding: 0.9rem 2rem;
+    background: var(--aqua);
+    color: var(--navy);
+    border: none;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+
+  .submit-btn:hover { background: var(--aqua-dim); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #020810;
+    border-top: 1px solid rgba(0,212,200,0.1);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--aqua);
+    letter-spacing: 0.15em;
+  }
+
+  .footer-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CIRCUIT DECORATION ── */
+  .circuit-svg {
+    position: absolute;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .robot-features { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .achievement-row { grid-template-columns: 100px 1fr; }
+    .achievement-badge { display: none; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .robot-features { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .hero-number { font-size: 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">2020V</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#robot">Robot</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#achievements">Results</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <!-- circuit traces decoration -->
+  <svg class="circuit-svg" style="right:-100px;top:20%;width:400px;height:400px;" viewBox="0 0 400 400">
+    <path d="M50 200 H150 V100 H300 V150 H350" stroke="#00D4C8" stroke-width="2" fill="none"/>
+    <path d="M150 200 V300 H280 V250 H380" stroke="#2979FF" stroke-width="2" fill="none"/>
+    <circle cx="150" cy="200" r="5" fill="#00D4C8"/>
+    <circle cx="300" cy="100" r="5" fill="#00D4C8"/>
+    <circle cx="280" cy="300" r="5" fill="#2979FF"/>
+    <path d="M10 80 H80 V180 H20 V300 H90" stroke="#00D4C8" stroke-width="1.5" fill="none" opacity="0.5"/>
+  </svg>
+
+  <svg class="circuit-svg" style="left:-80px;bottom:20%;width:350px;height:350px;" viewBox="0 0 350 350">
+    <path d="M300 50 H200 V150 H50 V100 H10" stroke="#2979FF" stroke-width="2" fill="none"/>
+    <path d="M200 150 V250 H320 V200" stroke="#00D4C8" stroke-width="2" fill="none"/>
+    <circle cx="200" cy="150" r="5" fill="#2979FF"/>
+    <circle cx="50" cy="150" r="5" fill="#2979FF"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-tag">VEX Robotics Competition</div>
+    <div class="hero-number">2020V</div>
+    <div class="scanline"><div class="scanline-dot"></div></div>
+    <div class="hero-tagline">Precision. <span>Power.</span> Progress.</div>
+    <a class="hero-cta" href="#about">
+      Explore Team
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// 01 — About</div>
+  <h2 class="section-title">Built to Compete.</h2>
+  <div class="section-rule"></div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Team <strong>2020V</strong> is a competitive VEX Robotics team driven by engineering precision and a relentless pursuit of performance. Every mechanism, every line of auton code, every driver skill run is the result of hundreds of hours of iteration.</p>
+      <p>We don't just build robots — we solve problems under pressure. Our team combines mechanical design, electronics, and software to field a machine that's fast, reliable, and built to win.</p>
+      <p>From our first competition scrimmage to qualification events and regionals, <strong>2020V competes at every level with the same intensity.</strong></p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <span class="stat-number">3+</span>
+        <div class="stat-label">Seasons Competing</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-number">15+</span>
+        <div class="stat-label">Tournaments Entered</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-number">4</span>
+        <div class="stat-label">Team Members</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-number">∞</span>
+        <div class="stat-label">Hours Logged</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROBOT -->
+<div class="robot-section" id="robot">
+  <div class="robot-inner">
+    <div class="section-label">// 02 — The Machine</div>
+    <h2 class="section-title">This Season's Robot.</h2>
+    <div class="section-rule"></div>
+
+    <div class="robot-features">
+      <div class="feature-card">
+        <div class="feature-icon">DRIVETRAIN</div>
+        <div class="feature-title">6-Motor Tank Drive</div>
+        <p class="feature-desc">High-torque 6-motor drivetrain with 4" omni wheels optimized for pushing power and field traversal speed. Locked in for driver control consistency.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">INTAKE</div>
+        <div class="feature-title">Flex Wheel Intake</div>
+        <p class="feature-desc">Rubber flex wheels run at maximum RPM for aggressive game object collection. Adjusted spacing ensures consistent indexing with zero jams under match pressure.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">SCORING</div>
+        <div class="feature-title">Catapult Launch System</div>
+        <p class="feature-desc">Slip-gear catapult tuned for match load shots with a repeatable flight arc. Minimal charge time between shots keeps cycle counts high.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">AUTONOMOUS</div>
+        <div class="feature-title">PID + Odometry</div>
+        <p class="feature-desc">Closed-loop PID control with odometry tracking for precise positioning. Multiple auton routines selectable pre-match based on alliance strategy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">PNEUMATICS</div>
+        <div class="feature-title">Endgame Deployment</div>
+        <p class="feature-desc">Pneumatic-actuated endgame mechanism fires in under 0.3 seconds. Pressure tuned for reliability across repeated activations during skills runs.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">ELECTRONICS</div>
+        <div class="feature-title">Brain + V5 Smart Motors</div>
+        <p class="feature-desc">Full V5 ecosystem with real-time telemetry monitoring. Motor thermals tracked and rotation sensors on all critical subsystems for data-driven tuning.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-label">// 03 — Roster</div>
+  <h2 class="section-title">The People Behind the Robot.</h2>
+  <div class="section-rule"></div>
+
+  <div class="team-grid">
+    <div class="member-card">
+      <div class="member-avatar">DR</div>
+      <div class="member-name">Driver / Captain</div>
+      <div class="member-role">Lead Driver</div>
+      <div class="member-grade">Head of Strategy</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">ME</div>
+      <div class="member-name">Mechanical Lead</div>
+      <div class="member-role">Build Captain</div>
+      <div class="member-grade">Robot Design & CAD</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">SW</div>
+      <div class="member-name">Software Lead</div>
+      <div class="member-role">Code & Auton</div>
+      <div class="member-grade">PID / Odometry Dev</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">NB</div>
+      <div class="member-name">Notebooker</div>
+      <div class="member-role">Documentation</div>
+      <div class="member-grade">Engineering Notebook</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<div class="achievements-section" id="achievements">
+  <div class="achievements-inner">
+    <div class="section-label">// 04 — Results</div>
+    <h2 class="section-title">Competition Record.</h2>
+    <div class="section-rule"></div>
+
+    <div class="achievements-list">
+      <div class="achievement-row">
+        <div class="achievement-year">2024 – 25</div>
+        <div>
+          <div class="achievement-name">Tournament Champions</div>
+          <div class="achievement-event">Regional Qualifier — Alliance Captain</div>
+        </div>
+        <div class="achievement-badge badge-gold">Champion</div>
+      </div>
+      <div class="achievement-row">
+        <div class="achievement-year">2024 – 25</div>
+        <div>
+          <div class="achievement-name">Excellence Award</div>
+          <div class="achievement-event">Signature Event — Engineering Notebook</div>
+        </div>
+        <div class="achievement-badge badge-gold">Excellence</div>
+      </div>
+      <div class="achievement-row">
+        <div class="achievement-year">2024 – 25</div>
+        <div>
+          <div class="achievement-name">Skills 3rd Place</div>
+          <div class="achievement-event">State Championship — Driver + Autonomous</div>
+        </div>
+        <div class="achievement-badge badge-silver">Skills</div>
+      </div>
+      <div class="achievement-row">
+        <div class="achievement-year">2023 – 24</div>
+        <div>
+          <div class="achievement-name">Finalist Alliance</div>
+          <div class="achievement-event">Invitational Tournament</div>
+        </div>
+        <div class="achievement-badge badge-silver">Finalist</div>
+      </div>
+      <div class="achievement-row">
+        <div class="achievement-year">2023 – 24</div>
+        <div>
+          <div class="achievement-name">Design Award</div>
+          <div class="achievement-event">Regional Scrimmage</div>
+        </div>
+        <div class="achievement-badge">Award</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">// 05 — Contact</div>
+  <h2 class="section-title">Get in Touch.</h2>
+  <div class="section-rule"></div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p>Want to partner with us, sponsor the team, or just ask a question about our robot build? We're always open to connecting with the VEX community.</p>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Team</span>
+        <span>2020V — VEX Robotics</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Program</span>
+        <span>VEX V5 Robotics Competition</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Email</span>
+        <span>team2020v@vexrobotics.com</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Region</span>
+        <span>Your Region Here</span>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="return false;">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="What's on your mind?"></textarea>
+      </div>
+      <button class="submit-btn" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">2020V</div>
+  <div class="footer-note">VEX Robotics Competition · Built to win ·  2020V</div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .member-card, .achievement-row, .stat-cell').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
