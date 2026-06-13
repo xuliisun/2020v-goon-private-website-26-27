@@ -492,7 +492,7 @@
 
   .tiers-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-bottom: 4rem;
   }
@@ -507,8 +507,10 @@
   }
 
   .tier-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(0,212,200,0.13); border-color: rgba(0,212,200,0.4); }
-  .tier-card.tier-gold { border-color: rgba(200,169,81,0.4); }
-  .tier-card.tier-gold:hover { box-shadow: 0 20px 48px rgba(200,169,81,0.15); border-color: rgba(200,169,81,0.7); }
+  .tier-card.tier-gold    { border-color: rgba(200,169,81,0.4); }
+  .tier-card.tier-gold:hover    { box-shadow: 0 20px 48px rgba(200,169,81,0.15); border-color: rgba(200,169,81,0.7); }
+  .tier-card.tier-diamond { border-color: rgba(180,130,255,0.45); }
+  .tier-card.tier-diamond:hover { box-shadow: 0 20px 52px rgba(180,130,255,0.2); border-color: rgba(180,130,255,0.8); }
 
   .tier-header {
     padding: 1.25rem 1.5rem;
@@ -517,9 +519,10 @@
     justify-content: space-between;
   }
 
-  .tier-header.bronze { background: rgba(160,120,90,0.25); border-bottom: 1px solid rgba(160,120,90,0.3); }
-  .tier-header.silver { background: rgba(143,163,177,0.2); border-bottom: 1px solid rgba(143,163,177,0.3); }
-  .tier-header.gold   { background: rgba(200,169,81,0.2);  border-bottom: 1px solid rgba(200,169,81,0.4); }
+  .tier-header.bronze  { background: rgba(160,120,90,0.25);  border-bottom: 1px solid rgba(160,120,90,0.3); }
+  .tier-header.silver  { background: rgba(143,163,177,0.2);  border-bottom: 1px solid rgba(143,163,177,0.3); }
+  .tier-header.gold    { background: rgba(200,169,81,0.2);   border-bottom: 1px solid rgba(200,169,81,0.4); }
+  .tier-header.diamond { background: rgba(180,130,255,0.18); border-bottom: 1px solid rgba(180,130,255,0.4); }
 
   .tier-name {
     font-family: 'Orbitron', monospace;
@@ -529,9 +532,10 @@
     text-transform: uppercase;
   }
 
-  .tier-name.bronze { color: #C89A6A; }
-  .tier-name.silver { color: #A8B5C0; }
-  .tier-name.gold   { color: #E8C55A; }
+  .tier-name.bronze  { color: #C89A6A; }
+  .tier-name.silver  { color: #A8B5C0; }
+  .tier-name.gold    { color: #E8C55A; }
+  .tier-name.diamond { color: #C87EFF; }
 
   .tier-badge-label {
     font-family: 'Orbitron', monospace;
@@ -543,9 +547,10 @@
     border-radius: 999px;
   }
 
-  .tier-badge-label.bronze { border-color: #C89A6A; color: #C89A6A; }
-  .tier-badge-label.silver { border-color: #A8B5C0; color: #A8B5C0; }
-  .tier-badge-label.gold   { border-color: #E8C55A; color: #E8C55A; }
+  .tier-badge-label.bronze  { border-color: #C89A6A; color: #C89A6A; }
+  .tier-badge-label.silver  { border-color: #A8B5C0; color: #A8B5C0; }
+  .tier-badge-label.gold    { border-color: #E8C55A; color: #E8C55A; }
+  .tier-badge-label.diamond { border-color: #C87EFF; color: #C87EFF; }
 
   .tier-body { padding: 1.5rem; }
 
@@ -749,7 +754,7 @@
     .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     .sponsor-intro { grid-template-columns: 1fr; gap: 2rem; }
-    .tiers-grid { grid-template-columns: 1fr; }
+    .tiers-grid { grid-template-columns: 1fr 1fr; }
     .sponsor-cta { flex-direction: column; align-items: flex-start; }
     .sponsor-section { padding: 4rem 1.5rem; }
   }
@@ -1020,9 +1025,9 @@
   <div class="section-rule"></div>
   <div class="about-grid">
     <div class="about-text">
-      <p>Team <strong>2020V</strong> is a competitive VEX Robotics team driven by engineering precision and a relentless pursuit of performance. Every mechanism, every line of auton code, every driver skill run is the result of hundreds of hours of iteration.</p>
-      <p>We don't just build robots — we solve problems under pressure. Our team combines mechanical design, electronics, and software to field a machine that's fast, reliable, and built to win.</p>
-      <p>From our first competition scrimmage to qualification events and regionals, <strong>2020V competes at every level with the same intensity.</strong></p>
+      <p>Team <strong>2020V</strong> is a youth-led, competitive VEX Robotics team aiming to compete at the <strong>VEX Robotics World Championship in April 2027</strong>. Our team is full of dedicated, relentless, passionate individuals with years of experience in robotics. We're not just building robots — we're learning, innovating, and solving problems under pressure.</p>
+      <p>Our team combines mechanical design, electronics, and software to field a machine that's fast, reliable, and built to win.</p>
+      <p>From our first competition scrimmage to qualification events and regionals, our team gives everything a <strong>20/20 effort.</strong></p>
     </div>
     <div class="stats-grid">
       <div class="stat-cell">
@@ -1291,6 +1296,7 @@
       <div class="sponsor-intro-text">
         <p>Team <strong>2020V</strong> is looking for partners who believe in the next generation of engineers, programmers, and problem-solvers. Your sponsorship puts your brand in front of a driven STEM community — at competitions, on our robot, and across our channels.</p>
         <p>We compete hard, document everything, and represent every sponsor with pride. Whether you're a local business or a tech company, <strong>partnering with 2020V is a direct investment in future talent.</strong></p>
+        <p>By partnering with Team 2020V, you're investing directly in future talent while also gaining exposure in front of a vibrant STEM community. Your sponsorship will prominently display your brand at competitions, on our robot, and across our outreach channels. Whether you're a local business or a tech giant, your support will help us inspire future innovators and celebrate the spirit of teamwork and creativity. Together, let's give our <strong>20/20 effort!</strong></p>
       </div>
       <div class="sponsor-why-grid">
         <div class="sponsor-why-cell">
@@ -1320,30 +1326,18 @@
     <p class="tiers-heading">// Sponsorship Tiers — 2025–2026 Season</p>
     <div class="tiers-grid">
 
-      <div class="tier-card">
-        <div class="tier-header bronze">
-          <span class="tier-name bronze">Bronze</span>
-          <span class="tier-badge-label bronze">Entry</span>
+      <div class="tier-card tier-diamond">
+        <div class="tier-header diamond">
+          <span class="tier-name diamond">Diamond</span>
+          <span class="tier-badge-label diamond">Elite</span>
         </div>
         <div class="tier-body">
-          <span class="tier-price">$250</span>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on team banner</div>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Social media thank-you post</div>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Season update newsletter</div>
-        </div>
-      </div>
-
-      <div class="tier-card">
-        <div class="tier-header silver">
-          <span class="tier-name silver">Silver</span>
-          <span class="tier-badge-label silver">Partner</span>
-        </div>
-        <div class="tier-body">
-          <span class="tier-price">$500</span>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>All Bronze perks</div>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on robot</div>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Featured sponsor post</div>
-          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Certificate of appreciation</div>
+          <span class="tier-price">$1000+</span>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>All Gold perks</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on uniforms</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>VIP pit access at events</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Company spotlight on all channels</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Named title sponsorship option</div>
         </div>
       </div>
 
@@ -1353,12 +1347,39 @@
           <span class="tier-badge-label gold">Title Sponsor</span>
         </div>
         <div class="tier-body">
-          <span class="tier-price">$1,000+</span>
+          <span class="tier-price">$500 - $1000</span>
           <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>All Silver perks</div>
           <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on uniforms</div>
           <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>VIP pit access at events</div>
           <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Company spotlight on all channels</div>
           <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Named title sponsorship option</div>
+        </div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-header silver">
+          <span class="tier-name silver">Silver</span>
+          <span class="tier-badge-label silver">Partner</span>
+        </div>
+        <div class="tier-body">
+          <span class="tier-price">$250 - $500</span>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>All Bronze perks</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on robot</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Featured sponsor post</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Certificate of appreciation</div>
+        </div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-header bronze">
+          <span class="tier-name bronze">Bronze</span>
+          <span class="tier-badge-label bronze">Entry</span>
+        </div>
+        <div class="tier-body">
+          <span class="tier-price">$100 - $250</span>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on team banner</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Social media thank-you post</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Season update newsletter</div>
         </div>
       </div>
 
@@ -1373,6 +1394,12 @@
       <div class="sponsor-cta-actions">
         <a class="btn-primary" href="#contact">Contact Us</a>
         <a class="btn-outline" href="mailto:team2020v@vexrobotics.com">Email Directly</a>
+        <a class="btn-outline" href="sponsorship-package.pdf" target="_blank" rel="noopener noreferrer" style="gap:0.5rem;">
+          <svg style="width:14px;height:14px;flex-shrink:0;" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3M10 2h4v4M14 2L8 8"/>
+          </svg>
+          View Package
+        </a>
       </div>
     </div>
 
