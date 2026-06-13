@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team 2020V – VEX Robotics</title>
+<title>2020V - VEX Robotics</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -18,9 +18,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--navy);
     color: var(--white);
@@ -28,7 +26,6 @@
     overflow-x: hidden;
   }
 
-  /* ── NAV ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -62,12 +59,23 @@
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    transition: color 0.2s;
+    transition: color 0.25s;
+    position: relative;
+    padding-bottom: 3px;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--aqua);
+    transition: width 0.3s ease;
   }
 
   .nav-links a:hover { color: var(--aqua); }
+  .nav-links a:hover::after { width: 100%; }
 
-  /* ── HERO ── */
   .hero {
     position: relative;
     min-height: 100vh;
@@ -146,7 +154,6 @@
     color: var(--electric);
     -webkit-text-stroke: 0;
     clip-path: inset(0 0 50% 0);
-    transition: clip-path 0.3s;
   }
 
   .hero-tagline {
@@ -176,17 +183,13 @@
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
   }
 
-  .hero-cta:hover {
-    background: var(--aqua);
-    color: var(--navy);
-  }
-
+  .hero-cta:hover { background: var(--aqua); color: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,212,200,0.25); }
   .hero-cta svg { width: 16px; height: 16px; }
 
-  /* ── SCAN LINE DECORATION ── */
   .scanline {
     display: flex;
     align-items: center;
@@ -210,7 +213,6 @@
     background: var(--aqua);
   }
 
-  /* ── SECTION BASE ── */
   section {
     padding: 6rem 3rem;
     max-width: 1200px;
@@ -241,7 +243,6 @@
     margin-bottom: 3rem;
   }
 
-  /* ── ABOUT ── */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -256,23 +257,27 @@
     margin-bottom: 1.2rem;
   }
 
-  .about-text p strong {
-    color: var(--white);
-    font-weight: 500;
-  }
+  .about-text p strong { color: var(--white); font-weight: 500; }
 
   .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: rgba(0,212,200,0.15);
-    border: 1px solid rgba(0,212,200,0.15);
+    gap: 10px;
   }
 
   .stat-cell {
     background: var(--dark-blue);
     padding: 2rem;
     text-align: center;
+    border-radius: 14px;
+    border: 1px solid rgba(0,212,200,0.15);
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .stat-cell:hover {
+    border-color: rgba(0,212,200,0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 32px rgba(0,212,200,0.12);
   }
 
   .stat-number {
@@ -291,17 +296,13 @@
     margin-top: 0.3rem;
   }
 
-  /* ── ROBOT ── */
   .robot-section {
     background: var(--dark-blue);
     max-width: 100%;
     padding: 6rem 3rem;
   }
 
-  .robot-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  .robot-inner { max-width: 1200px; margin: 0 auto; }
 
   .robot-features {
     display: grid;
@@ -314,24 +315,26 @@
     background: var(--navy);
     border: 1px solid rgba(0,212,200,0.12);
     padding: 2rem;
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
 
   .feature-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--aqua);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.3s;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--aqua), var(--electric));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    border-radius: 16px 16px 0 0;
   }
 
-  .feature-card:hover { border-color: rgba(0,212,200,0.4); }
-  .feature-card:hover::before { transform: scaleY(1); }
+  .feature-card:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,212,200,0.1); }
+  .feature-card:hover::before { transform: scaleX(1); }
 
   .feature-icon {
     font-family: 'Orbitron', monospace;
@@ -349,13 +352,8 @@
     margin-bottom: 0.75rem;
   }
 
-  .feature-desc {
-    font-size: 0.875rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+  .feature-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
 
-  /* ── TEAM ── */
   .team-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -368,13 +366,11 @@
     border: 1px solid rgba(0,212,200,0.1);
     padding: 1.5rem;
     text-align: center;
-    transition: border-color 0.2s, transform 0.2s;
+    border-radius: 16px;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
 
-  .member-card:hover {
-    border-color: rgba(0,212,200,0.4);
-    transform: translateY(-4px);
-  }
+  .member-card:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,212,200,0.1); }
 
   .member-avatar {
     width: 70px; height: 70px;
@@ -391,44 +387,18 @@
     color: var(--aqua);
   }
 
-  .member-name {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-  }
+  .member-name { font-weight: 600; font-size: 0.95rem; color: var(--white); margin-bottom: 0.25rem; }
+  .member-role { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.5rem; }
+  .member-grade { font-size: 0.8rem; color: var(--muted); }
 
-  .member-role {
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--aqua);
-    margin-bottom: 0.5rem;
-  }
-
-  .member-grade {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-
-  /* ── ACHIEVEMENTS ── */
-  .achievements-section {
-    background: var(--dark-blue);
-    max-width: 100%;
-    padding: 6rem 3rem;
-  }
-
-  .achievements-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  .achievements-section { background: var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
+  .achievements-inner { max-width: 1200px; margin: 0 auto; }
 
   .achievements-list {
     margin-top: 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    background: rgba(0,212,200,0.1);
+    gap: 8px;
   }
 
   .achievement-row {
@@ -438,10 +408,12 @@
     gap: 2rem;
     background: var(--navy);
     padding: 1.5rem 2rem;
-    transition: background 0.2s;
+    border-radius: 12px;
+    border: 1px solid rgba(0,212,200,0.08);
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
   }
 
-  .achievement-row:hover { background: var(--dark-blue); }
+  .achievement-row:hover { background: var(--dark-blue); border-color: rgba(0,212,200,0.3); transform: translateX(6px); }
 
   .achievement-year {
     font-family: 'Orbitron', monospace;
@@ -451,17 +423,8 @@
     letter-spacing: 0.1em;
   }
 
-  .achievement-name {
-    font-weight: 500;
-    color: var(--white);
-    font-size: 0.95rem;
-  }
-
-  .achievement-event {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 0.2rem;
-  }
+  .achievement-name { font-weight: 500; color: var(--white); font-size: 0.95rem; }
+  .achievement-event { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
 
   .achievement-badge {
     font-family: 'Orbitron', monospace;
@@ -472,12 +435,249 @@
     color: var(--aqua);
     text-transform: uppercase;
     white-space: nowrap;
+    border-radius: 999px;
   }
 
   .badge-gold { border-color: #E8B923; color: #E8B923; }
   .badge-silver { border-color: #A8B5C0; color: #A8B5C0; }
 
-  /* ── CONTACT ── */
+  /* ── SPONSORSHIP SECTION ── */
+  .sponsor-section {
+    background: var(--navy);
+    max-width: 100%;
+    padding: 6rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sponsor-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,200,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,200,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .sponsor-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .sponsor-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+
+  .sponsor-intro-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .sponsor-intro-text p strong { color: var(--white); font-weight: 500; }
+
+  .sponsor-why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .sponsor-why-cell {
+    background: var(--dark-blue);
+    padding: 1.5rem;
+    border-radius: 14px;
+    border: 1px solid rgba(0,212,200,0.1);
+    transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .sponsor-why-cell:hover { background: #0d2260; border-color: rgba(0,212,200,0.35); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,212,200,0.09); }
+
+  .sponsor-why-icon {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--electric);
+    margin-bottom: 0.5rem;
+  }
+
+  .sponsor-why-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .sponsor-why-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+  /* TIERS */
+  .tiers-heading {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .tier-card {
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.12);
+    overflow: hidden;
+    border-radius: 18px;
+    position: relative;
+    transition: border-color 0.3s, transform 0.35s, box-shadow 0.35s;
+  }
+
+  .tier-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(0,212,200,0.13); border-color: rgba(0,212,200,0.4); }
+  .tier-card.tier-gold { border-color: rgba(200,169,81,0.4); }
+  .tier-card.tier-gold:hover { box-shadow: 0 20px 48px rgba(200,169,81,0.15); border-color: rgba(200,169,81,0.7); }
+
+  .tier-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tier-header.bronze { background: rgba(160,120,90,0.25); border-bottom: 1px solid rgba(160,120,90,0.3); }
+  .tier-header.silver { background: rgba(143,163,177,0.2); border-bottom: 1px solid rgba(143,163,177,0.3); }
+  .tier-header.gold   { background: rgba(200,169,81,0.2);  border-bottom: 1px solid rgba(200,169,81,0.4); }
+
+  .tier-name {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .tier-name.bronze { color: #C89A6A; }
+  .tier-name.silver { color: #A8B5C0; }
+  .tier-name.gold   { color: #E8C55A; }
+
+  .tier-badge-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid;
+    text-transform: uppercase;
+    border-radius: 999px;
+  }
+
+  .tier-badge-label.bronze { border-color: #C89A6A; color: #C89A6A; }
+  .tier-badge-label.silver { border-color: #A8B5C0; color: #A8B5C0; }
+  .tier-badge-label.gold   { border-color: #E8C55A; color: #E8C55A; }
+
+  .tier-body { padding: 1.5rem; }
+
+  .tier-price {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--aqua);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .tier-perk {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .tier-perk-check {
+    color: var(--aqua);
+    font-size: 0.7rem;
+    font-family: 'Orbitron', monospace;
+    margin-top: 2px;
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+
+  /* SPONSOR CTA BAR */
+  .sponsor-cta {
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.2);
+    padding: 2.5rem 3rem;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .sponsor-cta-text { }
+
+  .sponsor-cta-text h3 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .sponsor-cta-text p { font-size: 0.875rem; color: var(--muted); }
+
+  .sponsor-cta-actions { display: flex; gap: 1rem; flex-shrink: 0; }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--aqua);
+    color: var(--navy);
+    border: none;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+
+  .btn-primary:hover { background: var(--aqua-dim); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.3); }
+
+  .btn-outline {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--aqua);
+    border: 1.5px solid var(--aqua);
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+
+  .btn-outline:hover { background: var(--aqua); color: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.25); }
+
   .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -486,11 +686,7 @@
     margin-top: 3rem;
   }
 
-  .contact-info p {
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 2rem;
-  }
+  .contact-info p { color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
 
   .contact-detail {
     display: flex;
@@ -509,17 +705,9 @@
     min-width: 80px;
   }
 
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
   .form-group label {
     font-family: 'Orbitron', monospace;
@@ -537,14 +725,12 @@
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     outline: none;
-    transition: border-color 0.2s;
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
     resize: vertical;
   }
 
-  .form-group input:focus, .form-group textarea:focus {
-    border-color: var(--aqua);
-  }
-
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--aqua); box-shadow: 0 0 0 3px rgba(0,212,200,0.12); }
   .form-group textarea { min-height: 120px; }
 
   .submit-btn {
@@ -558,13 +744,13 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.2s;
+    border-radius: 10px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
     align-self: flex-start;
   }
 
-  .submit-btn:hover { background: var(--aqua-dim); }
+  .submit-btn:hover { background: var(--aqua-dim); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.28); }
 
-  /* ── FOOTER ── */
   footer {
     background: #020810;
     border-top: 1px solid rgba(0,212,200,0.1);
@@ -582,20 +768,10 @@
     letter-spacing: 0.15em;
   }
 
-  .footer-note {
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+  .footer-note { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
 
-  /* ── CIRCUIT DECORATION ── */
-  .circuit-svg {
-    position: absolute;
-    opacity: 0.07;
-    pointer-events: none;
-  }
+  .circuit-svg { position: absolute; opacity: 0.07; pointer-events: none; }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { gap: 1.5rem; }
@@ -607,6 +783,10 @@
     .achievement-badge { display: none; }
     .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
     footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .sponsor-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .sponsor-cta { flex-direction: column; align-items: flex-start; }
+    .sponsor-section { padding: 4rem 1.5rem; }
   }
 
   @media (max-width: 600px) {
@@ -614,6 +794,9 @@
     .team-grid { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
     .hero-number { font-size: 5rem; }
+    .sponsor-why-grid { grid-template-columns: 1fr; }
+    .sponsor-cta-actions { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-outline { justify-content: center; }
   }
 </style>
 </head>
@@ -627,6 +810,7 @@
     <li><a href="#robot">Robot</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="#achievements">Results</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -635,8 +819,6 @@
 <div class="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
-
-  <!-- circuit traces decoration -->
   <svg class="circuit-svg" style="right:-100px;top:20%;width:400px;height:400px;" viewBox="0 0 400 400">
     <path d="M50 200 H150 V100 H300 V150 H350" stroke="#00D4C8" stroke-width="2" fill="none"/>
     <path d="M150 200 V300 H280 V250 H380" stroke="#2979FF" stroke-width="2" fill="none"/>
@@ -645,14 +827,12 @@
     <circle cx="280" cy="300" r="5" fill="#2979FF"/>
     <path d="M10 80 H80 V180 H20 V300 H90" stroke="#00D4C8" stroke-width="1.5" fill="none" opacity="0.5"/>
   </svg>
-
   <svg class="circuit-svg" style="left:-80px;bottom:20%;width:350px;height:350px;" viewBox="0 0 350 350">
     <path d="M300 50 H200 V150 H50 V100 H10" stroke="#2979FF" stroke-width="2" fill="none"/>
     <path d="M200 150 V250 H320 V200" stroke="#00D4C8" stroke-width="2" fill="none"/>
     <circle cx="200" cy="150" r="5" fill="#2979FF"/>
     <circle cx="50" cy="150" r="5" fill="#2979FF"/>
   </svg>
-
   <div class="hero-content">
     <div class="hero-tag">VEX Robotics Competition</div>
     <div class="hero-number">2020V</div>
@@ -672,7 +852,6 @@
   <div class="section-label">// 01 — About</div>
   <h2 class="section-title">Built to Compete.</h2>
   <div class="section-rule"></div>
-
   <div class="about-grid">
     <div class="about-text">
       <p>Team <strong>2020V</strong> is a competitive VEX Robotics team driven by engineering precision and a relentless pursuit of performance. Every mechanism, every line of auton code, every driver skill run is the result of hundreds of hours of iteration.</p>
@@ -706,37 +885,36 @@
     <div class="section-label">// 02 — The Machine</div>
     <h2 class="section-title">This Season's Robot.</h2>
     <div class="section-rule"></div>
-
     <div class="robot-features">
       <div class="feature-card">
         <div class="feature-icon">DRIVETRAIN</div>
         <div class="feature-title">6-Motor Tank Drive</div>
-        <p class="feature-desc">High-torque 6-motor drivetrain with 4" omni wheels optimized for pushing power and field traversal speed. Locked in for driver control consistency.</p>
+        <p class="feature-desc">High-torque 6-motor drivetrain with 4" omni wheels optimized for pushing power and field traversal speed.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">INTAKE</div>
         <div class="feature-title">Flex Wheel Intake</div>
-        <p class="feature-desc">Rubber flex wheels run at maximum RPM for aggressive game object collection. Adjusted spacing ensures consistent indexing with zero jams under match pressure.</p>
+        <p class="feature-desc">Rubber flex wheels run at maximum RPM for aggressive game object collection. Zero jams under match pressure.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">SCORING</div>
         <div class="feature-title">Catapult Launch System</div>
-        <p class="feature-desc">Slip-gear catapult tuned for match load shots with a repeatable flight arc. Minimal charge time between shots keeps cycle counts high.</p>
+        <p class="feature-desc">Slip-gear catapult tuned for match load shots with a repeatable flight arc. Minimal charge time between shots.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">AUTONOMOUS</div>
         <div class="feature-title">PID + Odometry</div>
-        <p class="feature-desc">Closed-loop PID control with odometry tracking for precise positioning. Multiple auton routines selectable pre-match based on alliance strategy.</p>
+        <p class="feature-desc">Closed-loop PID control with odometry tracking for precise positioning. Multiple auton routines selectable pre-match.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">PNEUMATICS</div>
         <div class="feature-title">Endgame Deployment</div>
-        <p class="feature-desc">Pneumatic-actuated endgame mechanism fires in under 0.3 seconds. Pressure tuned for reliability across repeated activations during skills runs.</p>
+        <p class="feature-desc">Pneumatic-actuated endgame mechanism fires in under 0.3 seconds. Pressure tuned for reliability across repeated activations.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">ELECTRONICS</div>
         <div class="feature-title">Brain + V5 Smart Motors</div>
-        <p class="feature-desc">Full V5 ecosystem with real-time telemetry monitoring. Motor thermals tracked and rotation sensors on all critical subsystems for data-driven tuning.</p>
+        <p class="feature-desc">Full V5 ecosystem with real-time telemetry monitoring. Rotation sensors on all critical subsystems for data-driven tuning.</p>
       </div>
     </div>
   </div>
@@ -747,7 +925,6 @@
   <div class="section-label">// 03 — Roster</div>
   <h2 class="section-title">The People Behind the Robot.</h2>
   <div class="section-rule"></div>
-
   <div class="team-grid">
     <div class="member-card">
       <div class="member-avatar">DR</div>
@@ -782,7 +959,6 @@
     <div class="section-label">// 04 — Results</div>
     <h2 class="section-title">Competition Record.</h2>
     <div class="section-rule"></div>
-
     <div class="achievements-list">
       <div class="achievement-row">
         <div class="achievement-year">2024 – 25</div>
@@ -828,12 +1004,110 @@
   </div>
 </div>
 
+<!-- SPONSORSHIP -->
+<div class="sponsor-section" id="sponsors">
+  <div class="sponsor-inner">
+    <div class="section-label">// 05 — Sponsorship</div>
+    <h2 class="section-title">Partner With 2020V.</h2>
+    <div class="section-rule"></div>
+
+    <div class="sponsor-intro">
+      <div class="sponsor-intro-text">
+        <p>Team <strong>2020V</strong> is looking for partners who believe in the next generation of engineers, programmers, and problem-solvers. Your sponsorship puts your brand in front of a driven STEM community — at competitions, on our robot, and across our channels.</p>
+        <p>We compete hard, document everything, and represent every sponsor with pride. Whether you're a local business or a tech company, <strong>partnering with 2020V is a direct investment in future talent.</strong></p>
+      </div>
+      <div class="sponsor-why-grid">
+        <div class="sponsor-why-cell">
+          <div class="sponsor-why-icon">VISIBILITY</div>
+          <div class="sponsor-why-title">Brand on Robot</div>
+          <p class="sponsor-why-desc">Your logo on our robot, uniforms, and banners at every event we attend.</p>
+        </div>
+        <div class="sponsor-why-cell">
+          <div class="sponsor-why-icon">STEM</div>
+          <div class="sponsor-why-title">Talent Pipeline</div>
+          <p class="sponsor-why-desc">Support students building real engineering, coding, and design skills.</p>
+        </div>
+        <div class="sponsor-why-cell">
+          <div class="sponsor-why-icon">REACH</div>
+          <div class="sponsor-why-title">Social Coverage</div>
+          <p class="sponsor-why-desc">Season updates and competition content across all team channels.</p>
+        </div>
+        <div class="sponsor-why-cell">
+          <div class="sponsor-why-icon">COMMUNITY</div>
+          <div class="sponsor-why-title">Local Impact</div>
+          <p class="sponsor-why-desc">Outreach workshops and school events reaching hundreds of students.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIERS -->
+    <p class="tiers-heading">// Sponsorship Tiers — 2025–2026 Season</p>
+    <div class="tiers-grid">
+
+      <div class="tier-card">
+        <div class="tier-header bronze">
+          <span class="tier-name bronze">Bronze</span>
+          <span class="tier-badge-label bronze">Entry</span>
+        </div>
+        <div class="tier-body">
+          <span class="tier-price">$250</span>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on team banner</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Social media thank-you post</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Season update newsletter</div>
+        </div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-header silver">
+          <span class="tier-name silver">Silver</span>
+          <span class="tier-badge-label silver">Partner</span>
+        </div>
+        <div class="tier-body">
+          <span class="tier-price">$500</span>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>All Bronze perks</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on robot</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Featured sponsor post</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Certificate of appreciation</div>
+        </div>
+      </div>
+
+      <div class="tier-card tier-gold">
+        <div class="tier-header gold">
+          <span class="tier-name gold">Gold</span>
+          <span class="tier-badge-label gold">Title Sponsor</span>
+        </div>
+        <div class="tier-body">
+          <span class="tier-price">$1,000+</span>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>All Silver perks</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Logo on uniforms</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>VIP pit access at events</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Company spotlight on all channels</div>
+          <div class="tier-perk"><span class="tier-perk-check">[ ✓ ]</span>Named title sponsorship option</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA BAR -->
+    <div class="sponsor-cta">
+      <div class="sponsor-cta-text">
+        <h3>Ready to sponsor Team 2020V?</h3>
+        <p>Reach out before the season kicks off and we'll get your brand on the field.</p>
+      </div>
+      <div class="sponsor-cta-actions">
+        <a class="btn-primary" href="#contact">Contact Us</a>
+        <a class="btn-outline" href="mailto:team2020v@vexrobotics.com">Email Directly</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- CONTACT -->
 <section id="contact">
-  <div class="section-label">// 05 — Contact</div>
+  <div class="section-label">// 06 — Contact</div>
   <h2 class="section-title">Get in Touch.</h2>
   <div class="section-rule"></div>
-
   <div class="contact-grid">
     <div class="contact-info">
       <p>Want to partner with us, sponsor the team, or just ask a question about our robot build? We're always open to connecting with the VEX community.</p>
@@ -854,7 +1128,6 @@
         <span>Your Region Here</span>
       </div>
     </div>
-
     <form class="contact-form" onsubmit="return false;">
       <div class="form-group">
         <label for="name">Name</label>
@@ -876,7 +1149,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">2020V</div>
-  <div class="footer-note">VEX Robotics Competition · Built to win ·  2020V</div>
+  <div class="footer-note">VEX Robotics Competition · Built to win · 2020V</div>
 </footer>
 
 <script>
@@ -897,7 +1170,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.feature-card, .member-card, .achievement-row, .stat-cell').forEach(el => {
+  document.querySelectorAll('.feature-card, .member-card, .achievement-row, .stat-cell, .tier-card, .sponsor-why-cell').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
