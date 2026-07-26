@@ -44,11 +44,43 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%) fixed, var(--navy);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%), var(--navy);
     color: var(--white);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
   }
+
+  /* Keyboard focus: visible aqua ring on every interactive element */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--aqua);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Skip link — hidden until focused */
+  .skip-link {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 200;
+    background: var(--aqua);
+    color: var(--navy);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.75rem;
+    border-radius: 0 0 10px 10px;
+    transition: transform 0.2s ease;
+  }
+
+  .skip-link:focus { transform: translate(-50%, 0); }
 
   nav {
     position: fixed;
@@ -113,6 +145,68 @@
   .nav-links a:hover::after { width: 100%; }
   .nav-links a.active { color: var(--aqua); text-shadow: 0 0 12px rgba(0,212,200,0.55); }
   .nav-links a.active::after { width: 100%; }
+
+  /* ── MOBILE NAV TOGGLE ── */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid rgba(0,212,200,0.35);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 40px; height: 38px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    transition: border-color 0.25s;
+  }
+
+  .nav-toggle:hover { border-color: var(--aqua); }
+
+  .nav-toggle span {
+    display: block;
+    width: 18px; height: 2px;
+    background: var(--aqua);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-panel {
+    position: fixed;
+    top: 100%; left: 0; right: 0;
+    background: rgba(9, 24, 64, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 212, 200, 0.2);
+    padding: 0.5rem 1.5rem 1.25rem;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .nav-panel.open { opacity: 1; transform: translateY(0); }
+
+  .nav-panel a {
+    display: block;
+    padding: 0.9rem 0.25rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0,212,200,0.08);
+    transition: color 0.25s, padding-left 0.25s;
+  }
+
+  .nav-panel a:last-child { border-bottom: none; }
+  .nav-panel a:hover, .nav-panel a.active { color: var(--aqua); padding-left: 0.6rem; }
 
   .hero {
     position: relative;
@@ -369,7 +463,7 @@
   }
 
   .robot-section {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%) fixed, var(--dark-blue);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%), var(--dark-blue);
     max-width: 100%;
     padding: 6rem 3rem;
   }
@@ -429,7 +523,7 @@
 
 
 
-  .achievements-section { background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%) fixed, var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
+  .achievements-section { background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%), var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
   .achievements-inner { max-width: 1200px; margin: 0 auto; }
 
   .achievements-list {
@@ -481,7 +575,7 @@
 
   /* ── SPONSORSHIP SECTION ── */
   .sponsor-section {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%) fixed, var(--navy);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%), var(--navy);
     max-width: 100%;
     padding: 6rem 3rem;
     position: relative;
@@ -667,8 +761,6 @@
     gap: 2rem;
   }
 
-  .sponsor-cta-text { }
-
   .sponsor-cta-text h3 {
     font-family: 'Orbitron', monospace;
     font-weight: 700;
@@ -817,25 +909,27 @@
 
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1.5rem; }
+    /* Desktop link row gives way to the hamburger panel */
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .nav-panel { display: flex; }
     section { padding: 4rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .robot-features { grid-template-columns: 1fr 1fr; }
+    .robot-showcase { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr 1fr; }
     .achievement-row { grid-template-columns: 100px 1fr; }
     .achievement-badge { display: none; }
     .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     .sponsor-intro { grid-template-columns: 1fr; gap: 2rem; }
     .tiers-grid { grid-template-columns: 1fr 1fr; }
     .sponsor-cta { flex-direction: column; align-items: flex-start; }
-    .sponsor-section { padding: 4rem 1.5rem; }
+    .sponsor-section, .robot-section, .achievements-section, .timeline-section { padding: 4rem 1.5rem; }
   }
 
   @media (max-width: 600px) {
     .robot-features { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
+    .team-grid { grid-template-columns: 1fr; }
     .hero-number { font-size: 5rem; }
     .sponsor-why-grid { grid-template-columns: 1fr; }
     .sponsor-cta-actions { flex-direction: column; width: 100%; }
@@ -1035,13 +1129,7 @@
     text-align: left;
   }
 
-  @media (max-width: 900px) {
-    .robot-showcase { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 600px) {
-    .team-grid { grid-template-columns: 1fr; }
-  }
+  /* (responsive rules for these live in the consolidated media blocks above) */
 
   /* ── ADDITIONAL ANIMATIONS ── */
 
@@ -1049,7 +1137,6 @@
   .nav-logo, .footer-logo {
     position: relative;
     overflow: hidden;
-    cursor: pointer;
     transition: filter 0.3s ease, color 0.3s ease;
   }
   .nav-logo::before, .footer-logo::before {
@@ -1286,9 +1373,308 @@
   @media (max-width: 600px) {
     .form-row { grid-template-columns: 1fr; }
   }
+
+  /* ── SCROLL REVEAL ──
+     Hidden state is gated on html.js (set inline in <head>), so with
+     JavaScript disabled every section renders normally instead of blank. */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  html.js .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* ── FORM STATUS MESSAGES ── */
+  .form-status {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin-top: 0.9rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    display: none;
+  }
+
+  .form-status.visible { display: block; }
+  .form-status.pending { color: var(--muted); border-color: rgba(130,176,204,0.3); background: rgba(130,176,204,0.07); }
+  .form-status.success { color: var(--aqua); border-color: rgba(0,212,200,0.45); background: rgba(0,212,200,0.09); }
+  .form-status.error   { color: #FF9B9B; border-color: rgba(255,120,120,0.45); background: rgba(255,120,120,0.08); }
+
+  button[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+  /* ── SPONSOR LOGO WALL ── */
+  .sponsor-wall { margin-bottom: 4rem; }
+
+  .sponsor-wall-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .sponsor-slot {
+    aspect-ratio: 5/3;
+    border-radius: 14px;
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 1rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .sponsor-slot:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-4px); }
+  .sponsor-slot img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+  .sponsor-slot-empty {
+    background: transparent;
+    border: 1px dashed rgba(0,212,200,0.28);
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .sponsor-slot-empty .plus {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    color: rgba(0,212,200,0.5);
+    line-height: 1;
+  }
+
+  .sponsor-slot-empty .label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(130,176,204,0.75);
+  }
+
+  /* ── MATCH VIDEO ── */
+  .video-frame {
+    position: relative;
+    margin-top: 2.5rem;
+    aspect-ratio: 16/9;
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(0,212,200,0.2);
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .video-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(0,212,200,0.45);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .video-play {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,212,200,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-play svg { width: 22px; height: 22px; fill: rgba(0,212,200,0.6); margin-left: 4px; }
+
+  /* ── NOTEBOOK CTA ── */
+  .notebook-cta { margin-top: 2rem; text-align: center; }
+
+  /* ── SEASON TIMELINE ── */
+  .timeline-section {
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.45) 0%, transparent 65%), var(--navy);
+    max-width: 100%;
+    padding: 6rem 3rem;
+  }
+
+  .timeline-inner { max-width: 1200px; margin: 0 auto; }
+
+  .timeline {
+    position: relative;
+    margin-top: 3rem;
+    padding-left: 2rem;
+  }
+
+  /* the vertical rail */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--aqua), rgba(61,128,255,0.25));
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-node {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid var(--aqua);
+    box-shadow: 0 0 12px rgba(0,212,200,0.5);
+  }
+
+  .timeline-item.upcoming .timeline-node {
+    border-color: var(--muted);
+    box-shadow: none;
+  }
+
+  .timeline-date {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; max-width: 60ch; }
+
+  .timeline-flag {
+    display: inline-block;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--muted);
+    color: var(--muted);
+    margin-left: 0.6rem;
+    vertical-align: 2px;
+  }
+
+  .timeline-flag.done { border-color: var(--aqua); color: var(--aqua); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060E2E;
+    border-top: 1px solid rgba(0,212,200,0.1);
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .footer-col-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 0.9rem;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.25s;
+  }
+
+  .footer-links a:hover { color: var(--aqua); }
+
+  .footer-socials { display: flex; gap: 0.75rem; }
+
+  .footer-socials a {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    border: 1px solid rgba(0,212,200,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    transition: color 0.25s, border-color 0.25s, transform 0.25s;
+  }
+
+  .footer-socials a:hover { color: var(--aqua); border-color: var(--aqua); transform: translateY(-3px); }
+  .footer-socials svg { width: 17px; height: 17px; }
+
+  .footer-bottom {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(0,212,200,0.08);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    footer { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.5rem; text-align: left; }
+    .footer-bottom { flex-direction: column; text-align: left; }
+  }
+
+  /* ── REDUCED MOTION ──
+     Honours the OS "Reduce Motion" setting: stops every looping animation
+     and collapses transitions, while forcing scroll-revealed elements to
+     their final visible state so nothing stays hidden. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .hero-grid,
+    .hero-glow,
+    .hero-tag,
+    .scanline-dot,
+    .sponsor-form::before {
+      animation: none !important;
+    }
+
+    .hero-glow { transform: translate(-50%, -50%); opacity: 0.8; }
+
+    .section-rule,
+    .section-rule.in-view { width: 60px; opacity: 1; animation: none !important; }
+
+    html.js .reveal { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- NAV -->
 <nav>
@@ -1298,10 +1684,27 @@
     <li><a href="#robot">Robot</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="#achievements">Results</a></li>
+    <li><a href="#season">Season</a></li>
     <li><a href="#sponsors">Sponsors</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-panel">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-panel" id="nav-panel">
+    <a href="#about">About</a>
+    <a href="#robot">Robot</a>
+    <a href="#team">Team</a>
+    <a href="#achievements">Results</a>
+    <a href="#season">Season</a>
+    <a href="#sponsors">Sponsors</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
+
+<main id="main">
 
 <!-- HERO -->
 <div class="hero">
@@ -1323,7 +1726,7 @@
   </svg>
   <div class="hero-content">
     <div class="hero-tag">VEX Robotics Competition</div>
-    <div class="hero-number">2020V</div>
+    <h1 class="hero-number" aria-label="2020V — Twenty-Twenty Vision">2020V</h1>
     <div style="font-family:'Inter',sans-serif;font-size:0.8rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);margin-top:0.75rem;">Twenty-Twenty Vision</div>
     <div class="scanline"><div class="scanline-dot"></div></div>
     <div class="hero-tagline">Precision. <span>Power.</span> Progress.</div>
@@ -1357,7 +1760,7 @@
         <div class="stat-label">Tournaments Entered</div>
       </div>
       <div class="stat-cell">
-        <span class="stat-number">4</span>
+        <span class="stat-number">8</span>
         <div class="stat-label">Team Members</div>
       </div>
       <div class="stat-cell">
@@ -1383,8 +1786,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
           </svg>
-          Add your robot photo<br>
-          <span style="font-size:0.55rem;opacity:0.6;">Replace src="" with your image path</span>
+          2020V
         </div>
         <div class="robot-img-corner tl"></div>
         <div class="robot-img-corner tr"></div>
@@ -1477,6 +1879,36 @@
         <div class="feature-title">Match Scouting System</div>
         <p class="feature-desc">Custom scouting spreadsheet tracking opponent cycles, autonomous consistency, and endgame success rates across all events.</p>
       </div>
+    </div>
+
+    <!-- MATCH VIDEO
+         To go live: delete the .video-empty div below and uncomment the iframe,
+         replacing YOUR_VIDEO_ID with the id from your YouTube URL
+         (youtube.com/watch?v=YOUR_VIDEO_ID). -->
+    <div class="video-frame reveal">
+      <!--
+      <iframe src="https://www.youtube-nocookie.com/embed/YOUR_VIDEO_ID"
+              title="2020V competition match"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy"></iframe>
+      -->
+      <div class="video-empty">
+        <div class="video-play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        Match footage coming soon
+      </div>
+    </div>
+
+    <!-- Engineering notebook: replace href with your public notebook link
+         (Google Drive, Notion, or a PDF in this folder) -->
+    <div class="notebook-cta">
+      <a class="btn-outline" href="#" target="_blank" rel="noopener noreferrer" style="gap:0.5rem;">
+        <svg style="width:14px;height:14px;flex-shrink:0;" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 3h5a2 2 0 0 1 2 2v9a1.5 1.5 0 0 0-1.5-1.5H2zM14 3H9a2 2 0 0 0-2 2v9a1.5 1.5 0 0 1 1.5-1.5H14z"/>
+        </svg>
+        Read Our Engineering Notebook
+      </a>
     </div>
   </div>
 </div>
@@ -1663,10 +2095,60 @@
   </div>
 </div>
 
+<!-- SEASON TIMELINE
+     EDIT THESE: the dates and copy below are examples showing the intended
+     shape. Replace with your real season milestones. Add class="upcoming"
+     to a .timeline-item for events that haven't happened yet (dims the node),
+     and swap the .timeline-flag text between "Complete" and "Upcoming". -->
+<div class="timeline-section" id="season">
+  <div class="timeline-inner">
+    <div class="section-label">// 05 - Season</div>
+    <h2 class="section-title">The Road to Worlds.</h2>
+    <div class="section-rule"></div>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-node"></div>
+        <div class="timeline-date">May 2026</div>
+        <div class="timeline-title">Season Kickoff<span class="timeline-flag done">Complete</span></div>
+        <p class="timeline-desc">New game released. Team breaks down the rules, scores strategy options, and locks in a robot archetype for the season.</p>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-node"></div>
+        <div class="timeline-date">Summer 2026</div>
+        <div class="timeline-title">Prototype &amp; Build<span class="timeline-flag done">Complete</span></div>
+        <p class="timeline-desc">CAD, prototyping, and subsystem testing. Drivetrain and intake iterations documented in the engineering notebook.</p>
+      </div>
+
+      <div class="timeline-item upcoming reveal">
+        <div class="timeline-node"></div>
+        <div class="timeline-date">Fall 2026</div>
+        <div class="timeline-title">First Qualifiers<span class="timeline-flag">Upcoming</span></div>
+        <p class="timeline-desc">Opening tournaments of the season. Driver practice, autonomous tuning, and early skills runs to bank a ranking score.</p>
+      </div>
+
+      <div class="timeline-item upcoming reveal">
+        <div class="timeline-node"></div>
+        <div class="timeline-date">Winter 2027</div>
+        <div class="timeline-title">Provincial Championship<span class="timeline-flag">Upcoming</span></div>
+        <p class="timeline-desc">Ontario provincials. A qualifying berth here is the direct path to the World Championship field.</p>
+      </div>
+
+      <div class="timeline-item upcoming reveal">
+        <div class="timeline-node"></div>
+        <div class="timeline-date">April 2027</div>
+        <div class="timeline-title">VEX World Championship<span class="timeline-flag">Goal</span></div>
+        <p class="timeline-desc">Dallas, Texas. The target we've been building toward — competing against the best teams in the world.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- SPONSORSHIP -->
 <div class="sponsor-section" id="sponsors">
   <div class="sponsor-inner">
-    <div class="section-label">// 05 - Sponsorship</div>
+    <div class="section-label">// 06 - Sponsorship</div>
     <h2 class="section-title">Partner With 2020V.</h2>
     <div class="section-rule"></div>
 
@@ -1696,6 +2178,33 @@
           <div class="sponsor-why-icon">COMMUNITY</div>
           <div class="sponsor-why-title">Local Impact</div>
           <p class="sponsor-why-desc">Outreach workshops and school events reaching hundreds of students.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPONSOR LOGO WALL
+         To add a real sponsor: drop the logo in a logos/ folder, then replace
+         one .sponsor-slot-empty block with:
+           <div class="sponsor-slot"><img src="logos/name.png" alt="Company Name"></div>
+         Delete any leftover empty slots you don't want shown. -->
+    <div class="sponsor-wall">
+      <p class="tiers-heading">// Our Partners</p>
+      <div class="sponsor-wall-grid">
+        <div class="sponsor-slot sponsor-slot-empty reveal">
+          <span class="plus">+</span>
+          <span class="label">Partner spot available</span>
+        </div>
+        <div class="sponsor-slot sponsor-slot-empty reveal">
+          <span class="plus">+</span>
+          <span class="label">Partner spot available</span>
+        </div>
+        <div class="sponsor-slot sponsor-slot-empty reveal">
+          <span class="plus">+</span>
+          <span class="label">Partner spot available</span>
+        </div>
+        <div class="sponsor-slot sponsor-slot-empty reveal">
+          <span class="plus">+</span>
+          <span class="label">Partner spot available</span>
         </div>
       </div>
     </div>
@@ -1771,13 +2280,18 @@
       </div>
       <div class="sponsor-cta-actions">
         <a class="btn-primary" href="#contact">Contact Us</a>
-        <a class="btn-outline" href="mailto:team2020v@vexrobotics.com">Email Directly</a>
+        <a class="btn-outline" href="mailto:xuliang@silverknights.ca">Email Directly</a>
+        <!-- RE-ENABLE once sponsorship-package.pdf exists in this folder.
+             It currently 404s, so the button is commented out rather than
+             sending sponsors to a dead link.
         <a class="btn-outline" href="sponsorship-package.pdf" target="_blank" rel="noopener noreferrer" style="gap:0.5rem;">
           <svg style="width:14px;height:14px;flex-shrink:0;" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3M10 2h4v4M14 2L8 8"/>
           </svg>
           View Package
         </a>
+        -->
+
       </div>
     </div>
 
@@ -1786,7 +2300,7 @@
 
 <!-- CONTACT & PARTNERSHIP -->
 <section id="contact">
-  <div class="section-label">// 06 - Contact & Partnership</div>
+  <div class="section-label">// 07 - Contact & Partnership</div>
   <h2 class="section-title">Let's Connect.</h2>
   <div class="section-rule"></div>
   <div class="contact-grid">
@@ -1849,6 +2363,7 @@
             <textarea id="message" placeholder="What's on your mind?" required></textarea>
           </div>
           <button class="submit-btn" type="submit">Send Message</button>
+          <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
         </form>
       </div>
 
@@ -1886,6 +2401,7 @@
               <textarea style="width:100%;background:var(--dark-blue);border:1px solid rgba(0,212,200,0.2);color:var(--white);padding:0.75rem 1rem;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;border-radius:10px;transition:border-color 0.3s,box-shadow 0.3s;resize:vertical;min-height:100px;" id="s-message" placeholder="Tell us about your company or any questions you have..."></textarea>
             </div>
             <button class="sponsor-submit-btn" type="submit">Send Sponsorship Inquiry</button>
+            <p class="form-status" id="sponsor-status" role="status" aria-live="polite"></p>
             <p class="form-note">We'll follow up within 2 business days with a full package.</p>
           </form>
         </div>
@@ -1895,13 +2411,149 @@
   </div>
 </section>
 
-<!-- FOOTER -->
+</main>
+
+<!-- FOOTER
+     SOCIAL LINKS: replace each href="#" with your real profile URL.
+     Delete any row you don't use rather than leaving it pointing at "#". -->
 <footer>
-  <div class="footer-logo">2020V<span style="display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:2px;">Twenty-Twenty Vision</span></div>
-  <div class="footer-note">VEX Robotics Competition · Twenty-Twenty Vision · 2020V</div>
+  <div>
+    <div class="footer-logo">2020V<span style="display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:2px;">Twenty-Twenty Vision</span></div>
+    <p class="footer-note" style="margin-top:0.9rem;max-width:34ch;line-height:1.7;">Youth-led VEX V5 Robotics Competition team based in Markham, Ontario.</p>
+  </div>
+
+  <div>
+    <div class="footer-col-title">Explore</div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#robot">Robot</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#season">Season</a></li>
+      <li><a href="#sponsors">Sponsors</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="footer-col-title">Connect</div>
+    <div class="footer-socials">
+      <a href="#" aria-label="2020V on Instagram" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="#" aria-label="2020V on YouTube" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="#" aria-label="2020V on GitHub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2A10 10 0 0 0 8.8 21.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/>
+        </svg>
+      </a>
+      <a href="mailto:xuliang@silverknights.ca" aria-label="Email team 2020V">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="3"/><path d="M3 7l9 6 9-6"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-note">VEX Robotics Competition · Twenty-Twenty Vision · 2020V</div>
+    <div class="footer-note">&copy; <span id="year">2026</span> Team 2020V. All rights reserved.</div>
+  </div>
 </footer>
 
 <script>
+  /* ══════════════════════════════════════════════════════════════════
+     GOOGLE FORMS CONFIGURATION  —  ⚠️ YOU NEED TO FILL THIS IN
+
+     Until you replace the PASTE_..._HERE values below, both forms fall
+     back to opening the visitor's mail client (the old behaviour), so
+     nothing is broken in the meantime.
+
+     HOW TO GET THESE VALUES (do this once per form):
+
+     1. Create a form at https://forms.google.com with fields matching
+        the ones listed in `fields` below.
+     2. Click ⋮ (top right) → "Get pre-filled link".
+     3. Type a recognisable dummy value into every field (e.g. "AAA"
+        into Name, "BBB" into Email) and click "Get link" → "Copy link".
+     4. Paste that link somewhere you can read it. It looks like:
+          https://docs.google.com/forms/d/e/1FAIpQLSdXXXXXXXX/viewform
+            ?usp=pp_url&entry.1234567=AAA&entry.7654321=BBB
+     5. The long id after /d/e/ is your formId  →  1FAIpQLSdXXXXXXXX
+     6. Each entry.NNNNNNN is the field id. Match them up by the dummy
+        value you typed, and paste them below.
+     7. In the form, open the "Responses" tab → link it to a Google
+        Sheet so every submission is recorded.
+     ══════════════════════════════════════════════════════════════════ */
+  const FORMS = {
+    contact: {
+      formId: 'PASTE_CONTACT_FORM_ID_HERE',
+      fields: {
+        name:    'entry.PASTE_NAME_FIELD_ID',
+        email:   'entry.PASTE_EMAIL_FIELD_ID',
+        message: 'entry.PASTE_MESSAGE_FIELD_ID'
+      }
+    },
+    sponsor: {
+      formId: 'PASTE_SPONSOR_FORM_ID_HERE',
+      fields: {
+        contact: 'entry.PASTE_CONTACT_NAME_FIELD_ID',
+        company: 'entry.PASTE_COMPANY_FIELD_ID',
+        email:   'entry.PASTE_EMAIL_FIELD_ID',
+        tier:    'entry.PASTE_TIER_FIELD_ID',
+        message: 'entry.PASTE_MESSAGE_FIELD_ID'
+      }
+    }
+  };
+
+  const TEAM_EMAIL = 'xuliang@silverknights.ca';
+
+  // A form is "configured" only once its placeholders are gone.
+  function isConfigured(cfg) {
+    if (cfg.formId.startsWith('PASTE_')) return false;
+    return Object.values(cfg.fields).every(id => !id.includes('PASTE_'));
+  }
+
+  function setStatus(el, state, msg) {
+    if (!el) return;
+    el.className = 'form-status visible ' + state;
+    el.textContent = msg;
+  }
+
+  /* Posts to Google Forms. The request is cross-origin and Google sends no
+     CORS headers, so we use mode:'no-cors' — the response is opaque and
+     unreadable by design, which means a resolved promise is the only
+     success signal available. A rejection indicates the request never left
+     the browser (offline, blocked), which we surface as an error. */
+  function submitToGoogleForm(cfg, values, statusEl, btn, form, successMsg) {
+    const data = new FormData();
+    Object.keys(cfg.fields).forEach(key => {
+      if (values[key] !== undefined) data.append(cfg.fields[key], values[key]);
+    });
+
+    btn.disabled = true;
+    setStatus(statusEl, 'pending', 'Sending…');
+
+    fetch('https://docs.google.com/forms/d/e/' + cfg.formId + '/formResponse', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: data
+    })
+      .then(() => {
+        setStatus(statusEl, 'success', successMsg);
+        form.reset();
+      })
+      .catch(() => {
+        setStatus(statusEl, 'error',
+          'Something went wrong sending that. Please email us directly at ' + TEAM_EMAIL + '.');
+      })
+      .finally(() => { btn.disabled = false; });
+  }
+
   function switchFormTab(tab, btn) {
     document.getElementById('tab-general').style.display = tab === 'general' ? 'block' : 'none';
     document.getElementById('tab-sponsor').style.display  = tab === 'sponsor'  ? 'block' : 'none';
@@ -1916,13 +2568,29 @@
     const email   = document.getElementById('s-email').value.trim();
     const tier    = document.getElementById('s-tier').value;
     const message = document.getElementById('s-message').value.trim();
+
+    if (isConfigured(FORMS.sponsor)) {
+      submitToGoogleForm(
+        FORMS.sponsor,
+        { contact, company, email, tier, message },
+        document.getElementById('sponsor-status'),
+        e.target.querySelector('button[type="submit"]'),
+        e.target,
+        'Thanks, ' + contact + ' — your inquiry is in. We\'ll follow up within 2 business days.'
+      );
+      return;
+    }
+
+    // Fallback until FORMS.sponsor is configured.
     const subject = encodeURIComponent('Sponsorship Inquiry from ' + company + ' - ' + tier + ' Tier');
     const body    = encodeURIComponent(
       'Contact: ' + contact + '\nCompany: ' + company + '\nEmail: ' + email +
       '\nInterested Tier: ' + tier +
       (message ? '\n\nMessage:\n' + message : '')
     );
-    window.location.href = 'mailto:xuliang@silverknights.ca?subject=' + subject + '&body=' + body;
+    setStatus(document.getElementById('sponsor-status'), 'pending',
+      'Opening your email app… if nothing happens, email us at ' + TEAM_EMAIL + '.');
+    window.location.href = 'mailto:' + TEAM_EMAIL + '?subject=' + subject + '&body=' + body;
   }
 
   function sendContactEmail(e) {
@@ -1930,53 +2598,112 @@
     const name    = document.getElementById('name').value.trim();
     const email   = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
+
+    if (isConfigured(FORMS.contact)) {
+      submitToGoogleForm(
+        FORMS.contact,
+        { name, email, message },
+        document.getElementById('contact-status'),
+        e.target.querySelector('button[type="submit"]'),
+        e.target,
+        'Thanks, ' + name + ' — message received. We\'ll get back to you soon.'
+      );
+      return;
+    }
+
+    // Fallback until FORMS.contact is configured.
     const subject = encodeURIComponent('Message from ' + name + ' via 2020V Website');
     const body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-    window.location.href = 'mailto:xuliang@silverknights.ca?subject=' + subject + '&body=' + body;
+    setStatus(document.getElementById('contact-status'), 'pending',
+      'Opening your email app… if nothing happens, email us at ' + TEAM_EMAIL + '.');
+    window.location.href = 'mailto:' + TEAM_EMAIL + '?subject=' + subject + '&body=' + body;
   }
+
+  // ── MOBILE NAV ──
+  const navToggle = document.getElementById('nav-toggle');
+  const navPanel  = document.getElementById('nav-panel');
+
+  function setNav(open) {
+    navPanel.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+  }
+
+  navToggle.addEventListener('click', () => {
+    setNav(navToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  navPanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNav(false)));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+      setNav(false);
+      navToggle.focus();
+    }
+  });
+
+  document.addEventListener('click', e => {
+    if (navToggle.getAttribute('aria-expanded') !== 'true') return;
+    if (!navPanel.contains(e.target) && !navToggle.contains(e.target)) setNav(false);
+  });
+
+  // ── SMOOTH SCROLL (honours reduced-motion) ──
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;             // placeholder social/notebook links
+      const target = document.querySelector(href);
+      if (!target) return;
       e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      target.scrollIntoView({ behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
     });
   });
 
+  // ── SCROLL REVEAL ──
+  // The hidden state lives in CSS behind html.js, so this only adds .in-view.
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
+        e.target.classList.add('in-view');
+        observer.unobserve(e.target);
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.feature-card, .member-card, .achievement-row, .stat-cell, .tier-card, .sponsor-why-cell').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
+  document.querySelectorAll('.feature-card, .member-card, .achievement-row, .stat-cell, .tier-card, .sponsor-why-cell')
+    .forEach(el => el.classList.add('reveal'));
 
-  // Scrollspy
-  const scrollSectionIds = ['about', 'robot', 'team', 'achievements', 'sponsors', 'contact'];
-  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  function updateActiveNav() {
-    const scrollY = window.scrollY + 120;
-    let currentId = '';
-    scrollSectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.offsetTop <= scrollY) currentId = id;
+  // ── SCROLLSPY ──
+  // IntersectionObserver instead of reading offsetTop on every scroll event,
+  // which forced a synchronous layout each frame.
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"], .nav-panel a[href^="#"]');
+  const spySections = ['about', 'robot', 'team', 'achievements', 'season', 'sponsors', 'contact']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+
+  const visible = new Set();
+
+  const spyObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) visible.add(e.target.id);
+      else visible.delete(e.target.id);
     });
+
+    // Highlight the topmost section currently on screen.
+    const currentId = spySections.map(s => s.id).find(id => visible.has(id)) || '';
     navLinks.forEach(link => {
       link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
     });
-  }
+  }, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
 
-  window.addEventListener('scroll', updateActiveNav, { passive: true });
-  updateActiveNav();
+  spySections.forEach(s => spyObserver.observe(s));
+
+  // Footer copyright year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
   const ruleObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
