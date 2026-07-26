@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2020V — Twenty-Twenty Vision | VEX Robotics Competition Team</title>
-<meta name="description" content="Team 2020V (Twenty-Twenty Vision) is a youth-led VEX V5 Robotics Competition team from Markham, Ontario, building toward the VEX World Championship. Meet the team, see the robot, and partner with us.">
-<meta name="theme-color" content="#091840">
+<title>2020V — Twenty-Twenty Vision | Rookie VEX Robotics Team</title>
+<meta name="description" content="Team 2020V (Twenty-Twenty Vision) is a brand-new, youth-led VEX V5 Robotics Competition team from Markham, Ontario. This is our rookie season — follow the build from day one, and help us get to the field.">
+<meta name="theme-color" content="#102A43">
 
 <!-- Social sharing (Open Graph / Twitter) -->
 <!-- TODO: replace og:url with your real domain once deployed, and add og-image.jpg (1200x630) to this folder -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Team 2020V">
-<meta property="og:title" content="2020V — Twenty-Twenty Vision | VEX Robotics">
-<meta property="og:description" content="Youth-led VEX V5 Robotics Competition team from Markham, Ontario. Precision. Power. Progress.">
+<meta property="og:title" content="2020V — Rookie Season | VEX Robotics">
+<meta property="og:description" content="A brand-new VEX V5 Robotics Competition team from Markham, Ontario. Season one starts now. Precision. Power. Progress.">
 <meta property="og:url" content="https://example.com/">
 <meta property="og:image" content="og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="2020V — Twenty-Twenty Vision | VEX Robotics">
-<meta name="twitter:description" content="Youth-led VEX V5 Robotics Competition team from Markham, Ontario. Precision. Power. Progress.">
+<meta name="twitter:title" content="2020V — Rookie Season | VEX Robotics">
+<meta name="twitter:description" content="A brand-new VEX V5 Robotics Competition team from Markham, Ontario. Season one starts now.">
 <meta name="twitter:image" content="og-image.jpg">
 
 <!-- Favicon: inline SVG, no extra file needed -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23091840'/%3E%3Ctext x='32' y='43' font-family='Verdana,sans-serif' font-size='30' font-weight='bold' fill='%2300D4C8' text-anchor='middle'%3E20%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23102A43'/%3E%3Ctext x='32' y='43' font-family='Verdana,sans-serif' font-size='30' font-weight='bold' fill='%2300B8D4' text-anchor='middle'%3E20%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,20 +31,20 @@
 <script>document.documentElement.classList.add('js');</script>
 <style>
   :root {
-    --navy: #091840;
-    --dark-blue: #102060;
-    --mid-blue: #1648A8;
-    --electric: #3D80FF;
-    --aqua: #00D4C8;
-    --aqua-dim: #00A89E;
-    --white: #F0F8FF;
-    --muted: #82B0CC;
+    --navy: #0b1f33;
+    --dark-blue: #17344f;
+    --mid-blue: #2a567f;
+    --electric: #4e92d9;
+    --aqua: #79b9ef;
+    --aqua-dim: #5f9fd7;
+    --white: #f1f7fc;
+    --muted: #bfd1e2;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%), var(--navy);
+    background: linear-gradient(180deg, #1c4061 0%, #0f2740 55%, #081423 100%);
     color: var(--white);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
@@ -90,16 +90,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 3rem;
-    background: rgba(9, 24, 64, 0.88);
+    background: rgba(15, 39, 64, 0.88);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 212, 200, 0.15);
+    border-bottom: 1px solid rgba(94,165,219,0.18);
   }
 
   .nav-logo {
     font-family: 'Orbitron', monospace;
     font-weight: 900;
     font-size: 1.4rem;
-    color: var(--aqua);
+    color: var(--electric);
     letter-spacing: 0.1em;
     display: flex;
     flex-direction: column;
@@ -137,20 +137,20 @@
     position: absolute;
     bottom: 0; left: 0;
     width: 0; height: 1.5px;
-    background: var(--aqua);
+    background: var(--electric);
     transition: width 0.3s ease;
   }
 
-  .nav-links a:hover { color: var(--aqua); }
+  .nav-links a:hover { color: var(--electric); }
   .nav-links a:hover::after { width: 100%; }
-  .nav-links a.active { color: var(--aqua); text-shadow: 0 0 12px rgba(0,212,200,0.55); }
+  .nav-links a.active { color: var(--electric); text-shadow: 0 0 12px rgba(0,169,192,0.25); }
   .nav-links a.active::after { width: 100%; }
 
   /* ── MOBILE NAV TOGGLE ── */
   .nav-toggle {
     display: none;
     background: none;
-    border: 1px solid rgba(0,212,200,0.35);
+    border: 1px solid rgba(0,169,192,0.35);
     border-radius: 8px;
     padding: 0.5rem;
     cursor: pointer;
@@ -162,7 +162,7 @@
     transition: border-color 0.25s;
   }
 
-  .nav-toggle:hover { border-color: var(--aqua); }
+  .nav-toggle:hover { border-color: var(--electric); }
 
   .nav-toggle span {
     display: block;
@@ -179,9 +179,9 @@
   .nav-panel {
     position: fixed;
     top: 100%; left: 0; right: 0;
-    background: rgba(9, 24, 64, 0.97);
+    background: rgba(15, 39, 64, 0.97);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 212, 200, 0.2);
+    border-bottom: 1px solid rgba(94,165,219,0.2);
     padding: 0.5rem 1.5rem 1.25rem;
     display: none;
     flex-direction: column;
@@ -206,7 +206,7 @@
   }
 
   .nav-panel a:last-child { border-bottom: none; }
-  .nav-panel a:hover, .nav-panel a.active { color: var(--aqua); padding-left: 0.6rem; }
+  .nav-panel a:hover, .nav-panel a.active { color: var(--aqua); padding-left: 0; }
 
   .hero {
     position: relative;
@@ -222,8 +222,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,212,200,0.09) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,200,0.09) 1px, transparent 1px);
+      linear-gradient(rgba(0,169,192,0.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,169,192,0.10) 1px, transparent 1px);
     background-size: 60px 60px;
     animation: gridPulse 8s ease-in-out infinite;
   }
@@ -237,7 +237,7 @@
     position: absolute;
     width: 600px; height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(61,128,255,0.22) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(94,165,219,0.16) 0%, transparent 70%);
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     animation: glowPulse 4s ease-in-out infinite;
@@ -275,7 +275,7 @@
     line-height: 0.9;
     letter-spacing: -0.02em;
     color: transparent;
-    -webkit-text-stroke: 2px var(--aqua);
+    -webkit-text-stroke: 2px var(--electric);
     position: relative;
     display: inline-block;
     cursor: default;
@@ -283,9 +283,9 @@
   }
 
   .hero-number:hover {
-    transform: scale(1.06) translateY(-6px);
-    -webkit-text-stroke: 2px #fff;
-    filter: drop-shadow(0 0 18px rgba(0,212,200,0.7)) drop-shadow(0 0 40px rgba(77,143,255,0.45));
+    transform: none;
+    -webkit-text-stroke: 2px var(--navy);
+    filter: none;
   }
 
   @keyframes heroShine {
@@ -299,13 +299,13 @@
     position: absolute;
     top: 0; left: -80%;
     width: 50%; height: 100%;
-    background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.25) 50%, transparent 80%);
+    background: linear-gradient(120deg, transparent 20%, rgba(232,242,250,0.25) 50%, transparent 80%);
     pointer-events: none;
     opacity: 0;
   }
 
   .hero-number:hover::before {
-    animation: heroShine 0.7s ease forwards;
+    opacity: 0;
   }
 
   .hero-number::after {
@@ -319,7 +319,7 @@
   }
 
   .hero-number:hover::after {
-    color: #fff;
+    color: #eef4f8;
   }
 
   .hero-tagline {
@@ -341,8 +341,8 @@
     gap: 0.75rem;
     padding: 0.9rem 2.5rem;
     background: transparent;
-    border: 1.5px solid var(--aqua);
-    color: var(--aqua);
+    border: 1.5px solid var(--electric);
+    color: var(--electric);
     font-family: 'Orbitron', monospace;
     font-size: 0.8rem;
     letter-spacing: 0.15em;
@@ -353,7 +353,7 @@
     transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
   }
 
-  .hero-cta:hover { background: var(--aqua); color: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,212,200,0.25); }
+  .hero-cta:hover { background: var(--electric); color: #f6fafc; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,169,192,0.22); }
   .hero-cta svg { width: 16px; height: 16px; }
 
   .scanline {
@@ -441,9 +441,9 @@
   }
 
   .stat-cell:hover {
-    border-color: rgba(0,212,200,0.5);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 32px rgba(0,212,200,0.12);
+    border-color: rgba(0,169,192,0.35);
+    transform: none;
+    box-shadow: none;
   }
 
   .stat-number {
@@ -463,7 +463,7 @@
   }
 
   .robot-section {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%), var(--dark-blue);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(94,165,219,0.16) 0%, transparent 65%), #5f86ae;
     max-width: 100%;
     padding: 6rem 3rem;
   }
@@ -472,58 +472,40 @@
 
   .robot-features {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem 1.5rem;
     margin-top: 3rem;
   }
 
   .feature-card {
-    background: var(--navy);
-    border: 1px solid rgba(0,212,200,0.12);
-    padding: 2rem;
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
   }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--aqua), var(--electric));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-    border-radius: 16px 16px 0 0;
-  }
-
-  .feature-card:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,212,200,0.1); }
-  .feature-card:hover::before { transform: scaleX(1); }
 
   .feature-icon {
+    display: inline;
     font-family: 'Orbitron', monospace;
     font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     color: var(--electric);
-    margin-bottom: 1rem;
+    margin: 0;
   }
 
   .feature-title {
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--white);
-    margin-bottom: 0.75rem;
+    display: inline;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-left: 0.5rem;
   }
 
-  .feature-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; }
 
 
-
-  .achievements-section { background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(30,80,185,0.35) 0%, transparent 65%), var(--dark-blue); max-width: 100%; padding: 6rem 3rem; }
+  .achievements-section { background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(94,165,219,0.16) 0%, transparent 65%), #6d93bb; max-width: 100%; padding: 6rem 3rem; }
   .achievements-inner { max-width: 1200px; margin: 0 auto; }
 
   .achievements-list {
@@ -538,14 +520,14 @@
     grid-template-columns: 140px 1fr auto;
     align-items: center;
     gap: 2rem;
-    background: var(--navy);
+    background: #6d93bb;
     padding: 1.5rem 2rem;
     border-radius: 12px;
-    border: 1px solid rgba(0,212,200,0.08);
+    border: 1px solid rgba(0,169,192,0.18);
     transition: background 0.3s, border-color 0.3s, transform 0.3s;
   }
 
-  .achievement-row:hover { background: var(--dark-blue); border-color: rgba(0,212,200,0.3); transform: translateX(6px); }
+  .achievement-row:hover { background: var(--dark-blue); border-color: rgba(0,169,192,0.30); transform: none; }
 
   .achievement-year {
     font-family: 'Orbitron', monospace;
@@ -575,7 +557,7 @@
 
   /* ── SPONSORSHIP SECTION ── */
   .sponsor-section {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.55) 0%, transparent 65%), var(--navy);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(94,165,219,0.14) 0%, transparent 65%), #0d2238;
     max-width: 100%;
     padding: 6rem 3rem;
     position: relative;
@@ -587,8 +569,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,212,200,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,200,0.06) 1px, transparent 1px);
+      linear-gradient(rgba(94,165,219,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(94,165,219,0.06) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
   }
@@ -604,13 +586,13 @@
   }
 
   .sponsor-intro-text p {
-    color: var(--muted);
+    color: #d2e1ee;
     line-height: 1.8;
     font-size: 1rem;
     margin-bottom: 1.2rem;
   }
 
-  .sponsor-intro-text p strong { color: var(--white); font-weight: 500; }
+  .sponsor-intro-text p strong { color: #f1f7fc; font-weight: 500; }
 
   .sponsor-why-grid {
     display: grid;
@@ -619,14 +601,14 @@
   }
 
   .sponsor-why-cell {
-    background: var(--dark-blue);
+    background: #17344f;
     padding: 1.5rem;
     border-radius: 14px;
-    border: 1px solid rgba(0,212,200,0.1);
+    border: 1px solid rgba(127,156,109,0.1);
     transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
 
-  .sponsor-why-cell:hover { background: #172e7a; border-color: rgba(0,212,200,0.35); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,212,200,0.09); }
+  .sponsor-why-cell:hover { background: #1c3d5d; border-color: rgba(94,165,219,0.28); transform: none; box-shadow: none; }
 
   .sponsor-why-icon {
     font-family: 'Orbitron', monospace;
@@ -640,11 +622,11 @@
     font-family: 'Orbitron', monospace;
     font-weight: 700;
     font-size: 0.85rem;
-    color: var(--white);
+    color: #f1f7fc;
     margin-bottom: 0.4rem;
   }
 
-  .sponsor-why-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+  .sponsor-why-desc { font-size: 0.8rem; color: #d2e1ee; line-height: 1.6; }
 
   /* TIERS */
   .tiers-heading {
@@ -652,7 +634,7 @@
     font-size: 0.65rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--aqua);
+    color: #9fd0ff;
     margin-bottom: 2rem;
     text-align: center;
   }
@@ -665,19 +647,19 @@
   }
 
   .tier-card {
-    background: var(--dark-blue);
-    border: 1px solid rgba(0,212,200,0.12);
+    background: #17344f;
+    border: 1px solid rgba(127,156,109,0.12);
     overflow: hidden;
     border-radius: 18px;
     position: relative;
     transition: border-color 0.3s, transform 0.35s, box-shadow 0.35s;
   }
 
-  .tier-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(0,212,200,0.13); border-color: rgba(0,212,200,0.4); }
+  .tier-card:hover { transform: none; box-shadow: none; border-color: rgba(0,169,192,0.35); }
   .tier-card.tier-gold     { border-color: rgba(200,169,81,0.4); }
-  .tier-card.tier-gold:hover     { box-shadow: 0 20px 48px rgba(200,169,81,0.15); border-color: rgba(200,169,81,0.7); }
+  .tier-card.tier-gold:hover     { box-shadow: none; border-color: rgba(200,169,81,0.65); }
 .tier-card.tier-diamond  { border-color: rgba(180,130,255,0.45); }
-  .tier-card.tier-diamond:hover  { box-shadow: 0 20px 52px rgba(180,130,255,0.2); border-color: rgba(180,130,255,0.8); }
+  .tier-card.tier-diamond:hover  { box-shadow: none; border-color: rgba(180,130,255,0.7); }
 
   .tier-header {
     padding: 1.25rem 1.5rem;
@@ -725,7 +707,7 @@
     font-family: 'Orbitron', monospace;
     font-weight: 900;
     font-size: 2rem;
-    color: var(--aqua);
+    color: #9fd0ff;
     margin-bottom: 1.5rem;
     display: block;
   }
@@ -736,12 +718,12 @@
     gap: 0.75rem;
     margin-bottom: 0.75rem;
     font-size: 0.875rem;
-    color: var(--muted);
+    color: #d2e1ee;
     line-height: 1.4;
   }
 
   .tier-perk-check {
-    color: var(--aqua);
+    color: #9fd0ff;
     font-size: 0.7rem;
     font-family: 'Orbitron', monospace;
     margin-top: 2px;
@@ -751,8 +733,8 @@
 
   /* SPONSOR CTA BAR */
   .sponsor-cta {
-    background: var(--dark-blue);
-    border: 1px solid rgba(0,212,200,0.2);
+    background: #17344f;
+    border: 1px solid rgba(94,165,219,0.22);
     padding: 2.5rem 3rem;
     border-radius: 18px;
     display: flex;
@@ -765,11 +747,11 @@
     font-family: 'Orbitron', monospace;
     font-weight: 700;
     font-size: 1.1rem;
-    color: var(--white);
+    color: #f1f7fc;
     margin-bottom: 0.4rem;
   }
 
-  .sponsor-cta-text p { font-size: 0.875rem; color: var(--muted); }
+  .sponsor-cta-text p { font-size: 0.875rem; color: #d2e1ee; }
 
   .sponsor-cta-actions { display: flex; gap: 1rem; flex-shrink: 0; }
 
@@ -791,7 +773,7 @@
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   }
 
-  .btn-primary:hover { background: var(--aqua-dim); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.3); }
+  .btn-primary:hover { background: var(--aqua-dim); transform: none; box-shadow: none; }
 
   .btn-outline {
     padding: 0.85rem 2rem;
@@ -811,7 +793,7 @@
     transition: background 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
   }
 
-  .btn-outline:hover { background: var(--aqua); color: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.25); }
+  .btn-outline:hover { background: var(--aqua); color: var(--navy); transform: none; box-shadow: none; }
 
   .contact-grid {
     display: grid;
@@ -884,10 +866,10 @@
     align-self: flex-start;
   }
 
-  .submit-btn:hover { background: var(--aqua-dim); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,212,200,0.28); }
+  .submit-btn:hover { background: var(--aqua-dim); transform: none; box-shadow: none; }
 
   footer {
-    background: #060E2E;
+    background: #0b2239;
     border-top: 1px solid rgba(0,212,200,0.1);
     padding: 2.5rem 3rem;
     display: flex;
@@ -915,7 +897,7 @@
     .nav-panel { display: flex; }
     section { padding: 4rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .robot-features { grid-template-columns: 1fr 1fr; }
+    .robot-features { grid-template-columns: 1fr; }
     .robot-showcase { grid-template-columns: 1fr; }
     .team-grid { grid-template-columns: 1fr 1fr; }
     .achievement-row { grid-template-columns: 100px 1fr; }
@@ -949,7 +931,7 @@
     position: relative;
     border-radius: 18px;
     overflow: hidden;
-    border: 1px solid rgba(0,212,200,0.2);
+    border: 1px solid rgba(127,156,109,0.2);
     background: var(--navy);
     aspect-ratio: 4/3;
     display: flex;
@@ -965,7 +947,7 @@
     transition: transform 0.5s ease;
   }
 
-  .robot-img-wrap:hover img { transform: scale(1.04); }
+  .robot-img-wrap:hover img { transform: none; }
 
   .robot-img-placeholder {
     display: flex;
@@ -973,7 +955,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    color: rgba(0,212,200,0.35);
+    color: rgba(0,119,168,0.35);
     font-family: 'Orbitron', monospace;
     font-size: 0.7rem;
     letter-spacing: 0.2em;
@@ -985,13 +967,13 @@
 
   .robot-img-placeholder svg {
     width: 56px; height: 56px;
-    stroke: rgba(0,212,200,0.3);
+    stroke: rgba(0,169,192,0.30);
   }
 
   .robot-img-corner {
     position: absolute;
     width: 18px; height: 18px;
-    border-color: var(--aqua);
+    border-color: rgba(0,169,192,0.75);
     border-style: solid;
     opacity: 0.6;
   }
@@ -1004,12 +986,12 @@
   .robot-img-caption {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(9,24,64,0.92));
+    background: linear-gradient(transparent, rgba(16,42,67,0.92));
     padding: 1.5rem 1rem 0.9rem;
     font-family: 'Orbitron', monospace;
     font-size: 0.65rem;
     letter-spacing: 0.2em;
-    color: var(--aqua);
+    color: var(--electric);
     text-align: center;
     text-transform: uppercase;
   }
@@ -1024,7 +1006,7 @@
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid rgba(0,212,200,0.15);
+    border: 1px solid rgba(127,156,109,0.15);
     background: var(--navy);
     aspect-ratio: 1;
     display: flex;
@@ -1034,7 +1016,7 @@
     cursor: pointer;
   }
 
-  .robot-gallery-thumb:hover { border-color: rgba(0,212,200,0.5); transform: translateY(-3px); }
+  .robot-gallery-thumb:hover { border-color: rgba(0,169,192,0.45); transform: none; }
 
   .robot-gallery-thumb img {
     width: 100%; height: 100%;
@@ -1059,14 +1041,14 @@
 
   .member-card {
     background: var(--dark-blue);
-    border: 1px solid rgba(0,212,200,0.1);
+    border: 1px solid rgba(127,156,109,0.1);
     border-radius: 16px;
     overflow: hidden;
     text-align: center;
     transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
 
-  .member-card:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,212,200,0.1); }
+  .member-card:hover { border-color: rgba(0,169,192,0.35); transform: none; box-shadow: 0 14px 36px rgba(0,169,192,0.08); }
 
   .member-photo-wrap {
     width: 100%;
@@ -1086,7 +1068,7 @@
     transition: transform 0.4s ease;
   }
 
-  .member-card:hover .member-photo-wrap img { transform: scale(1.06); }
+  .member-card:hover .member-photo-wrap img { transform: none; }
 
   .member-photo-placeholder {
     display: flex;
@@ -1124,7 +1106,7 @@
     font-size: 0.8rem;
     color: var(--muted);
     line-height: 1.6;
-    border-top: 1px solid rgba(0,212,200,0.1);
+    border-top: 1px solid rgba(127,156,109,0.1);
     padding-top: 0.75rem;
     text-align: left;
   }
@@ -1144,16 +1126,16 @@
     position: absolute;
     top: 0; left: -80%;
     width: 50%; height: 100%;
-    background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.35) 50%, transparent 80%);
+    background: linear-gradient(120deg, transparent 20%, rgba(232,242,250,0.35) 50%, transparent 80%);
     pointer-events: none;
     opacity: 0;
   }
   .nav-logo:hover, .footer-logo:hover {
-    color: #fff;
-    filter: drop-shadow(0 0 10px rgba(0,212,200,0.8));
+    color: #f6fafc;
+    filter: none;
   }
   .nav-logo:hover::before, .footer-logo:hover::before {
-    animation: heroShine 0.65s ease forwards;
+    opacity: 0;
   }
 
   /* Hero tag: continuous border pulse */
@@ -1161,7 +1143,7 @@
     0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,200,0); border-color: rgba(0,212,200,0.4); }
     50%       { box-shadow: 0 0 14px 3px rgba(0,212,200,0.22); border-color: rgba(0,212,200,0.9); }
   }
-  .hero-tag { animation: tagPulse 3.5s ease-in-out infinite; }
+  .hero-tag { animation: none; }
 
   /* Section rule: slide-in entrance on scroll */
   @keyframes ruleExpand {
@@ -1174,21 +1156,21 @@
   /* Stat numbers: glow + scale when parent card is hovered */
   .stat-number { transition: filter 0.3s ease, transform 0.3s ease; }
   .stat-cell:hover .stat-number {
-    filter: drop-shadow(0 0 10px rgba(0,212,200,0.75));
-    transform: scale(1.1);
+    filter: none;
+    transform: none;
   }
 
   /* Achievement badges: coloured glow on row hover */
   .achievement-badge { transition: box-shadow 0.3s ease, filter 0.3s ease; }
-  .achievement-row:hover .achievement-badge          { box-shadow: 0 0 12px rgba(0,212,200,0.45);  filter: brightness(1.3); }
-  .achievement-row:hover .achievement-badge.badge-gold   { box-shadow: 0 0 14px rgba(232,185,35,0.55); }
-  .achievement-row:hover .achievement-badge.badge-silver { box-shadow: 0 0 14px rgba(168,181,192,0.55); }
+  .achievement-row:hover .achievement-badge          { box-shadow: none;  filter: none; }
+  .achievement-row:hover .achievement-badge.badge-gold   { box-shadow: none; }
+  .achievement-row:hover .achievement-badge.badge-silver { box-shadow: none; }
 
   /* Tier prices: pop + glow when card is hovered */
   .tier-price { transition: filter 0.35s ease, transform 0.35s ease; display: block; }
   .tier-card:hover .tier-price {
-    filter: drop-shadow(0 0 10px rgba(0,212,200,0.65));
-    transform: scale(1.08);
+    filter: none;
+    transform: none;
   }
 
   /* Section labels: letter-spacing expand + glow on hover */
@@ -1197,25 +1179,25 @@
     transition: letter-spacing 0.35s ease, filter 0.35s ease;
   }
   .section-label:hover {
-    letter-spacing: 0.42em;
-    filter: drop-shadow(0 0 6px rgba(0,212,200,0.75));
+    letter-spacing: 0.3em;
+    filter: none;
   }
 
   /* Feature icon labels: colour flash on card hover */
   .feature-icon { transition: color 0.3s ease, letter-spacing 0.3s ease; }
-  .feature-card:hover .feature-icon { color: var(--aqua); letter-spacing: 0.26em; }
+  .feature-card:hover .feature-icon { color: var(--electric); letter-spacing: 0.2em; }
 
   /* Scanline dot: continuous colour pulse */
   @keyframes dotPulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,200,0.6); background: var(--aqua); }
-    50%       { box-shadow: 0 0 0 6px rgba(0,212,200,0); background: #fff; }
+    50%       { box-shadow: 0 0 0 6px rgba(0,212,200,0); background: #d9e9f6; }
   }
   .scanline-dot { animation: dotPulse 2.5s ease-in-out infinite; }
 
   /* ── FORM TABS (combined contact/sponsor) ── */
   .form-tabs {
     display: flex;
-    border-bottom: 1px solid rgba(0,212,200,0.15);
+    border-bottom: 1px solid rgba(127,156,109,0.15);
     margin-bottom: 1.5rem;
   }
 
@@ -1360,7 +1342,7 @@
     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   }
 
-  .sponsor-submit-btn:hover { background: var(--aqua-dim); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,212,200,0.3); }
+  .sponsor-submit-btn:hover { background: var(--aqua-dim); transform: none; box-shadow: none; }
 
   .form-note {
     font-size: 0.75rem;
@@ -1426,7 +1408,7 @@
     transition: border-color 0.3s, transform 0.3s;
   }
 
-  .sponsor-slot:hover { border-color: rgba(0,212,200,0.45); transform: translateY(-4px); }
+  .sponsor-slot:hover { border-color: rgba(0,169,192,0.35); transform: none; }
   .sponsor-slot img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
   .sponsor-slot-empty {
@@ -1499,7 +1481,7 @@
 
   /* ── SEASON TIMELINE ── */
   .timeline-section {
-    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(22,72,168,0.45) 0%, transparent 65%), var(--navy);
+    background: radial-gradient(ellipse 80% 65% at 50% 40%, rgba(94,165,219,0.12) 0%, transparent 65%), #0f2740;
     max-width: 100%;
     padding: 6rem 3rem;
   }
@@ -1518,7 +1500,7 @@
     position: absolute;
     left: 7px; top: 6px; bottom: 6px;
     width: 2px;
-    background: linear-gradient(180deg, var(--aqua), rgba(61,128,255,0.25));
+    background: linear-gradient(180deg, var(--electric), rgba(94,165,219,0.25));
   }
 
   .timeline-item {
@@ -1536,7 +1518,7 @@
     border-radius: 50%;
     background: var(--navy);
     border: 2px solid var(--aqua);
-    box-shadow: 0 0 12px rgba(0,212,200,0.5);
+    box-shadow: 0 0 12px rgba(94,165,219,0.22);
   }
 
   .timeline-item.upcoming .timeline-node {
@@ -1557,11 +1539,11 @@
     font-family: 'Orbitron', monospace;
     font-weight: 700;
     font-size: 1rem;
-    color: var(--white);
+    color: #f1f7fc;
     margin-bottom: 0.4rem;
   }
 
-  .timeline-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; max-width: 60ch; }
+  .timeline-desc { font-size: 0.875rem; color: #d2e1ee; line-height: 1.7; max-width: 60ch; }
 
   .timeline-flag {
     display: inline-block;
@@ -1571,8 +1553,8 @@
     text-transform: uppercase;
     padding: 0.2rem 0.7rem;
     border-radius: 999px;
-    border: 1px solid var(--muted);
-    color: var(--muted);
+    border: 1px solid #a9c3d8;
+    color: #a9c3d8;
     margin-left: 0.6rem;
     vertical-align: 2px;
   }
@@ -1581,8 +1563,8 @@
 
   /* ── FOOTER ── */
   footer {
-    background: #060E2E;
-    border-top: 1px solid rgba(0,212,200,0.1);
+    background: #0b2239;
+    border-top: 1px solid rgba(127,156,109,0.1);
     padding: 3rem;
     display: grid;
     grid-template-columns: 1fr auto auto;
@@ -1615,7 +1597,7 @@
   .footer-socials a {
     width: 36px; height: 36px;
     border-radius: 9px;
-    border: 1px solid rgba(0,212,200,0.25);
+    border: 1px solid rgba(127,156,109,0.25);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1623,7 +1605,7 @@
     transition: color 0.25s, border-color 0.25s, transform 0.25s;
   }
 
-  .footer-socials a:hover { color: var(--aqua); border-color: var(--aqua); transform: translateY(-3px); }
+  .footer-socials a:hover { color: var(--aqua); border-color: var(--aqua); transform: none; }
   .footer-socials svg { width: 17px; height: 17px; }
 
   .footer-bottom {
@@ -1639,6 +1621,63 @@
   @media (max-width: 900px) {
     footer { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.5rem; text-align: left; }
     .footer-bottom { flex-direction: column; text-align: left; }
+  }
+
+  /* ── ROOKIE-SEASON ELEMENTS ── */
+  .hero-rookie {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: -1.5rem auto 2.5rem;
+    max-width: 42ch;
+  }
+
+  .hero-rookie strong { color: var(--aqua); font-weight: 600; }
+
+  /* Callout explaining the team's first-year status */
+  .rookie-note {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background: var(--dark-blue);
+    border: 1px solid rgba(0,212,200,0.25);
+    border-left: 3px solid var(--aqua);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 2rem;
+  }
+
+  .rookie-note-icon {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--navy);
+    background: var(--aqua);
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .rookie-note p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .rookie-note p strong { color: var(--white); font-weight: 500; }
+
+  /* Goal badges reuse .achievement-badge, tinted as forward-looking */
+  .badge-goal     { border-color: var(--electric); color: var(--electric); }
+  .badge-stretch  { border-color: #C87EFF; color: #C87EFF; }
+
+  .achievement-row:hover .achievement-badge.badge-goal    { box-shadow: none; }
+  .achievement-row:hover .achievement-badge.badge-stretch { box-shadow: none; }
+
+  @media (max-width: 600px) {
+    .rookie-note { flex-direction: column; gap: 0.9rem; }
   }
 
   /* ── REDUCED MOTION ──
@@ -1670,6 +1709,30 @@
 
     html.js .reveal { opacity: 1; transform: none; }
   }
+
+  /* Dark blue fallback palette for legibility */
+  nav, .nav-panel { background: rgba(11, 31, 51, 0.96); }
+  .nav-logo { color: #8bc1f2; }
+  .nav-logo-sub, .nav-links a, .nav-panel a { color: #d3e4f1; }
+  .nav-links a:hover, .nav-links a.active, .nav-panel a:hover, .nav-panel a.active { color: #8bc1f2; }
+
+  .achievement-row { background: #17344f; }
+  .achievement-row:hover { background: #1c3d5d; }
+  .stat-cell, .sponsor-why-cell, .tier-card, .sponsor-cta, .member-card,
+  .rookie-note, .form-group input, .form-group textarea, .form-group select,
+  .form-group select option { background-color: #17344f; }
+
+  .sponsor-form, footer { background: #0b1f33; }
+  .sponsor-form .form-note, footer .footer-note, footer .footer-links a,
+  footer .footer-socials a, footer .footer-bottom { color: #c8dce8; }
+  .sponsor-form label { color: #8bc1f2 !important; }
+  .sponsor-form .form-group input, .sponsor-form .form-group textarea,
+  .sponsor-form .form-group select { color: #f1f7fc; }
+
+  .robot-img-wrap, .robot-gallery-thumb, .member-photo-wrap, .sponsor-logo-placeholder {
+    background: #0b1f33;
+  }
+  .robot-img-placeholder, .member-avatar { color: #8bc1f2; }
 </style>
 </head>
 <body>
@@ -1683,7 +1746,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#robot">Robot</a></li>
     <li><a href="#team">Team</a></li>
-    <li><a href="#achievements">Results</a></li>
+    <li><a href="#achievements">Goals</a></li>
     <li><a href="#season">Season</a></li>
     <li><a href="#sponsors">Sponsors</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1697,7 +1760,7 @@
     <a href="#about">About</a>
     <a href="#robot">Robot</a>
     <a href="#team">Team</a>
-    <a href="#achievements">Results</a>
+    <a href="#achievements">Goals</a>
     <a href="#season">Season</a>
     <a href="#sponsors">Sponsors</a>
     <a href="#contact">Contact</a>
@@ -1725,13 +1788,14 @@
     <circle cx="50" cy="150" r="5" fill="#2979FF"/>
   </svg>
   <div class="hero-content">
-    <div class="hero-tag">VEX Robotics Competition</div>
+    <div class="hero-tag">Rookie Season · VEX Robotics Competition</div>
     <h1 class="hero-number" aria-label="2020V — Twenty-Twenty Vision">2020V</h1>
     <div style="font-family:'Inter',sans-serif;font-size:0.8rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);margin-top:0.75rem;">Twenty-Twenty Vision</div>
     <div class="scanline"><div class="scanline-dot"></div></div>
     <div class="hero-tagline">Precision. <span>Power.</span> Progress.</div>
+    <p class="hero-rookie">This is our <strong>first year</strong> as a team — season one starts here.</p>
     <a class="hero-cta" href="#about">
-      Explore The Team
+      Follow Our Build
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M3 8h10M9 4l4 4-4 4"/>
       </svg>
@@ -1742,32 +1806,37 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="section-label">// 01 - About</div>
-  <h2 class="section-title">Built to Compete.</h2>
+  <h2 class="section-title">Year One Starts Now.</h2>
   <div class="section-rule"></div>
   <div class="about-grid">
     <div class="about-text">
-      <p>Team <strong>2020V - Twenty-Twenty Vision</strong> is a youth-led, competitive VEX Robotics team aiming to compete at the <strong>VEX Robotics World Championship in April 2027</strong>. Our team is full of dedicated, relentless, passionate individuals with years of experience in robotics. We're not just building robots - we're learning, innovating, and solving problems under pressure.</p>
-      <p>Our team combines mechanical design, electronics, and software to field a machine that's fast, reliable, and built to win.</p>
-      <p>From our first competition scrimmage to qualification events and regionals, our team gives everything a <strong>20/20 effort.</strong></p>
+      <p>Team <strong>2020V - Twenty-Twenty Vision</strong> is a brand-new, youth-led VEX Robotics Competition team based in Markham, Ontario. <strong>This is our first year as a team</strong> - we formed from scratch, and everything you see here we are building for the very first time.</p>
+      <p>Being new means we start with no robot, no results, and no shortcuts. What we do have is a group that shows up: eight students splitting the work across mechanical design, electronics, programming, and documentation, learning each subsystem by actually building it.</p>
+      <p>Our long-term target is the <strong>VEX Robotics World Championship</strong>. We know rookie teams rarely get there on the first try - so this season is about building a machine we can trust, learning the game properly, and setting a foundation the team can grow on. Every step of it gets a <strong>20/20 effort.</strong></p>
     </div>
     <div class="stats-grid">
       <div class="stat-cell">
-        <span class="stat-number">3+</span>
-        <div class="stat-label">Seasons Competing</div>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-number">15+</span>
-        <div class="stat-label">Tournaments Entered</div>
+        <span class="stat-number">1st</span>
+        <div class="stat-label">Season Competing</div>
       </div>
       <div class="stat-cell">
         <span class="stat-number">8</span>
         <div class="stat-label">Team Members</div>
       </div>
       <div class="stat-cell">
+        <span class="stat-number">0</span>
+        <div class="stat-label">Shortcuts Taken</div>
+      </div>
+      <div class="stat-cell">
         <span class="stat-number">∞</span>
-        <div class="stat-label">Hours Logged</div>
+        <div class="stat-label">Hours Ahead</div>
       </div>
     </div>
+  </div>
+
+  <div class="rookie-note">
+    <span class="rookie-note-icon">Rookie Year</span>
+    <p><strong>Why we're telling you this up front.</strong> Plenty of teams have a decade of trophies behind them. We don't - and we'd rather say so than pad a page with results we haven't earned. If you're a sponsor, a mentor, or another team reading this: what you're backing is a group at the very start of the curve, documenting the whole climb in public. Check back through the season and you'll be able to see exactly how far we got.</p>
   </div>
 </section>
 
@@ -1775,7 +1844,7 @@
 <div class="robot-section" id="robot">
   <div class="robot-inner">
     <div class="section-label">// 02 - The Machine</div>
-    <h2 class="section-title">This Season's Robot.</h2>
+    <h2 class="section-title">Our First Robot.</h2>
     <div class="section-rule"></div>
     <!-- Robot image showcase -->
     <div class="robot-showcase">
@@ -1792,92 +1861,34 @@
         <div class="robot-img-corner tr"></div>
         <div class="robot-img-corner bl"></div>
         <div class="robot-img-corner br"></div>
-        <div class="robot-img-caption">2020V - 2025/26 Competition Robot</div>
       </div>
 
       <div class="robot-gallery">
         <!-- Add up to 4 additional robot photos below - replace src="" with your image paths -->
         <div class="robot-gallery-thumb">
           <img src="" alt="Robot detail 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
-          <div class="robot-img-placeholder">
+          <div class="robot-img-placeholder" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            Drivetrain
           </div>
         </div>
         <div class="robot-gallery-thumb">
           <img src="" alt="Robot detail 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
-          <div class="robot-img-placeholder">
+          <div class="robot-img-placeholder" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            Intake
           </div>
         </div>
         <div class="robot-gallery-thumb">
           <img src="" alt="Robot detail 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
-          <div class="robot-img-placeholder">
+          <div class="robot-img-placeholder" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            Scoring
           </div>
         </div>
         <div class="robot-gallery-thumb">
           <img src="" alt="Robot detail 4" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
-          <div class="robot-img-placeholder">
+          <div class="robot-img-placeholder" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            Auton
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="robot-features" style="margin-top:2rem;">
-      <div class="feature-card">
-        <div class="feature-icon">DRIVETRAIN</div>
-        <div class="feature-title">6-Motor Tank Drive</div>
-        <p class="feature-desc">High-torque 6-motor drivetrain with 4" omni wheels optimized for pushing power and field traversal speed.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">INTAKE</div>
-        <div class="feature-title">Flex Wheel Intake</div>
-        <p class="feature-desc">Rubber flex wheels run at maximum RPM for aggressive game object collection. Zero jams under match pressure.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">SCORING</div>
-        <div class="feature-title">Catapult Launch System</div>
-        <p class="feature-desc">Slip-gear catapult tuned for match load shots with a repeatable flight arc. Minimal charge time between shots.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">AUTONOMOUS</div>
-        <div class="feature-title">PID + Odometry</div>
-        <p class="feature-desc">Closed-loop PID control with odometry tracking for precise positioning. Multiple auton routines selectable pre-match.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">PNEUMATICS</div>
-        <div class="feature-title">Endgame Deployment</div>
-        <p class="feature-desc">Pneumatic-actuated endgame mechanism fires in under 0.3 seconds. Pressure tuned for reliability across repeated activations.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">ELECTRONICS</div>
-        <div class="feature-title">Brain + V5 Smart Motors</div>
-        <p class="feature-desc">Full V5 ecosystem with real-time telemetry monitoring. Rotation sensors on all critical subsystems for data-driven tuning.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">STRUCTURE</div>
-        <div class="feature-title">Aluminium C-Channel Frame</div>
-        <p class="feature-desc">Full aluminium C-channel construction keeps weight low while maintaining rigidity. Every joint double-braced against match impacts.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">SENSORS</div>
-        <div class="feature-title">Inertial + Vision Sensor</div>
-        <p class="feature-desc">IMU-assisted turning for consistent autonomous heading. Vision sensor used for target tracking and game object detection.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">NOTEBOOK</div>
-        <div class="feature-title">Engineering Documentation</div>
-        <p class="feature-desc">Full engineering notebook documenting every design decision, test result, and iteration - built for Excellence Award judging.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">STRATEGY</div>
-        <div class="feature-title">Match Scouting System</div>
-        <p class="feature-desc">Custom scouting spreadsheet tracking opponent cycles, autonomous consistency, and endgame success rates across all events.</p>
       </div>
     </div>
 
@@ -1916,128 +1927,162 @@
 <!-- TEAM -->
 <section id="team">
   <div class="section-label">// 03 - Roster</div>
-  <h2 class="section-title">The People Behind the Robot.</h2>
+  <h2 class="section-title">Meet the Founding Members.</h2>
   <div class="section-rule"></div>
+  <p style="color:var(--muted);line-height:1.8;max-width:70ch;margin-bottom:-1rem;">The people below are the founding members of 2020V, sorted alphabetically by last name. Each card shows the role they took on in our first season.</p>
   <div class="team-grid">
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <!-- Replace src="" with your photo path e.g. src="photos/driver.jpg" -->
-        <img src="" alt="Driver" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">DR</div>
+          <div class="member-avatar">AS</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Lead Driver</div>
-        <div class="member-grade">Head of Strategy</div>
-        <p class="member-bio">Add a short bio here - your role on the team, what you handle, and what drives you to compete.</p>
+        <div class="member-name">Aaron Sui</div>
+        <div class="member-role">Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Helps with mechanical assembly and build support across the season.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Mechanical Lead" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">ME</div>
+          <div class="member-avatar">AW</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Build Captain</div>
-        <div class="member-grade">Robot Design & CAD</div>
-        <p class="member-bio">Add a short bio here - your role on the team, what you build, and what engineering challenges you enjoy most.</p>
+        <div class="member-name">Alexander Wang</div>
+        <div class="member-role">Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Works on mechanical fit, structure, and keeping the robot build moving forward.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Software Lead" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">SW</div>
+          <div class="member-avatar">AX</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Code & Auton</div>
-        <div class="member-grade">PID / Odometry Dev</div>
-        <p class="member-bio">Add a short bio here - your role, your programming focus, and how you approach autonomous routines.</p>
+        <div class="member-name">Anson Xiao</div>
+        <div class="member-role">Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Supports the mechanical side of the build and helps turn ideas into parts that work.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Notebooker" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">NB</div>
+          <div class="member-avatar">AX</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Documentation</div>
-        <div class="member-grade">Engineering Notebook</div>
-        <p class="member-bio">Add a short bio here - your role, what you document, and why the engineering process matters to you.</p>
+        <div class="member-name">Ann Xue</div>
+        <div class="member-role">Mechanical & Inventory</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Keeps track of parts, hardware, and the details that keep the build organized.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Member 5" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">M5</div>
+          <div class="member-avatar">CS</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Your Role</div>
-        <div class="member-grade">Your Specialty</div>
-        <p class="member-bio">Add a short bio here - your role on the team and what you contribute.</p>
+        <div class="member-name">Charlie Shao</div>
+        <div class="member-role">Lead Programmer</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Leads software work, autonomous testing, and the code that drives the robot.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Member 6" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">M6</div>
+          <div class="member-avatar">HZ</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Your Role</div>
-        <div class="member-grade">Your Specialty</div>
-        <p class="member-bio">Add a short bio here - your role on the team and what you contribute.</p>
+        <div class="member-name">Helios Zhang</div>
+        <div class="member-role">Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Contributes to mechanical work and helps solve build problems as they show up.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Member 7" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">M7</div>
+          <div class="member-avatar">JC</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Your Role</div>
-        <div class="member-grade">Your Specialty</div>
-        <p class="member-bio">Add a short bio here - your role on the team and what you contribute.</p>
+        <div class="member-name">Justin Cao</div>
+        <div class="member-role">Lead Notebooker</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Documents the season and keeps the engineering notebook organized from day one.</p>
       </div>
     </div>
 
     <div class="member-card">
       <div class="member-photo-wrap">
-        <img src="" alt="Member 8" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="display:none;">
         <div class="member-photo-placeholder">
-          <div class="member-avatar">M8</div>
+          <div class="member-avatar">OX</div>
         </div>
       </div>
       <div class="member-info">
-        <div class="member-name">Your Name Here</div>
-        <div class="member-role">Your Role</div>
-        <div class="member-grade">Your Specialty</div>
-        <p class="member-bio">Add a short bio here - your role on the team and what you contribute.</p>
+        <div class="member-name">Owen Xie</div>
+        <div class="member-role">Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Works on mechanical assembly and helps test and refine build ideas.</p>
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-photo-wrap">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">RN</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Ryan Ni</div>
+        <div class="member-role">Designer & Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Bridges design and build work, helping shape the robot and how it comes together.</p>
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-photo-wrap">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">XS</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Xuliang Sun</div>
+        <div class="member-role">Designer, Mechanical, Lead Drive Team</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Works across design, mechanical, and driving so the robot and team stay coordinated.</p>
+      </div>
+    </div>
+
+    <div class="member-card">
+      <div class="member-photo-wrap">
+        <div class="member-photo-placeholder">
+          <div class="member-avatar">ZL</div>
+        </div>
+      </div>
+      <div class="member-info">
+        <div class="member-name">Zachary Liu</div>
+        <div class="member-role">Mechanical</div>
+        <div class="member-grade">Founding Member</div>
+        <p class="member-bio">Supports the mechanical side of the build and helps keep the robot moving forward.</p>
       </div>
     </div>
 
@@ -2047,49 +2092,53 @@
 <!-- ACHIEVEMENTS -->
 <div class="achievements-section" id="achievements">
   <div class="achievements-inner">
-    <div class="section-label">// 04 - Results</div>
-    <h2 class="section-title">Competition Record.</h2>
+    <div class="section-label">// 04 - Goals</div>
+    <h2 class="section-title">What We're Aiming At.</h2>
     <div class="section-rule"></div>
+    <p style="color:var(--muted);line-height:1.8;max-width:70ch;">We have no competition record yet - this is our first season, so there's nothing here to report and we're not going to invent any. Instead, here's exactly what we're measuring ourselves against this year. We'll replace this section with real results as we earn them.</p>
+
+    <!-- Once you have actual results, swap these goal rows for achievement rows:
+         use badge-gold / badge-silver and a real event name + year. -->
     <div class="achievements-list">
       <div class="achievement-row">
-        <div class="achievement-year">2024 – 25</div>
+        <div class="achievement-year">Goal 01</div>
         <div>
-          <div class="achievement-name">Tournament Champions</div>
-          <div class="achievement-event">Regional Qualifier - Alliance Captain</div>
+          <div class="achievement-name">Compete in our first official tournament</div>
+          <div class="achievement-event">A complete, inspection-passing robot on the field</div>
         </div>
-        <div class="achievement-badge badge-gold">Champion</div>
+        <div class="achievement-badge badge-goal">Core</div>
       </div>
       <div class="achievement-row">
-        <div class="achievement-year">2024 – 25</div>
+        <div class="achievement-year">Goal 02</div>
         <div>
-          <div class="achievement-name">Excellence Award</div>
-          <div class="achievement-event">Signature Event - Engineering Notebook</div>
+          <div class="achievement-name">Score a working autonomous routine</div>
+          <div class="achievement-event">Consistent points without driver input</div>
         </div>
-        <div class="achievement-badge badge-gold">Excellence</div>
+        <div class="achievement-badge badge-goal">Core</div>
       </div>
       <div class="achievement-row">
-        <div class="achievement-year">2024 – 25</div>
+        <div class="achievement-year">Goal 03</div>
         <div>
-          <div class="achievement-name">Skills 3rd Place</div>
-          <div class="achievement-event">State Championship - Driver + Autonomous</div>
+          <div class="achievement-name">Submit a complete engineering notebook</div>
+          <div class="achievement-event">Documented from the first day of the season</div>
         </div>
-        <div class="achievement-badge badge-silver">Skills</div>
+        <div class="achievement-badge badge-goal">Core</div>
       </div>
       <div class="achievement-row">
-        <div class="achievement-year">2023 – 24</div>
+        <div class="achievement-year">Goal 04</div>
         <div>
-          <div class="achievement-name">Finalist Alliance</div>
-          <div class="achievement-event">Invitational Tournament</div>
+          <div class="achievement-name">Get picked for an elimination alliance</div>
+          <div class="achievement-event">Be a robot other teams want to play with</div>
         </div>
-        <div class="achievement-badge badge-silver">Finalist</div>
+        <div class="achievement-badge badge-stretch">Stretch</div>
       </div>
       <div class="achievement-row">
-        <div class="achievement-year">2023 – 24</div>
+        <div class="achievement-year">Goal 05</div>
         <div>
-          <div class="achievement-name">Design Award</div>
-          <div class="achievement-event">Regional Scrimmage</div>
+          <div class="achievement-name">Qualify for the Provincial Championship</div>
+          <div class="achievement-event">The realistic first step toward Worlds</div>
         </div>
-        <div class="achievement-badge">Award</div>
+        <div class="achievement-badge badge-stretch">Stretch</div>
       </div>
     </div>
   </div>
@@ -2103,43 +2152,51 @@
 <div class="timeline-section" id="season">
   <div class="timeline-inner">
     <div class="section-label">// 05 - Season</div>
-    <h2 class="section-title">The Road to Worlds.</h2>
+    <h2 class="section-title">Our First Season, Start to Finish.</h2>
     <div class="section-rule"></div>
+    <p style="color:var(--muted);line-height:1.8;max-width:70ch;">Everything below is year one. We'll keep this updated as we go, so anyone following along can see where we actually are - not where we wish we were.</p>
 
     <div class="timeline">
       <div class="timeline-item reveal">
         <div class="timeline-node"></div>
-        <div class="timeline-date">May 2026</div>
-        <div class="timeline-title">Season Kickoff<span class="timeline-flag done">Complete</span></div>
-        <p class="timeline-desc">New game released. Team breaks down the rules, scores strategy options, and locks in a robot archetype for the season.</p>
+        <div class="timeline-date">Spring 2026</div>
+        <div class="timeline-title">Team Formed<span class="timeline-flag done">Complete</span></div>
+        <p class="timeline-desc">Eight students, one team number, zero robots. We registered as 2020V, split into mechanical, programming, and documentation groups, and started learning the program.</p>
       </div>
 
       <div class="timeline-item reveal">
         <div class="timeline-node"></div>
+        <div class="timeline-date">May 2026</div>
+        <div class="timeline-title">Game Release &amp; Strategy<span class="timeline-flag done">Complete</span></div>
+        <p class="timeline-desc">Our first-ever game reveal. We read the manual end to end, scored the strategy options, and picked a robot archetype we thought a rookie team could actually build well.</p>
+      </div>
+
+      <div class="timeline-item upcoming reveal">
+        <div class="timeline-node"></div>
         <div class="timeline-date">Summer 2026</div>
-        <div class="timeline-title">Prototype &amp; Build<span class="timeline-flag done">Complete</span></div>
-        <p class="timeline-desc">CAD, prototyping, and subsystem testing. Drivetrain and intake iterations documented in the engineering notebook.</p>
+        <div class="timeline-title">First Build<span class="timeline-flag">In Progress</span></div>
+        <p class="timeline-desc">Prototyping subsystems for the first time. The drivetrain is running; intake and scoring are mid-iteration. Every version and every failure is going in the notebook.</p>
       </div>
 
       <div class="timeline-item upcoming reveal">
         <div class="timeline-node"></div>
         <div class="timeline-date">Fall 2026</div>
-        <div class="timeline-title">First Qualifiers<span class="timeline-flag">Upcoming</span></div>
-        <p class="timeline-desc">Opening tournaments of the season. Driver practice, autonomous tuning, and early skills runs to bank a ranking score.</p>
+        <div class="timeline-title">Our First Competition<span class="timeline-flag">Upcoming</span></div>
+        <p class="timeline-desc">The big one for a rookie team: pass inspection, play real matches, and find out how much of what we built survives contact with an actual field.</p>
       </div>
 
       <div class="timeline-item upcoming reveal">
         <div class="timeline-node"></div>
         <div class="timeline-date">Winter 2027</div>
-        <div class="timeline-title">Provincial Championship<span class="timeline-flag">Upcoming</span></div>
-        <p class="timeline-desc">Ontario provincials. A qualifying berth here is the direct path to the World Championship field.</p>
+        <div class="timeline-title">Provincial Championship<span class="timeline-flag">Stretch Goal</span></div>
+        <p class="timeline-desc">Ontario provincials. Qualifying in a rookie season would be well ahead of where we expect to be - which is exactly why it's on the list.</p>
       </div>
 
       <div class="timeline-item upcoming reveal">
         <div class="timeline-node"></div>
-        <div class="timeline-date">April 2027</div>
-        <div class="timeline-title">VEX World Championship<span class="timeline-flag">Goal</span></div>
-        <p class="timeline-desc">Dallas, Texas. The target we've been building toward — competing against the best teams in the world.</p>
+        <div class="timeline-date">Beyond</div>
+        <div class="timeline-title">The Long Game<span class="timeline-flag">Goal</span></div>
+        <p class="timeline-desc">The VEX World Championship is where we want this to end up. Realistically that's a multi-season climb, and year one is about earning the experience to make it possible.</p>
       </div>
     </div>
   </div>
@@ -2149,35 +2206,35 @@
 <div class="sponsor-section" id="sponsors">
   <div class="sponsor-inner">
     <div class="section-label">// 06 - Sponsorship</div>
-    <h2 class="section-title">Partner With 2020V.</h2>
+    <h2 class="section-title">Back a Team From Day One.</h2>
     <div class="section-rule"></div>
 
     <div class="sponsor-intro">
       <div class="sponsor-intro-text">
-        <p>Team <strong>2020V</strong> is looking for partners who believe in the next generation of engineers, programmers, and problem-solvers. Your sponsorship puts your brand in front of a driven STEM community - at competitions, on our robot, and across our channels.</p>
-        <p>We compete hard, document everything, and represent every sponsor with pride. Whether you're a local business or a tech company, <strong>partnering with 2020V is a direct investment in future talent.</strong></p>
-        <p>By partnering with Team 2020V, you're investing directly in future talent while also gaining exposure in front of a vibrant STEM community. Your sponsorship will prominently display your brand at competitions, on our robot, and across our outreach channels. Whether you're a local business or a tech giant, your support will help us inspire future innovators and celebrate the spirit of teamwork and creativity. Together, let's give our <strong>20/20 effort!</strong></p>
+        <p>Here's the honest version: <strong>2020V is a first-year team</strong>, and first-year teams are the ones that need help most. We're starting without the equipment, the spare parts, or the budget that established programs have built up over years. Every dollar at this stage goes straight into getting a competitive robot onto the field.</p>
+        <p>What your sponsorship actually pays for: the <strong>V5 control system and motors</strong>, structural metal and spare parts, tournament registration fees, and travel to events. These are the startup costs that decide whether a rookie team gets a real season or a stalled one.</p>
+        <p>In exchange you get in on the ground floor. Your logo goes on our very first robot and our first competition banner, and you'll be listed as a founding partner for as long as this team exists. We document everything publicly, so you'll be able to see precisely what your support built. Let's give it a <strong>20/20 effort.</strong></p>
       </div>
       <div class="sponsor-why-grid">
         <div class="sponsor-why-cell">
-          <div class="sponsor-why-icon">VISIBILITY</div>
-          <div class="sponsor-why-title">Brand on Robot</div>
-          <p class="sponsor-why-desc">Your logo on our robot, uniforms, and banners at every event we attend.</p>
+          <div class="sponsor-why-icon">FOUNDING</div>
+          <div class="sponsor-why-title">Ground Floor</div>
+          <p class="sponsor-why-desc">Be a founding partner of a brand-new team - logo on our first robot and first banner.</p>
+        </div>
+        <div class="sponsor-why-cell">
+          <div class="sponsor-why-icon">STARTUP</div>
+          <div class="sponsor-why-title">Real Startup Costs</div>
+          <p class="sponsor-why-desc">Funds go to the V5 kit, parts, and registration fees - the things that get us on the field.</p>
         </div>
         <div class="sponsor-why-cell">
           <div class="sponsor-why-icon">STEM</div>
           <div class="sponsor-why-title">Talent Pipeline</div>
-          <p class="sponsor-why-desc">Support students building real engineering, coding, and design skills.</p>
+          <p class="sponsor-why-desc">Support eight students learning engineering, coding, and design from the very beginning.</p>
         </div>
         <div class="sponsor-why-cell">
-          <div class="sponsor-why-icon">REACH</div>
-          <div class="sponsor-why-title">Social Coverage</div>
-          <p class="sponsor-why-desc">Season updates and competition content across all team channels.</p>
-        </div>
-        <div class="sponsor-why-cell">
-          <div class="sponsor-why-icon">COMMUNITY</div>
-          <div class="sponsor-why-title">Local Impact</div>
-          <p class="sponsor-why-desc">Outreach workshops and school events reaching hundreds of students.</p>
+          <div class="sponsor-why-icon">OPEN BOOK</div>
+          <div class="sponsor-why-title">Documented Publicly</div>
+          <p class="sponsor-why-desc">Our notebook and season updates are public, so you can see exactly what your support built.</p>
         </div>
       </div>
     </div>
@@ -2188,11 +2245,11 @@
            <div class="sponsor-slot"><img src="logos/name.png" alt="Company Name"></div>
          Delete any leftover empty slots you don't want shown. -->
     <div class="sponsor-wall">
-      <p class="tiers-heading">// Our Partners</p>
+      <p class="tiers-heading">// Founding Partners</p>
       <div class="sponsor-wall-grid">
         <div class="sponsor-slot sponsor-slot-empty reveal">
           <span class="plus">+</span>
-          <span class="label">Partner spot available</span>
+          <span class="label">Founding partner spot</span>
         </div>
         <div class="sponsor-slot sponsor-slot-empty reveal">
           <span class="plus">+</span>
@@ -2275,12 +2332,12 @@
     <!-- CTA BAR -->
     <div class="sponsor-cta">
       <div class="sponsor-cta-text">
-        <h3>Ready to sponsor Team 2020V?</h3>
-        <p>Reach out before the season kicks off and we'll get your brand on the field.</p>
+        <h3>Be one of our first sponsors.</h3>
+        <p>We're a first-year team looking for founding partners. Reach out and your logo goes on our very first robot.</p>
       </div>
       <div class="sponsor-cta-actions">
         <a class="btn-primary" href="#contact">Contact Us</a>
-        <a class="btn-outline" href="mailto:xuliang@silverknights.ca">Email Directly</a>
+        <a class="btn-outline" href="mailto:2020vrobotics@gmail.com">Email Directly</a>
         <!-- RE-ENABLE once sponsorship-package.pdf exists in this folder.
              It currently 404s, so the button is commented out rather than
              sending sponsors to a dead link.
@@ -2301,12 +2358,12 @@
 <!-- CONTACT & PARTNERSHIP -->
 <section id="contact">
   <div class="section-label">// 07 - Contact & Partnership</div>
-  <h2 class="section-title">Let's Connect.</h2>
+  <h2 class="section-title">Get In Touch.</h2>
   <div class="section-rule"></div>
   <div class="contact-grid">
 
     <div class="contact-info">
-      <p>Have a question about our robot, want to connect with the team, or interested in sponsoring our journey to Worlds? We'd love to hear from you.</p>
+      <p>We're a brand-new team, so we're genuinely glad to hear from anyone - sponsors, mentors, experienced teams willing to share advice, or students thinking about joining. Questions about the robot are welcome too, even the basic ones.</p>
       <div class="contact-detail">
         <span class="contact-detail-label">Team</span>
         <span>2020V - Twenty-Twenty Vision</span>
@@ -2317,7 +2374,7 @@
       </div>
       <div class="contact-detail">
         <span class="contact-detail-label">Email</span>
-        <span>xuliang@silverknights.ca</span>
+        <span>2020vrobotics@gmail.com</span>
       </div>
       <div class="contact-detail">
         <span class="contact-detail-label">Region</span>
@@ -2326,10 +2383,10 @@
 
       <div class="contact-sponsor-pitch">
         <div class="section-label">// Sponsorship</div>
-        <p>Interested in partnering with us? Switch to the <strong>Sponsorship Inquiry</strong> tab - your support goes toward parts, registration, and travel, and your brand gets real visibility at competitions.</p>
+        <p>Interested in partnering with us? Switch to the <strong>Sponsorship Inquiry</strong> tab. As a first-year team, your support covers the startup costs - the V5 kit, parts, and registration - that get us onto the field at all.</p>
         <div class="apply-benefit">
           <div class="apply-benefit-dot"></div>
-          <div class="apply-benefit-text"><strong>Logo on robot, uniforms & banner</strong> at every event we attend.</div>
+          <div class="apply-benefit-text"><strong>Founding partner status</strong> - logo on our first robot, uniforms, and banner.</div>
         </div>
         <div class="apply-benefit">
           <div class="apply-benefit-dot"></div>
@@ -2337,7 +2394,7 @@
         </div>
         <div class="apply-benefit">
           <div class="apply-benefit-dot"></div>
-          <div class="apply-benefit-text"><strong>Direct investment</strong> in the next generation of engineers and problem-solvers.</div>
+          <div class="apply-benefit-text"><strong>Direct investment</strong> in eight students at the very start of their engineering journey.</div>
         </div>
       </div>
     </div>
@@ -2419,7 +2476,7 @@
 <footer>
   <div>
     <div class="footer-logo">2020V<span style="display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:2px;">Twenty-Twenty Vision</span></div>
-    <p class="footer-note" style="margin-top:0.9rem;max-width:34ch;line-height:1.7;">Youth-led VEX V5 Robotics Competition team based in Markham, Ontario.</p>
+    <p class="footer-note" style="margin-top:0.9rem;max-width:34ch;line-height:1.7;">A first-year, youth-led VEX V5 Robotics Competition team based in Markham, Ontario.</p>
   </div>
 
   <div>
@@ -2451,7 +2508,7 @@
           <path d="M12 2A10 10 0 0 0 8.8 21.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/>
         </svg>
       </a>
-      <a href="mailto:xuliang@silverknights.ca" aria-label="Email team 2020V">
+      <a href="mailto:2020vrobotics@gmail.com" aria-label="Email team 2020V">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="2" y="4" width="20" height="16" rx="3"/><path d="M3 7l9 6 9-6"/>
         </svg>
@@ -2510,7 +2567,7 @@
     }
   };
 
-  const TEAM_EMAIL = 'xuliang@silverknights.ca';
+  const TEAM_EMAIL = '2020vrobotics@gmail.com';
 
   // A form is "configured" only once its placeholders are gone.
   function isConfigured(cfg) {
