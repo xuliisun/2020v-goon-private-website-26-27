@@ -1422,9 +1422,13 @@
   /* ── SPONSOR LOGO WALL ── */
   .sponsor-wall { margin-bottom: 4rem; }
 
+  /* auto-fit (not auto-fill) collapses the unused tracks, and capping the
+     track width leaves slack for justify-content — together these keep the
+     tiles centred under the heading however many sponsors there are. */
   .sponsor-wall-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
+    justify-content: center;
     gap: 1rem;
     margin-top: 2rem;
   }
