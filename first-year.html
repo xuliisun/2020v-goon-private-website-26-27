@@ -1385,6 +1385,40 @@
 
   button[disabled] { opacity: 0.55; cursor: not-allowed; }
 
+  /* Backup actions shown under a form after the mail app is handed off */
+  .handoff-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(120,170,215,0.22);
+  }
+
+  .handoff-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-right: 0.15rem;
+  }
+
+  .handoff-btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid var(--electric);
+    background: transparent;
+    color: var(--electric);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .handoff-btn:hover { background: var(--electric); color: var(--white); }
+
   /* ── SPONSOR LOGO WALL ── */
   .sponsor-wall { margin-bottom: 4rem; }
 
@@ -2419,10 +2453,6 @@
             <label for="message">Message</label>
             <textarea id="message" placeholder="What's on your mind?" required></textarea>
           </div>
-          
-          <!-- Anti-spam honeypot: hidden from people, bots fill it in. Leave empty. -->
-          <input type="text" id="c-honey" name="_honey" tabindex="-1" autocomplete="off"
-                 aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
           <button class="submit-btn" type="submit">Send Message</button>
           <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
         </form>
@@ -2461,10 +2491,6 @@
               <label style="font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--aqua);display:block;margin-bottom:0.4rem;" for="s-message">Message (optional)</label>
               <textarea style="width:100%;background:var(--dark-blue);border:1px solid rgba(0,212,200,0.2);color:var(--white);padding:0.75rem 1rem;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;border-radius:10px;transition:border-color 0.3s,box-shadow 0.3s;resize:vertical;min-height:100px;" id="s-message" placeholder="Tell us about your company or any questions you have..."></textarea>
             </div>
-            
-          <!-- Anti-spam honeypot: hidden from people, bots fill it in. Leave empty. -->
-          <input type="text" id="s-honey" name="_honey" tabindex="-1" autocomplete="off"
-                 aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
             <button class="sponsor-submit-btn" type="submit">Send Sponsorship Inquiry</button>
             <p class="form-status" id="sponsor-status" role="status" aria-live="polite"></p>
             <p class="form-note">We'll follow up within 2 business days with a full package.</p>
@@ -2532,77 +2558,83 @@
 
 <script>
   /* ══════════════════════════════════════════════════════════════════
-     EMAIL DELIVERY
+     EMAIL DELIVERY  —  visitor sends it themselves
 
-     Both forms are emailed straight to TEAM_EMAIL via FormSubmit, which
-     needs no account and no API key — the address below IS the config.
+     Nothing is sent in the background and there is no third-party
+     service. Submitting a form opens the visitor's own email app with
+     the message fully composed — To, Subject and Body all filled in —
+     and THEY press Send. The mail then arrives from their real address.
 
-     ⚠️ ONE-TIME ACTIVATION (required before any mail arrives):
-       1. Publish this page, or open it over http:// (not file://).
-       2. Submit either form once with real details.
-       3. FormSubmit emails 2020vrobotics@gmail.com asking to confirm.
-          Open that email and click the activation link.
-       4. That's it — every submission from then on lands in the inbox.
-          Check spam the first time; the activation mail often goes there.
+     Because some visitors have no mail app configured (common on
+     desktop when using webmail), the page also shows two backups right
+     under the form: an "Open in Gmail" link that composes the same
+     message in Gmail's web client, and a "Copy message" button.
 
-     Replies work naturally: the sender's address is set as reply-to, so
-     hitting Reply in Gmail goes back to the person who wrote in.
-
-     If the request fails for any reason (offline, service down, blocked
-     by a network), the visitor is offered a mailto: link instead, so a
-     message is never silently lost.
-
-     TO CHANGE THE DESTINATION: edit TEAM_EMAIL below. Nothing else
-     references the address — the mailto links in the page markup are
-     separate and would need updating too.
+     TO CHANGE THE DESTINATION: edit TEAM_EMAIL below. The mailto links
+     elsewhere in the page markup are separate and need updating too.
      ══════════════════════════════════════════════════════════════════ */
   const TEAM_EMAIL = '2020vrobotics@gmail.com';
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/' + TEAM_EMAIL;
 
-  function setStatus(el, state, msg) {
-    if (!el) return;
-    el.className = 'form-status visible ' + state;
-    el.textContent = msg;   // textContent, not innerHTML — msg contains user input
+  function mailtoHref(subject, body) {
+    return 'mailto:' + TEAM_EMAIL +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body='    + encodeURIComponent(body);
   }
 
-  // Error state only. Static copy plus a mailto escape hatch, so it is
-  // safe to build as HTML (no user input is interpolated here).
-  function setStatusFallback(el, mailtoHref) {
-    if (!el) return;
-    el.className = 'form-status visible error';
-    el.innerHTML = 'We could not send that automatically. ' +
-      '<a href="' + mailtoHref + '" style="color:inherit;text-decoration:underline;">' +
-      'Click here to email us instead</a>, or write to ' + TEAM_EMAIL + '.';
+  // Gmail's web compose window, for visitors with no desktop mail app.
+  function gmailHref(subject, body) {
+    return 'https://mail.google.com/mail/?view=cm&fs=1' +
+      '&to='   + encodeURIComponent(TEAM_EMAIL) +
+      '&su='   + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
   }
 
-  /* POSTs JSON to FormSubmit's AJAX endpoint, which sends CORS headers —
-     so unlike an opaque no-cors request we can read the real result and
-     report an honest success or failure. */
-  function submitForm(payload, statusEl, btn, form, successMsg, mailtoHref) {
-    btn.disabled = true;
-    setStatus(statusEl, 'pending', 'Sending…');
+  /* Opens the visitor's mail app with the message ready, then explains
+     that they still need to press Send, and offers the two backups.
+     Built with DOM APIs rather than innerHTML so the user's own text can
+     never be interpreted as markup. */
+  function handOffToEmail(statusEl, subject, body) {
+    statusEl.className = 'form-status visible pending';
+    statusEl.textContent = '';
 
-    fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(res => res.json().catch(() => ({})).then(data => ({ ok: res.ok, data })))
-      .then(({ ok, data }) => {
-        // FormSubmit reports success as the string "true".
-        if (ok && String(data.success) === 'true') {
-          setStatus(statusEl, 'success', successMsg);
-          form.reset();
-        } else if (ok) {
-          // Reached the service, but it wants the activation step completed.
-          setStatus(statusEl, 'pending',
-            (data.message || 'Almost there — this address needs to be confirmed once before mail is delivered.'));
-        } else {
-          setStatusFallback(statusEl, mailtoHref);
-        }
-      })
-      .catch(() => setStatusFallback(statusEl, mailtoHref))
-      .finally(() => { btn.disabled = false; });
+    const line = document.createElement('div');
+    line.textContent = 'Your email app should now be open with the message ready. ' +
+      'Press Send there and it will reach us at ' + TEAM_EMAIL + '.';
+    statusEl.appendChild(line);
+
+    const row = document.createElement('div');
+    row.className = 'handoff-row';
+
+    const hint = document.createElement('span');
+    hint.className = 'handoff-hint';
+    hint.textContent = 'Nothing opened?';
+    row.appendChild(hint);
+
+    const gmail = document.createElement('a');
+    gmail.className = 'handoff-btn';
+    gmail.href = gmailHref(subject, body);      // property assignment, not HTML
+    gmail.target = '_blank';
+    gmail.rel = 'noopener noreferrer';
+    gmail.textContent = 'Open in Gmail';
+    row.appendChild(gmail);
+
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.className = 'handoff-btn';
+    copy.textContent = 'Copy message';
+    copy.addEventListener('click', () => {
+      const full = 'To: ' + TEAM_EMAIL + '\nSubject: ' + subject + '\n\n' + body;
+      navigator.clipboard.writeText(full)
+        .then(() => { copy.textContent = 'Copied ✓'; })
+        .catch(() => { copy.textContent = 'Press Ctrl/Cmd+C'; });
+    });
+    row.appendChild(copy);
+
+    statusEl.appendChild(row);
+
+    // Trigger the mail app last, so the guidance is already on screen
+    // when the visitor comes back to the page.
+    window.location.href = mailtoHref(subject, body);
   }
 
   function switchFormTab(tab, btn) {
@@ -2619,37 +2651,19 @@
     const email   = document.getElementById('s-email').value.trim();
     const tier    = document.getElementById('s-tier').value;
     const message = document.getElementById('s-message').value.trim();
-    const honey   = document.getElementById('s-honey').value;
-
-    // Hidden field: only bots fill this in. Pretend it worked, send nothing.
-    if (honey) { setStatus(document.getElementById('sponsor-status'), 'success', 'Thanks — your inquiry is in.'); return; }
 
     const subject = 'Sponsorship Inquiry from ' + company + ' - ' + tier + ' Tier';
-    const mailto  = 'mailto:' + TEAM_EMAIL +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body='    + encodeURIComponent(
-        'Contact: ' + contact + '\nCompany: ' + company + '\nEmail: ' + email +
-        '\nInterested Tier: ' + tier + (message ? '\n\nMessage:\n' + message : '')
-      );
+    const body =
+      'Hello Team 2020V,\n\n' +
+      'I\'d like to talk about sponsoring the team.\n\n' +
+      'Contact name: ' + contact + '\n' +
+      'Company: '      + company + '\n' +
+      'Email: '        + email   + '\n' +
+      'Interested tier: ' + tier + '\n\n' +
+      (message ? 'Message:\n' + message + '\n\n' : '') +
+      'Thanks,\n' + contact;
 
-    submitForm(
-      {
-        _subject:  subject,
-        _replyto:  email,          // so Reply in Gmail goes back to the sender
-        _template: 'table',
-        Form:      'Sponsorship Inquiry',
-        Contact:   contact,
-        Company:   company,
-        Email:     email,
-        Tier:      tier,
-        Message:   message || '(none)'
-      },
-      document.getElementById('sponsor-status'),
-      e.target.querySelector('button[type="submit"]'),
-      e.target,
-      'Thanks, ' + contact + ' — your inquiry is in. We\'ll follow up within 2 business days.',
-      mailto
-    );
+    handOffToEmail(document.getElementById('sponsor-status'), subject, body);
   }
 
   function sendContactEmail(e) {
@@ -2657,31 +2671,16 @@
     const name    = document.getElementById('name').value.trim();
     const email   = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
-    const honey   = document.getElementById('c-honey').value;
-
-    if (honey) { setStatus(document.getElementById('contact-status'), 'success', 'Thanks — message received.'); return; }
 
     const subject = 'Message from ' + name + ' via 2020V Website';
-    const mailto  = 'mailto:' + TEAM_EMAIL +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body='    + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+    const body =
+      'Hello Team 2020V,\n\n' +
+      message + '\n\n' +
+      '—\n' +
+      'Name: '  + name + '\n' +
+      'Email: ' + email;
 
-    submitForm(
-      {
-        _subject:  subject,
-        _replyto:  email,
-        _template: 'table',
-        Form:      'General Message',
-        Name:      name,
-        Email:     email,
-        Message:   message
-      },
-      document.getElementById('contact-status'),
-      e.target.querySelector('button[type="submit"]'),
-      e.target,
-      'Thanks, ' + name + ' — message received. We\'ll get back to you soon.',
-      mailto
-    );
+    handOffToEmail(document.getElementById('contact-status'), subject, body);
   }
 
   // ── MOBILE NAV ──
