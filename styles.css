@@ -37,6 +37,11 @@
   --r-sm: 10px;   /* inputs and primary buttons */
   --r-md: 14px;   /* cards and tiles */
   --r-lg: 18px;   /* large panels: tiers, forms, media frames */
+
+  /* Centred glow pools — see the CENTRED GLOWS section. */
+  --glow-color: rgba(94,165,219,0.30);
+  --glow-w: 720px;
+  --glow-h: 420px;
 }
 
 
@@ -1501,6 +1506,54 @@ html.js .reveal {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 html.js .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+
+/* ══ CENTRED GLOWS ════════════════════════════════════════════════════════════*/
+/* A soft radial pool centred behind a block, so the block lifts off the
+   background instead of sitting flat on it. Drawn with ::after because
+   several of these panels already use ::before for other decoration.
+   Size and strength are per-target via --glow-w / --glow-h / --glow-color.
+
+   The direct children are raised to z-index 1 so they paint above the pool. */
+.stats-grid,
+.sponsor-wall-grid,
+.tiers-grid,
+.sponsor-cta,
+.sponsor-form { position: relative; }
+
+.stats-grid::after,
+.sponsor-wall-grid::after,
+.tiers-grid::after,
+.sponsor-cta::after,
+.sponsor-form::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /* Capped at 100% so the pool can never push the page wider than the
+     viewport. At 130% this overflowed by 32px on a 420px screen. */
+  width: min(var(--glow-w), 100%);
+  height: var(--glow-h);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, var(--glow-color) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep content above the pool */
+.stats-grid > *,
+.sponsor-wall-grid > *,
+.tiers-grid > *,
+.sponsor-cta > *,
+.sponsor-form > form { position: relative; z-index: 1; }
+
+/* Per-target sizing */
+.stats-grid       { --glow-w: 620px;  --glow-h: 380px; --glow-color: rgba(94,165,219,0.26); }
+.sponsor-wall-grid{ --glow-w: 900px;  --glow-h: 340px; --glow-color: rgba(94,165,219,0.30); }
+.tiers-grid       { --glow-w: 1080px; --glow-h: 520px; --glow-color: rgba(94,165,219,0.24); }
+.sponsor-cta      { --glow-w: 820px;  --glow-h: 360px; --glow-color: rgba(94,165,219,0.34); }
+.sponsor-form     { --glow-w: 620px;  --glow-h: 520px; --glow-color: rgba(94,165,219,0.22); }
 
 
 /* ══ THEME OVERRIDES ═════════════════════════════════════════════════════════*/
