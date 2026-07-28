@@ -38,6 +38,10 @@
   --r-md: 14px;   /* cards and tiles */
   --r-lg: 18px;   /* large panels: tiers, forms, media frames */
 
+  /* Keyboard focus ring. Aqua on the dark page, but re-declared to navy
+     inside the light bands below, where aqua measures only 1.5-1.8:1. */
+  --focus-ring: var(--aqua);
+
   /* Centred glow pools — see the CENTRED GLOWS section. */
   --glow-color: rgba(94,165,219,0.30);
   --glow-w: 720px;
@@ -64,10 +68,15 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--aqua);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* The two light bands need a dark ring: aqua on #5f86ae is 1.82:1 and on
+   #6d93bb only 1.53:1, both under the 3.0 minimum. Navy gives 4.38/5.20. */
+.robot-section,
+.achievements-section { --focus-ring: var(--navy); }
 /* Skip link — hidden until focused */
 .skip-link {
   position: absolute;
@@ -737,12 +746,17 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 
 /* ══ SECTION 03 — TEAM ═══════════════════════════════════════════════════════*/
 /* ── EXPANDED TEAM CARDS ── */
+/* Flex rather than grid so a partial final row centres itself. With 11
+   members the grid left a 4/4/3 row hugging the left edge. Basis is the
+   grid track width it replaces, so full rows are unchanged. */
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
   margin-top: 3rem;
 }
+.member-card { flex: 0 1 calc((100% - 3 * 1.5rem) / 4); }
 .member-card {
   background: var(--dark-blue);
   border: 1px solid rgba(127,156,109,0.1);
@@ -1613,7 +1627,7 @@ footer .footer-socials a, footer .footer-bottom { color: #c8dce8; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .robot-features { grid-template-columns: 1fr; }
     .robot-showcase { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr 1fr; }
+    .member-card { flex-basis: calc((100% - 1.5rem) / 2); }
     .achievement-row { grid-template-columns: 100px 1fr; }
     .achievement-badge { display: none; }
     .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -1627,7 +1641,7 @@ footer .footer-socials a, footer .footer-bottom { color: #c8dce8; }
 
 @media (max-width: 600px) {
   .tiers-grid { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr; }
+    .member-card { flex-basis: 100%; }
     .hero-number { font-size: 5rem; }
     .sponsor-why-grid { grid-template-columns: 1fr; }
     .sponsor-cta-actions { flex-direction: column; width: 100%; }
