@@ -151,17 +151,7 @@ nav {
   font-size: 1.4rem;
   color: var(--electric);
   letter-spacing: 0.1em;
-  display: flex;
-  flex-direction: column;
   line-height: 1.1;
-}
-.nav-logo-sub {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 0.55rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 .nav-links {
   display: flex;
@@ -1589,7 +1579,7 @@ footer {
    earlier lets the base rule win. Kept as one block for that reason. */
 nav, .nav-panel { background: rgba(11, 31, 51, 0.96); }
 .nav-logo { color: #8bc1f2; }
-.nav-logo-sub, .nav-links a, .nav-panel a { color: #d3e4f1; }
+.nav-links a, .nav-panel a { color: #d3e4f1; }
 .nav-links a:hover, .nav-links a.active, .nav-panel a:hover, .nav-panel a.active { color: #8bc1f2; }
 .achievement-row { background: #17344f; }
 .achievement-row:hover { background: #1c3d5d; }
