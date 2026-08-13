@@ -1,0 +1,973 @@
+/* ============================================================================
+   2020V - single-file layout
+   ----------------------------------------------------------------------------
+   Loaded AFTER styles.css, which it layers on top of rather than replacing.
+   styles.css holds the base component styles; this file adds the nav
+   dropdown, the compact sub-view hero, the view-swapping rules, the motion
+   layer and the dark palette. Several rules here override styles.css at
+   equal specificity, so THE LOAD ORDER IN index.html MATTERS - theme.css
+   must stay second.
+
+   CONTENTS
+     00  Motion tokens
+     01  Nav dropdown (desktop)
+     02  Nav dropdown (mobile panel)
+     03  Compact page hero
+     03b Single-file views
+     04  Page-level spacing
+     05  Cross-page cards
+     06  Motion & animation polish
+     07  Ink layer (black contrast pass)
+
+   REDUCED MOTION: styles.css already collapses every animation and transition
+   to 0.01ms under prefers-reduced-motion. That only lands somewhere sensible
+   if the *visible* state is the animation's end frame - so every entrance
+   here is written as a keyframe animation with `both` fill, never as a bare
+   `opacity: 0` that something else is expected to undo.
+   ============================================================================ */
+
+
+/* ══ 00 · MOTION TOKENS ══════════════════════════════════════════════════════*/
+:root {
+  /* Decelerating curves: fast out of the gate, long soft landing. This is
+     what makes movement read as "smooth" rather than mechanical. */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.30, 1);
+  --ease-out-back:  cubic-bezier(0.34, 1.4, 0.64, 1);   /* slight overshoot */
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-fast: 0.22s;
+  --dur-mid:  0.42s;
+  --dur-slow: 0.65s;
+
+  /* One step of a cascade. Keep small - past ~90ms a stagger stops feeling
+     like one gesture and starts feeling like a queue. */
+  --stagger: 65ms;
+
+  /* ── Ink scale (see section 07) ──
+     Very dark blue rather than black. All four sit on roughly the same hue
+     (~215°) as the rest of the page, so they read as the bottom of one
+     palette instead of a hole punched in it - while still being dark enough
+     to give the light bands something to push against. */
+  --ink-0: #030b1a;   /* page floor and footer - deepest */
+  --ink-1: #061224;   /* section bands */
+  --ink-2: #0a1a30;   /* raised surfaces: cards, inputs, panels */
+  --ink-3: #0f2440;   /* hover state for those surfaces */
+
+  /* The pool that blends the hero into the section under it. */
+  --hero-merge: rgba(4, 13, 26, 0.85);
+
+  /* Hairline edge. A light border is what keeps a black card from dissolving
+     into a black band - without it the shapes disappear. */
+  --ink-line:       rgba(140, 190, 240, 0.14);
+  --ink-line-soft:  rgba(140, 190, 240, 0.08);
+}
+
+
+/* ══ 01 · NAV DROPDOWN (DESKTOP) ═════════════════════════════════════════════*/
+/* "Meet Us" opens on hover, on keyboard focus, and on click. Hover alone is
+   unreachable by keyboard and unusable on touch, so the same .open class is
+   driven from JS for those; :hover / :focus-within cover the pointer case
+   with no script at all. */
+/* The logo is a link home on every page now, and styles.css has no global
+   anchor reset - without this it renders underlined. */
+a.nav-logo { text-decoration: none; display: inline-block; }
+
+.nav-drop { position: relative; }
+
+/* Matches .nav-links a so the trigger sits flush with its neighbours. */
+.nav-drop-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  padding: 0 0 3px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d3e4f1;
+  transition: color 0.25s;
+  position: relative;
+}
+.nav-drop-toggle::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--electric);
+  transition: width 0.3s ease;
+}
+.nav-drop:hover .nav-drop-toggle,
+.nav-drop-toggle:hover,
+.nav-drop-toggle[aria-expanded="true"],
+.nav-drop-toggle.active { color: #8bc1f2; }
+
+.nav-drop:hover .nav-drop-toggle::after,
+.nav-drop-toggle[aria-expanded="true"]::after,
+.nav-drop-toggle.active::after { width: 100%; }
+
+.nav-drop-chevron {
+  width: 10px; height: 10px;
+  flex: none;
+  transition: transform 0.25s ease;
+}
+.nav-drop:hover .nav-drop-chevron,
+.nav-drop-toggle[aria-expanded="true"] .nav-drop-chevron { transform: rotate(180deg); }
+
+.nav-drop-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  /* The 0.9rem of padding-top is a deliberate hover bridge: without it the
+     pointer crosses bare page between the trigger and the panel and the
+     menu closes mid-travel. */
+  padding-top: 0.9rem;
+  transform: translateX(-50%) translateY(-6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  z-index: 120;
+}
+.nav-drop:hover .nav-drop-menu,
+.nav-drop:focus-within .nav-drop-menu,
+.nav-drop.open .nav-drop-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-drop-inner {
+  position: relative;
+  min-width: 270px;
+  background: rgba(11, 31, 51, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(94,165,219,0.22);
+  border-radius: var(--r-md);
+  box-shadow: 0 18px 44px rgba(4, 14, 26, 0.55);
+  padding: 0.5rem;
+}
+/* Little pointer up to the trigger */
+.nav-drop-inner::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: 50%;
+  width: 10px; height: 10px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgba(11, 31, 51, 0.98);
+  border-left: 1px solid rgba(94,165,219,0.22);
+  border-top: 1px solid rgba(94,165,219,0.22);
+}
+
+/* These links sit inside .nav-links, which uppercases and letter-spaces every
+   anchor and draws a sliding underline on hover. Neither belongs on a menu
+   row, so both are undone here - and the selector has to carry the .nav-links
+   ancestor, because `.nav-links a` (0,1,1) outranks a bare class (0,1,0). */
+.nav-links .nav-drop-item {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.85rem;
+}
+.nav-links .nav-drop-item::after { content: none; }
+
+.nav-drop-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  color: var(--muted);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.nav-drop-item:hover,
+.nav-drop-item:focus-visible {
+  background: rgba(94,165,219,0.12);
+  color: var(--white);
+  transform: translateX(2px);
+}
+.nav-drop-item.active { background: rgba(94,165,219,0.16); color: var(--white); }
+
+.nav-drop-icon {
+  width: 34px; height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-xs);
+  border: 1px solid rgba(94,165,219,0.28);
+  background: rgba(94,165,219,0.08);
+  color: var(--aqua);
+}
+.nav-drop-icon svg { width: 17px; height: 17px; }
+
+.nav-drop-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: inherit;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.nav-drop-desc {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+
+/* ══ 02 · NAV DROPDOWN (MOBILE PANEL) ════════════════════════════════════════*/
+/* The slide-down panel has no room for a nested menu, so the two Meet Us
+   destinations are flattened into indented children under a caption. */
+.nav-panel-caption {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  padding: 1rem 0.25rem 0.35rem;
+}
+.nav-panel a.nav-panel-sub {
+  padding-left: 1.1rem;
+  font-size: 0.7rem;
+  border-left: 1px solid rgba(94,165,219,0.25);
+  border-bottom: none;
+  margin-left: 0.25rem;
+}
+.nav-panel a.nav-panel-sub:hover { padding-left: 1.35rem; }
+
+
+/* ══ 03 · COMPACT PAGE HERO ══════════════════════════════════════════════════*/
+/* Sub-pages don't get the full-viewport hero - they get a short banner that
+   clears the fixed nav and states what the page is. */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 10rem 3rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero-grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(0,169,192,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,169,192,0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  pointer-events: none;
+}
+.page-hero-inner { position: relative; }
+
+.page-hero-eyebrow {
+  display: inline-block;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--aqua);
+  border: 1px solid rgba(94,165,219,0.3);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.page-hero-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.page-hero-title span { color: var(--aqua); }
+.page-hero-lead {
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 62ch;
+  font-size: 1.02rem;
+}
+
+/* Breadcrumb-ish sibling link: "the other half of Meet Us" */
+.page-hero-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid rgba(94,165,219,0.28);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  transition: border-color 0.25s, color 0.25s, transform 0.25s;
+}
+.page-hero-switch:hover {
+  border-color: var(--electric);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+.page-hero-switch svg { width: 14px; height: 14px; flex: none; }
+
+
+/* ══ 03b · SINGLE-FILE VIEWS ═════════════════════════════════════════════════*/
+/* index.html carries all four pages as sibling .view blocks and shows one at
+   a time; router.js decides which. */
+.view { display: none; }
+.view.is-active { display: block; }
+
+/* The nav's own current-page marker. script.js's scrollspy owns .active on
+   .nav-links anchors and clears it on scroll, so the router marks the active
+   view with aria-current instead - same look, but scroll can't wipe it. */
+.nav-links a[aria-current="page"] {
+  color: #8bc1f2;
+  text-shadow: 0 0 12px rgba(0,169,192,0.25);
+}
+.nav-links a[aria-current="page"]::after { width: 100%; }
+.nav-panel a[aria-current="page"] { color: var(--aqua); }
+
+
+/* ══ 04 · PAGE-LEVEL SPACING ═════════════════════════════════════════════════*/
+/* A section that opens a page sits right under .page-hero, so it doesn't
+   need the full 6rem of lead-in that a mid-scroll section does. */
+.page-hero + section,
+.page-hero + .robot-section,
+.page-hero + .sponsor-section,
+.page-hero + .achievements-section { padding-top: 2rem; }
+
+/* Contact closes every page, so give it a rule above rather than letting it
+   run straight on from whatever came before. */
+.contact-divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+.contact-divider hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(94,165,219,0.28), transparent);
+}
+
+
+/* Cross-page links inside body copy. styles.css never needed these - the
+   single-page version had no prose links - so they were falling back to the
+   browser default blue/purple. */
+.contact-sponsor-pitch a,
+.about-text a {
+  color: var(--aqua);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s ease;
+}
+.contact-sponsor-pitch a:hover,
+.about-text a:hover { color: var(--white); }
+
+
+/* ══ 05 · CROSS-PAGE CARDS ═══════════════════════════════════════════════════*/
+/* Two big links on the home page mirroring the Meet Us dropdown, for anyone
+   who scrolls past the nav instead of using it. */
+.meet-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.meet-card {
+  display: block;
+  text-decoration: none;
+  background: #17344f;
+  border: 1px solid rgba(94,165,219,0.18);
+  border-radius: var(--r-md);
+  padding: 2rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.meet-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(94,165,219,0.5);
+  box-shadow: 0 16px 40px rgba(4, 14, 26, 0.4);
+}
+.meet-card-icon {
+  width: 46px; height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-sm);
+  border: 1px solid rgba(94,165,219,0.3);
+  background: rgba(94,165,219,0.08);
+  color: var(--aqua);
+  margin-bottom: 1.25rem;
+}
+.meet-card-icon svg { width: 22px; height: 22px; }
+.meet-card-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+}
+.meet-card-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+.meet-card-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.25rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--aqua);
+}
+.meet-card-more svg { width: 13px; height: 13px; transition: transform 0.25s ease; }
+.meet-card:hover .meet-card-more svg { transform: translateX(4px); }
+
+
+/* ══ 06 · MOTION & ANIMATION POLISH ══════════════════════════════════════════*/
+/* Everything that runs during scroll or on many elements at once animates
+   only `opacity` and `transform` - both composited, so they don't trigger
+   layout. Don't add width/height/top/margin transitions to the reveal or
+   stagger rules below; those run on dozens of cards and would drop frames.
+
+   The one deliberate exception is the nav's padding (see "Nav shrink on
+   scroll"). That does force layout, but on a single fixed bar with six
+   children, once per scroll-direction change - not per frame of scrolling. */
+
+@keyframes viewIn {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes riseIn {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: translate3d(0, -8px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* ── View change ──────────────────────────────────────────────────────────
+   The router swaps display, so this animation restarts every time a view is
+   shown - no JS re-trigger and no forced reflow needed to replay it. */
+.view.is-active {
+  animation: viewIn var(--dur-mid) var(--ease-out-expo) both;
+}
+
+/* Page-hero cascade. The eyebrow, headline, lead and switch link arrive as
+   one gesture rather than four, which is what the small offsets buy. */
+.view.is-active .page-hero-eyebrow { animation: riseIn var(--dur-slow) var(--ease-out-expo) both 0.04s; }
+.view.is-active .page-hero-title   { animation: riseIn var(--dur-slow) var(--ease-out-expo) both 0.11s; }
+.view.is-active .page-hero-lead    { animation: riseIn var(--dur-slow) var(--ease-out-expo) both 0.18s; }
+.view.is-active .page-hero-switch  { animation: riseIn var(--dur-slow) var(--ease-out-expo) both 0.25s; }
+
+
+/* ── Scroll reveal ────────────────────────────────────────────────────────
+   styles.css already ships the reveal mechanism (opacity + translateY on
+   .reveal, cleared by .in-view). This only re-times it: longer, softer
+   curve, and a little more travel so the movement is legible.
+
+   The stagger is nth-child modulo the column count, so each row washes in
+   left-to-right and the pattern repeats down the grid - it keeps working no
+   matter how many cards there are. */
+html.js .reveal {
+  transform: translate3d(0, 26px, 0);
+  transition: opacity var(--dur-slow) var(--ease-out-expo),
+              transform var(--dur-slow) var(--ease-out-expo);
+}
+html.js .reveal.in-view { transform: none; }
+
+/* 3-up: roster */
+.team-grid .reveal:nth-child(3n + 2) { transition-delay: calc(var(--stagger) * 1); }
+.team-grid .reveal:nth-child(3n + 3) { transition-delay: calc(var(--stagger) * 2); }
+
+/* 4-up: tiers, sponsor wall, stats */
+.tiers-grid .reveal:nth-child(4n + 2),
+.sponsor-wall-grid .reveal:nth-child(4n + 2),
+.stats-grid .reveal:nth-child(4n + 2) { transition-delay: calc(var(--stagger) * 1); }
+.tiers-grid .reveal:nth-child(4n + 3),
+.sponsor-wall-grid .reveal:nth-child(4n + 3),
+.stats-grid .reveal:nth-child(4n + 3) { transition-delay: calc(var(--stagger) * 2); }
+.tiers-grid .reveal:nth-child(4n + 4),
+.sponsor-wall-grid .reveal:nth-child(4n + 4),
+.stats-grid .reveal:nth-child(4n + 4) { transition-delay: calc(var(--stagger) * 3); }
+
+/* 2-up: why-us cells, achievement rows, timeline entries */
+.sponsor-why-grid .reveal:nth-child(2n) { transition-delay: calc(var(--stagger) * 1); }
+.achievements-list .reveal:nth-child(n + 2) { transition-delay: 40ms; }
+
+
+/* ── Nav dropdown ─────────────────────────────────────────────────────────
+   Opening cascades the two rows in behind the panel. The delays sit on the
+   items, not the panel, so the panel edge is already there to catch them. */
+.nav-drop-menu {
+  transition: opacity var(--dur-fast) var(--ease-out-expo),
+              transform var(--dur-fast) var(--ease-out-expo),
+              visibility var(--dur-fast);
+}
+.nav-drop:hover .nav-drop-item,
+.nav-drop:focus-within .nav-drop-item,
+.nav-drop.open .nav-drop-item {
+  animation: dropIn var(--dur-mid) var(--ease-out-expo) both;
+}
+.nav-drop:hover .nav-drop-item:nth-child(2),
+.nav-drop:focus-within .nav-drop-item:nth-child(2),
+.nav-drop.open .nav-drop-item:nth-child(2) { animation-delay: 55ms; }
+
+.nav-drop-icon { transition: transform var(--dur-fast) var(--ease-out-back),
+                             border-color var(--dur-fast) ease; }
+.nav-drop-item:hover .nav-drop-icon {
+  transform: scale(1.08);
+  border-color: rgba(94,165,219,0.55);
+}
+.nav-drop-chevron { transition: transform var(--dur-fast) var(--ease-out-back); }
+
+
+/* ── Cards ────────────────────────────────────────────────────────────────
+   A slightly springy curve on the lift, and the icon leads the movement so
+   the card reads as one object responding rather than a box that jumped. */
+.meet-card {
+  transition: transform var(--dur-mid) var(--ease-out-back),
+              border-color var(--dur-mid) ease,
+              box-shadow var(--dur-mid) ease;
+}
+.meet-card-icon {
+  transition: transform var(--dur-mid) var(--ease-out-back),
+              border-color var(--dur-mid) ease;
+}
+.meet-card:hover .meet-card-icon {
+  transform: translateY(-3px) scale(1.06);
+  border-color: rgba(94,165,219,0.55);
+}
+.meet-card-more svg { transition: transform var(--dur-fast) var(--ease-out-expo); }
+.meet-card:hover .meet-card-more svg { transform: translateX(5px); }
+
+.page-hero-switch svg { transition: transform var(--dur-fast) var(--ease-out-expo); }
+.page-hero-switch:hover svg { transform: translateX(4px); }
+
+
+/* ── Nav shrink on scroll ─────────────────────────────────────────────────
+   nav.js adds .is-scrolled past the fold. Tightening the bar and deepening
+   its shadow gives the fixed nav a sense of depth over the content. */
+nav {
+  transition: padding var(--dur-mid) var(--ease-out-expo),
+              background-color var(--dur-mid) ease,
+              box-shadow var(--dur-mid) ease;
+}
+nav.is-scrolled {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  box-shadow: 0 8px 30px rgba(4, 14, 26, 0.45);
+}
+.nav-logo { transition: transform var(--dur-mid) var(--ease-out-expo), color 0.3s ease; }
+nav.is-scrolled .nav-logo { transform: scale(0.92); }
+
+
+/* ══ 06b · PHOTO SLOTS ═══════════════════════════════════════════════════════*/
+/* Each photo slot holds an <img> pointing at a file in images/ plus a
+   styled placeholder (robot icon, or the member's initials). They are flex
+   siblings, so exactly one must be visible or they split the frame and the
+   photo renders at half width.
+
+   Default: photo hidden, placeholder shown. bindings.js adds .has-photo to
+   the wrapper once the file has actually loaded, which swaps them. Doing it
+   this way round means a missing file needs no JS at all - the initials are
+   simply what's already on screen, with no flash of a broken image. */
+img.img-probe { display: none; }
+
+.has-photo > img.img-probe { display: block; }
+.has-photo > .member-photo-placeholder,
+.has-photo > .robot-img-placeholder { display: none; }
+
+
+/* ══ 07 · INK LAYER (DARK CONTRAST PASS) ═════════════════════════════════════*/
+/* styles.css builds the page out of blues stacked on blues, so every surface
+   sits at a similar value and nothing separates strongly. This pass drops a
+   very dark blue underneath and behind things to widen that range:
+
+     · the page floor goes to the deepest ink, so the gradient has somewhere
+       to go
+     · surfaces that sit ON something (cards, inputs, nav, dropdown) go dark
+       enough to read as "in front" rather than "also blue"
+     · the two light bands are left exactly as they are - they are now the
+       bright end of a much wider range, which is where the pop comes from
+
+   Every rule here is a plain class or element selector, same specificity as
+   the ones it overrides in styles.css. It wins on order alone: theme.css is
+   linked after styles.css. */
+
+/* ── Ground ─────────────────────────────────────────────────────────────── */
+/* Navy under the hero so the blue branding still has something to sit on,
+   falling to true black by the foot of the page. */
+/* Deliberately NOT background-attachment: fixed - that maps the gradient to
+   the viewport, so every screen would start navy and the page would never
+   actually arrive at black. Scroll attachment spans the whole document, which
+   is the point, and avoids a full repaint on each scroll frame. */
+body {
+  background: linear-gradient(180deg,
+    #12293f 0%,
+    #0a1826 40%,
+    #050a11 72%,
+    var(--ink-0) 100%);
+}
+
+/* ── Bands ──────────────────────────────────────────────────────────────── */
+/* The two dark bands go to ink; the light ones (robot, achievements) keep
+   their colour and become the high end of the contrast range. */
+.timeline-section { --band: var(--ink-1); --band-tint: rgba(94,165,219,0.10); }
+.sponsor-section  { --band: var(--ink-1); --band-tint: rgba(94,165,219,0.12); }
+footer            { --band: var(--ink-0); }
+
+/* ── Chrome: nav, mobile panel, dropdown ────────────────────────────────── */
+nav {
+  background: rgba(5, 15, 30, 0.82);
+  border-bottom: 1px solid var(--ink-line-soft);
+}
+nav.is-scrolled {
+  background: rgba(3, 10, 21, 0.94);
+  border-bottom-color: var(--ink-line);
+}
+.nav-panel { background: rgba(4, 12, 25, 0.98); }
+
+.nav-drop-inner {
+  background: rgba(4, 12, 25, 0.98);
+  border-color: var(--ink-line);
+  box-shadow: 0 22px 50px rgba(1, 5, 12, 0.8);
+}
+.nav-drop-inner::before {
+  background: rgba(4, 12, 25, 0.98);
+  border-left-color: var(--ink-line);
+  border-top-color: var(--ink-line);
+}
+.nav-drop-icon { background: rgba(2, 8, 18, 0.6); border-color: var(--ink-line); }
+
+/* ── Raised surfaces ────────────────────────────────────────────────────── */
+/* The hairline border is doing as much work as the fill: a black card on a
+   black band is invisible without an edge. */
+.stat-cell,
+.sponsor-why-cell,
+.tier-card,
+.sponsor-cta,
+.member-card,
+.rookie-note,
+.meet-card,
+.achievement-row {
+  background-color: var(--ink-2);
+  border: 1px solid var(--ink-line-soft);
+}
+.achievement-row:hover,
+.meet-card:hover { background-color: var(--ink-3); }
+.meet-card:hover { border-color: var(--ink-line); }
+
+/* Media wells read as cut-outs, so they go deeper than the cards on top of
+   them - including on the two light bands, where black frames pop hardest. */
+.robot-img-wrap,
+.robot-gallery-thumb,
+.member-photo-wrap,
+.sponsor-logo-placeholder,
+.video-frame {
+  background: var(--ink-0);
+}
+.sponsor-slot { background-color: var(--ink-2); border-color: var(--ink-line-soft); }
+
+/* ── Forms ──────────────────────────────────────────────────────────────── */
+.sponsor-form { background: var(--ink-1); border: 1px solid var(--ink-line-soft); }
+.form-group input,
+.form-group textarea,
+.form-group select,
+.form-group select option {
+  background-color: var(--ink-0);
+  border-color: var(--ink-line-soft);
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { border-color: var(--aqua-dim); }
+
+/* ── Depth ──────────────────────────────────────────────────────────────── */
+/* Shadows pitched darker and bluer than the default blue-grey ones - on a
+   dark ground a light shadow lifts the area it is supposed to sink. */
+.meet-card:hover { box-shadow: 0 18px 44px rgba(1, 5, 12, 0.65); }
+.tier-card:hover { box-shadow: 0 18px 44px rgba(1, 5, 12, 0.6); }
+
+
+/* ── Hero → About merge ─────────────────────────────────────────────────── */
+/* The hero and the section under it share one continuous body gradient, so
+   the only thing that ever made a seam was the decoration stopping dead at
+   the hero's edge. Two things fix that:
+
+   1. The grid fades out before it reaches the boundary instead of being cut
+      off by it.
+   2. A soft pool of ink straddles the join - the bottom half painted by the
+      hero, the top half by the section below - so the two slides dissolve
+      into each other rather than meeting at a line.
+
+   The halves use the same colour and mirrored gradients, which is what makes
+   them read as one shape spanning the boundary. */
+.hero-grid {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 58%, transparent 96%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 58%, transparent 96%);
+}
+
+/* Lower half of the blend */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 300px;
+  background: linear-gradient(to bottom, transparent, var(--hero-merge));
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-content { position: relative; z-index: 1; }
+
+/* Upper half of the blend. Full-bleed via 100vw because the section itself is
+   capped at 1200px - without it the pool would stop short of the edges and
+   the seam would still show either side. body already hides overflow-x. */
+#about { position: relative; }
+#about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  height: 300px;
+  background: linear-gradient(to bottom, var(--hero-merge), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Contact closes every view against the black floor, so its divider needs to
+   read on black rather than on navy. */
+.contact-divider hr {
+  background: linear-gradient(to right, transparent, var(--ink-line), transparent);
+}
+
+
+/* ══ 08 · CALM PASS ══════════════════════════════════════════════════════════*/
+/* Two things make a page like this read as templated: decoration that isn't
+   doing any work, and surfaces that change value abruptly. This section
+   settles both - quieter decoration, and section boundaries that gradate
+   instead of alternating.
+
+   Markup removed in index.html alongside this: the two circuit-board SVGs
+   flanking the hero, the animated scanline, and the "// 01 -" prefixes on
+   section labels. */
+
+
+/* ── Section bands ───────────────────────────────────────────────────────
+   These used to alternate between two LIGHT blues and the dark page, which
+   striped the page into slabs - the single biggest reason it read as
+   blocky. Now each band is a small step in value away from the page rather
+   than a reversal of it, so the eye reads one continuous surface with
+   gentle relief. The fade at each edge is much deeper too, so no boundary
+   lands on a hard line. */
+.robot-section,
+.achievements-section,
+.timeline-section,
+.sponsor-section { --band-fade: 240px; }
+
+.robot-section        { --band: #0e2136; --band-tint: rgba(94,165,219,0.07); }
+.achievements-section { --band: #0b1a2c; --band-tint: rgba(94,165,219,0.06); }
+.timeline-section     { --band: #081527; --band-tint: rgba(94,165,219,0.05); }
+.sponsor-section      { --band: #0a1829; --band-tint: rgba(94,165,219,0.06); }
+
+/* styles.css darkens the focus ring inside those two sections because they
+   used to be light, where aqua measured only 1.5:1. They are dark now, so
+   the ring goes back to aqua - navy on navy would be invisible. */
+.robot-section,
+.achievements-section { --focus-ring: var(--aqua); }
+
+
+/* ── Quieter decoration ──────────────────────────────────────────────────
+   A grid that breathes and a glow that throbs both pull attention without
+   adding meaning, and both are stock "tech template" cues. Held still, they
+   read as texture instead of effects. */
+.hero-grid {
+  animation: none;
+  opacity: 0.45;
+}
+.hero-glow { animation: none; }
+
+/* The radial washes behind the stat, tier and sponsor blocks were strong
+   enough to be visible as discs. Pulled back to a suggestion of light. */
+.stats-grid        { --glow-color: rgba(94,165,219,0.13); }
+.sponsor-wall-grid { --glow-color: rgba(94,165,219,0.13); }
+.tiers-grid        { --glow-color: rgba(94,165,219,0.10); }
+.sponsor-cta       { --glow-color: rgba(94,165,219,0.15); }
+.sponsor-form      { --glow-color: rgba(94,165,219,0.10); }
+
+
+/* ── Typography ──────────────────────────────────────────────────────────
+   Orbitron is the display face; it earns its place on the logo, the hero
+   and the headings. On small uppercase labels it was doing the opposite -
+   wide-tracked techno caps on every minor label is the default robotics-
+   site look. Those move to Inter, which reads as a considered choice rather
+   than a theme setting. Headings keep Orbitron. */
+.section-label,
+.tiers-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--aqua-dim);
+}
+.section-label:hover { letter-spacing: 0.16em; }   /* cancel the tracking jump */
+
+/* A touch more air in body copy; the measure was tight for the line length. */
+.about-text p,
+.section-intro,
+.sponsor-intro-text p,
+.timeline-desc,
+.member-bio { line-height: 1.85; }
+
+/* The tier ticks were "[ ✓ ]" - ASCII brackets pretending to be a checkbox.
+   Now a plain tick that sits properly against the text. */
+.tier-perk-check {
+  color: var(--aqua);
+  font-family: 'Inter', sans-serif;
+  opacity: 0.9;
+  margin-right: 0.1rem;
+}
+
+
+/* ── Frame details ───────────────────────────────────────────────────────
+   The robot frames were bordered in rgba(127,156,109,…) - an olive green
+   that appears nowhere else in the palette and read as a leftover. Brought
+   onto the same hairline as every other surface.
+
+   The L-shaped corner brackets are kept but pulled right back: at full
+   strength they were viewfinder decoration competing with the photo, which
+   is the sort of flourish that makes a page look themed rather than
+   designed. Faint, they just imply a frame. */
+.robot-img-wrap      { border-color: var(--ink-line); }
+.robot-gallery-thumb { border-color: var(--ink-line-soft); }
+.robot-gallery-thumb:hover,
+.robot-img-wrap:hover { border-color: rgba(140, 190, 240, 0.28); }
+
+.robot-img-corner {
+  width: 14px; height: 14px;
+  border-color: rgba(140, 190, 240, 0.45);
+  opacity: 0.35;
+}
+
+
+/* ── Motion on hover ─────────────────────────────────────────────────────
+   styles.css sets `transform: none` on essentially every :hover, so nothing
+   on the page responded to the cursor - which is most of why it felt stiff.
+   Gentle movement is restored here on the same easing as everything else,
+   so hover feels like one consistent behaviour rather than per-component
+   decisions. Transforms only: no layout is triggered. */
+.member-card,
+.tier-card,
+.sponsor-why-cell,
+.sponsor-slot,
+.robot-gallery-thumb,
+.achievement-row,
+.footer-socials a {
+  transition: transform var(--dur-mid) var(--ease-out-expo),
+              background-color var(--dur-mid) ease,
+              border-color var(--dur-mid) ease,
+              box-shadow var(--dur-mid) ease;
+}
+
+.member-card:hover,
+.tier-card:hover,
+.sponsor-why-cell:hover,
+.sponsor-slot:hover,
+.robot-gallery-thumb:hover { transform: translateY(-4px); }
+
+.achievement-row:hover     { transform: translateX(5px); }
+.footer-socials a:hover    { transform: translateY(-2px); }
+
+/* Photos ease in slightly inside their frame - the frame itself is clipped,
+   so this reads as the image settling rather than the card growing. */
+.member-photo-wrap img,
+.robot-img-wrap img {
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+}
+.member-card:hover .member-photo-wrap img,
+.robot-img-wrap:hover img { transform: scale(1.04); }
+
+/* Buttons lift by a single pixel - enough to feel live, not enough to jump. */
+.btn-primary,
+.btn-outline,
+.submit-btn,
+.sponsor-submit-btn,
+.hero-cta {
+  transition: transform var(--dur-fast) var(--ease-out-expo),
+              background-color var(--dur-fast) ease,
+              color var(--dur-fast) ease,
+              border-color var(--dur-fast) ease;
+}
+.btn-primary:hover,
+.btn-outline:hover,
+.submit-btn:hover,
+.sponsor-submit-btn:hover,
+.hero-cta:hover { transform: translateY(-2px); }
+
+
+/* ── Reduced motion ──────────────────────────────────────────────────────
+   Hover movement is an enhancement, so it is dropped entirely rather than
+   just shortened. */
+@media (prefers-reduced-motion: reduce) {
+  .member-card:hover,
+  .tier-card:hover,
+  .sponsor-why-cell:hover,
+  .sponsor-slot:hover,
+  .robot-gallery-thumb:hover,
+  .achievement-row:hover,
+  .footer-socials a:hover,
+  .member-card:hover .member-photo-wrap img,
+  .robot-img-wrap:hover img,
+  .btn-primary:hover,
+  .btn-outline:hover,
+  .submit-btn:hover,
+  .sponsor-submit-btn:hover,
+  .hero-cta:hover { transform: none; }
+}
+
+
+/* ══ RESPONSIVE ══════════════════════════════════════════════════════════════*/
+@media (max-width: 900px) {
+  .page-hero { padding: 8rem 1.5rem 2.5rem; }
+  .contact-divider { padding: 0 1.5rem; }
+  .meet-cards { grid-template-columns: 1fr; }
+
+  /* Single column: a per-column stagger would become a slow top-to-bottom
+     queue, so drop it and let each card animate as it scrolls in. */
+  .team-grid .reveal,
+  .tiers-grid .reveal,
+  .sponsor-wall-grid .reveal,
+  .stats-grid .reveal,
+  .sponsor-why-grid .reveal { transition-delay: 0s; }
+}
+
+/* styles.css already collapses animation and transition durations globally
+   under this query. These are the extras it can't know about: stagger delays
+   (a 0.01ms animation still waits out its delay) and the transform offsets
+   that would otherwise be left mid-flight. */
+@media (prefers-reduced-motion: reduce) {
+  .view.is-active,
+  .view.is-active .page-hero-eyebrow,
+  .view.is-active .page-hero-title,
+  .view.is-active .page-hero-lead,
+  .view.is-active .page-hero-switch,
+  .nav-drop-item {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js .reveal,
+  html.js .reveal.in-view {
+    transition-delay: 0s !important;
+    transform: none;
+    opacity: 1;
+  }
+
+  nav.is-scrolled .nav-logo { transform: none; }
+}

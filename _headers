@@ -1,0 +1,38 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# HTTP SECURITY HEADERS
+#
+# Netlify and Cloudflare Pages read this file automatically - put it in the
+# published directory root and it applies with no other setup.
+#
+# WHY THIS FILE EXISTS AS WELL AS THE <meta> CSP IN index.html:
+# some protections are ignored when delivered in a meta tag and only work as
+# real HTTP headers. frame-ancestors is the important one - it is what stops
+# another site putting your page in an invisible iframe and tricking visitors
+# into clicking things (clickjacking). A meta tag cannot do it.
+#
+# GitHub Pages does NOT support custom headers. If you host there, the meta
+# CSP still applies, but you will not get frame-ancestors or HSTS. Cloudflare
+# Pages is free and does support these - see SECURITY.md.
+# ═══════════════════════════════════════════════════════════════════════════
+
+/*
+  # Nobody may frame this site - blocks clickjacking.
+  Content-Security-Policy: frame-ancestors 'none'
+  # Older equivalent, for browsers that predate frame-ancestors.
+  X-Frame-Options: DENY
+
+  # Stops a browser second-guessing a file's declared type and running, say,
+  # an uploaded image as a script.
+  X-Content-Type-Options: nosniff
+
+  # Don't hand the full URL to sites the visitor clicks through to.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # The page needs none of these devices. Deny them so injected markup can't
+  # ask the visitor for them in your name.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+
+  # Force HTTPS for two years, including subdomains.
+  # ⚠ Only keep this once HTTPS definitely works on your real domain -
+  # browsers remember it, and it is deliberately hard to undo.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains

@@ -1,9 +1,9 @@
 /* ══════════════════════════════════════════════════════════════════
-     EMAIL DELIVERY  —  visitor sends it themselves
+     EMAIL DELIVERY  -  visitor sends it themselves
 
      Nothing is sent in the background and there is no third-party
      service. Submitting a form opens the visitor's own email app with
-     the message fully composed — To, Subject and Body all filled in —
+     the message fully composed - To, Subject and Body all filled in -
      and THEY press Send. The mail then arrives from their real address.
 
      Because some visitors have no mail app configured (common on
@@ -117,7 +117,7 @@
     const body =
       'Hello Team 2020V,\n\n' +
       message + '\n\n' +
-      '—\n' +
+      '-\n' +
       'Name: '  + name + '\n' +
       'Email: ' + email;
 

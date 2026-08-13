@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     CONTENT SECURITY POLICY
+
+     Everything the page is allowed to load or run, listed explicitly.
+     Anything not named here is refused by the browser, so markup injected
+     into the page cannot fetch a script, phone home, or execute.
+
+     default-src 'none'   deny by default; each capability is re-granted below
+     script-src           only files from this origin, plus ONE inline script
+                          allowed by hash (see the note on it further down).
+                          No 'unsafe-inline' - this is the whole point: an
+                          injected <script> or onclick= will not run.
+     style-src            our stylesheets + Google Fonts' stylesheet.
+                          'unsafe-inline' is NOT granted; nothing needs it.
+     font-src             the font files Google Fonts' stylesheet points at
+     img-src              our images, plus data: for the inline SVG favicon
+     frame-src            only the YouTube embed (currently commented out in
+                          the Robot view - this is here so it works when
+                          enabled, without loosening anything else)
+     form-action 'none'   the forms are handled entirely in JS and never post
+                          anywhere; this guarantees no data can be sent to a
+                          third party even if the markup were tampered with
+     base-uri 'none'      blocks an injected <base> from re-pointing every
+                          relative URL on the page at another server
+     object-src 'none'    no Flash/applets/embeds, ever
+     connect-src 'none'   the page makes no fetch/XHR/WebSocket calls at all
+
+     NOTE: frame-ancestors (anti-clickjacking) is deliberately absent - it is
+     ignored in a <meta> policy and only works as a real HTTP header. It is
+     set in the _headers file instead; see SECURITY.md.
+     ════════════════════════════════════════════════════════════════════════ -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'none';
+  script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=';
+  style-src 'self' https://fonts.googleapis.com;
+  font-src https://fonts.gstatic.com;
+  img-src 'self' data:;
+  frame-src https://www.youtube-nocookie.com;
+  form-action 'none';
+  base-uri 'none';
+  object-src 'none';
+  connect-src 'none';
+">
+
+<!-- Don't leak the page URL to sites the visitor clicks through to. -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<title>2020V - Twenty-Twenty Vision | Rookie VEX Robotics Team</title>
+<meta name="description" content="Team 2020V (Twenty-Twenty Vision) is a brand-new, youth-led VEX V5 Robotics Competition team from Markham, Ontario. This is our rookie season - follow the build from day one, and help us get to the field.">
+<meta name="theme-color" content="#102A43">
+
+<!-- Social sharing (Open Graph / Twitter) -->
+<!-- TODO: replace og:url with your real domain once deployed, and add og-image.jpg (1200x630) to this folder -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Team 2020V">
+<meta property="og:title" content="2020V - Rookie Season | VEX Robotics">
+<meta property="og:description" content="A brand-new VEX V5 Robotics Competition team from Markham, Ontario. Season one starts now. Precision. Power. Progress.">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="2020V - Rookie Season | VEX Robotics">
+<meta name="twitter:description" content="A brand-new VEX V5 Robotics Competition team from Markham, Ontario. Season one starts now.">
+<meta name="twitter:image" content="og-image.jpg">
+
+<!-- Favicon: inline SVG, no extra file needed -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23102A43'/%3E%3Ctext x='32' y='43' font-family='Verdana,sans-serif' font-size='30' font-weight='bold' fill='%2300B8D4' text-anchor='middle'%3E20%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsTeam",
+  "name": "2020V - Twenty-Twenty Vision",
+  "alternateName": "2020V",
+  "sport": "Robotics",
+  "url": "https://example.com/",
+  "email": "2020vrobotics@gmail.com",
+  "foundingDate": "2026",
+  "description": "A first-year, youth-led VEX V5 Robotics Competition team based in Markham, Ontario.",
+  "memberOf": {
+    "@type": "Organization",
+    "name": "VEX Robotics Competition"
+  },
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Markham",
+      "addressRegion": "ON",
+      "addressCountry": "CA"
+    }
+  },
+  "sameAs": [
+    "https://www.instagram.com/2020vrobotics/",
+    "https://www.youtube.com/@TwentyTwentyVisionRobotics"
+  ]
+}
+</script>
+<!-- The ONE inline script on the page. It must stay inline and run before the
+     stylesheet is applied, otherwise scroll-revealed sections flash visible
+     before JS hides them. It is allowed by the sha256 hash in the CSP above
+     rather than by 'unsafe-inline'.
+
+     ⚠ IF YOU EDIT THIS LINE - even one character - regenerate the hash or the
+     script will be blocked and the page will render with everything visible:
+
+       printf "%s" "document.documentElement.classList.add('js');" \
+         | openssl dgst -sha256 -binary | openssl base64
+-->
+<script>document.documentElement.classList.add('js');</script>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="theme.css">
+</head>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SINGLE-FILE BUILD
+
+     The Home, Meet the Team, Meet the Bot and Sponsors pages are merged into
+     this one file. Each is a <div class="view"> below; router.js shows one
+     at a time based on the URL hash (#home, #team, #bot, #sponsors), so the
+     Meet Us dropdown swaps views without a page load.
+
+     Contact and the footer sit OUTSIDE the views, after them - rendered
+     once and visible under whichever view is active.
+
+     IMPORTANT: no element may carry an id equal to a route name
+     (home / team / bot / sponsors). The router resolves those hashes to
+     views, and a matching element id would make the section anchors and the
+     view routes fight over the same hash.
+     ════════════════════════════════════════════════════════════════════════ -->
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">2020V</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#achievements">Goals</a></li>
+    <li><a href="#season">Season</a></li>
+    <li class="nav-drop">
+      <button class="nav-drop-toggle" id="meet-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="meet-menu">
+        Meet Us
+        <svg class="nav-drop-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 6l5 5 5-5"/>
+        </svg>
+      </button>
+      <div class="nav-drop-menu" id="meet-menu" role="menu" aria-labelledby="meet-toggle">
+        <div class="nav-drop-inner">
+          <a class="nav-drop-item" href="#team" role="menuitem">
+            <span class="nav-drop-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </span>
+            <span>
+              <span class="nav-drop-label">Meet the Team</span>
+              <span class="nav-drop-desc">The eleven founding members and their roles.</span>
+            </span>
+          </a>
+          <a class="nav-drop-item" href="#bot" role="menuitem">
+            <span class="nav-drop-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+              </svg>
+            </span>
+            <span>
+              <span class="nav-drop-label">Meet the Bot</span>
+              <span class="nav-drop-desc">Our first robot, gallery, and match footage.</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-panel">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-panel" id="nav-panel">
+    <a href="#about">About</a>
+    <a href="#achievements">Goals</a>
+    <a href="#season">Season</a>
+    <div class="nav-panel-caption">Meet Us</div>
+    <a class="nav-panel-sub" href="#team">Meet the Team</a>
+    <a class="nav-panel-sub" href="#bot">Meet the Bot</a>
+    <div class="nav-panel-caption">More</div>
+    <a href="#sponsors">Sponsors</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VIEW: HOME  (#home)  - hero, about, goals, season
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="view is-active" id="view-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Rookie Season · VEX Robotics Competition</div>
+      <h1 class="hero-number" aria-label="2020V - Twenty-Twenty Vision">2020V</h1>
+      <div class="hero-subtitle">Twenty-Twenty Vision</div>
+      <div class="hero-tagline">Precision. <span>Power.</span> Progress.</div>
+      <p class="hero-rookie">This is our <strong>first year</strong> as a team - season one starts here.</p>
+      <a class="hero-cta" href="#about">
+        Follow Our Build
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Year One Starts Now.</h2>
+    <div class="section-rule"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Team <strong>2020V - Twenty-Twenty Vision</strong> is a brand-new, youth-led VEX Robotics Competition team based in Markham, Ontario. <strong>This is our first year as a team</strong> - we formed from scratch, and everything you see here we are building for the very first time.</p>
+        <p>Being new means we start with no robot, no results, and no shortcuts. What we do have is a group that shows up: eleven students splitting the work across mechanical design, electronics, programming, and documentation, learning each subsystem by actually building it.</p>
+        <p>Our long-term target is the <strong>VEX Robotics World Championship</strong>. We know rookie teams rarely get there on the first try - so this season is about building a machine we can trust, learning the game properly, and setting a foundation the team can grow on. Every step of it gets a <strong>20/20 effort.</strong></p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <span class="stat-number">1st</span>
+          <div class="stat-label">Season Competing</div>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-number">11</span>
+          <div class="stat-label">Team Members</div>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-number">0</span>
+          <div class="stat-label">Shortcuts Taken</div>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-number">∞</span>
+          <div class="stat-label">Hours Ahead</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rookie-note">
+      <span class="rookie-note-icon">Rookie Year</span>
+      <p><strong>Why we're telling you this up front.</strong> Plenty of teams have a decade of trophies behind them. We don't - and we'd rather say so than pad a page with results we haven't earned. If you're a sponsor, a mentor, or another team reading this: what you're backing is a group at the very start of the curve, documenting the whole climb in public. Check back through the season and you'll be able to see exactly how far we got.</p>
+    </div>
+
+    <!-- The two Meet Us destinations, repeated as cards for anyone who
+         scrolls rather than using the nav dropdown. -->
+    <div class="meet-cards">
+      <a class="meet-card" href="#team">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Meet the Team</div>
+        <p class="meet-card-desc">Eleven founding members across mechanical, programming, design, and documentation - and what each of them took on in season one.</p>
+        <span class="meet-card-more">
+          View the roster
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+      <a class="meet-card" href="#bot">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Meet the Bot</div>
+        <p class="meet-card-desc">The first machine we've ever built: photos, subsystem breakdown, match footage, and the engineering notebook behind it.</p>
+        <span class="meet-card-more">
+          See the robot
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- GOALS -->
+  <div class="achievements-section" id="achievements">
+    <div class="achievements-inner">
+      <div class="section-label">Goals</div>
+      <h2 class="section-title">What We're Aiming At.</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">We have no competition record yet - this is our first season, so there's nothing here to report and we're not going to invent any. Instead, here's exactly what we're measuring ourselves against this year. We'll replace this section with real results as we earn them.</p>
+
+      <!-- Once you have actual results, swap these goal rows for achievement rows:
+           use badge-gold / badge-silver and a real event name + year. -->
+      <div class="achievements-list">
+        <div class="achievement-row">
+          <div class="achievement-year">Goal 01</div>
+          <div>
+            <div class="achievement-name">Compete in our first official tournament</div>
+            <div class="achievement-event">A complete, inspection-passing robot on the field</div>
+          </div>
+          <div class="achievement-badge badge-goal">Core</div>
+        </div>
+        <div class="achievement-row">
+          <div class="achievement-year">Goal 02</div>
+          <div>
+            <div class="achievement-name">Score a working autonomous routine</div>
+            <div class="achievement-event">Consistent points without driver input</div>
+          </div>
+          <div class="achievement-badge badge-goal">Core</div>
+        </div>
+        <div class="achievement-row">
+          <div class="achievement-year">Goal 03</div>
+          <div>
+            <div class="achievement-name">Submit a complete engineering notebook</div>
+            <div class="achievement-event">Documented from the first day of the season</div>
+          </div>
+          <div class="achievement-badge badge-goal">Core</div>
+        </div>
+        <div class="achievement-row">
+          <div class="achievement-year">Goal 04</div>
+          <div>
+            <div class="achievement-name">Get picked for an elimination alliance</div>
+            <div class="achievement-event">Be a robot other teams want to play with</div>
+          </div>
+          <div class="achievement-badge badge-stretch">Stretch</div>
+        </div>
+        <div class="achievement-row">
+          <div class="achievement-year">Goal 05</div>
+          <div>
+            <div class="achievement-name">Qualify for the Provincial Championship</div>
+            <div class="achievement-event">The realistic first step toward Worlds</div>
+          </div>
+          <div class="achievement-badge badge-stretch">Stretch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEASON TIMELINE
+       EDIT THESE: the dates and copy below are examples showing the intended
+       shape. Replace with your real season milestones. Add class="upcoming"
+       to a .timeline-item for events that haven't happened yet (dims the node),
+       and swap the .timeline-flag text between "Complete" and "Upcoming". -->
+  <div class="timeline-section" id="season">
+    <div class="timeline-inner">
+      <div class="section-label">Season</div>
+      <h2 class="section-title">Our First Season, Start to Finish.</h2>
+      <div class="section-rule"></div>
+      <p class="section-intro">Everything below is year one. We'll keep this updated as we go, so anyone following along can see where we actually are - not where we wish we were.</p>
+
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-node"></div>
+          <div class="timeline-date">Spring 2026</div>
+          <div class="timeline-title">Team Formed<span class="timeline-flag done">Complete</span></div>
+          <p class="timeline-desc">Eleven students, one team number, zero robots. We registered as 2020V, split into mechanical, programming, and documentation groups, and started learning the program.</p>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-node"></div>
+          <div class="timeline-date">May 2026</div>
+          <div class="timeline-title">Game Release &amp; Strategy<span class="timeline-flag done">Complete</span></div>
+          <p class="timeline-desc">Our first-ever game reveal. We read the manual end to end, scored the strategy options, and picked a robot archetype we thought a rookie team could actually build well.</p>
+        </div>
+
+        <div class="timeline-item upcoming reveal">
+          <div class="timeline-node"></div>
+          <div class="timeline-date">Summer 2026</div>
+          <div class="timeline-title">First Build<span class="timeline-flag">In Progress</span></div>
+          <p class="timeline-desc">Prototyping subsystems for the first time. The drivetrain is running; intake and scoring are mid-iteration. Every version and every failure is going in the notebook.</p>
+        </div>
+
+        <div class="timeline-item upcoming reveal">
+          <div class="timeline-node"></div>
+          <div class="timeline-date">Fall 2026</div>
+          <div class="timeline-title">Our First Competition<span class="timeline-flag">Upcoming</span></div>
+          <p class="timeline-desc">The big one for a rookie team: pass inspection, play real matches, and find out how much of what we built survives contact with an actual field.</p>
+        </div>
+
+        <div class="timeline-item upcoming reveal">
+          <div class="timeline-node"></div>
+          <div class="timeline-date">Winter 2027</div>
+          <div class="timeline-title">Provincial Championship<span class="timeline-flag">Stretch Goal</span></div>
+          <p class="timeline-desc">Ontario provincials. Qualifying in a rookie season would be well ahead of where we expect to be - which is exactly why it's on the list.</p>
+        </div>
+
+        <div class="timeline-item upcoming reveal">
+          <div class="timeline-node"></div>
+          <div class="timeline-date">Beyond</div>
+          <div class="timeline-title">The Long Game<span class="timeline-flag">Goal</span></div>
+          <p class="timeline-desc">The VEX World Championship is where we want this to end up. Realistically that's a multi-season climb, and year one is about earning the experience to make it possible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /view-home -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VIEW: MEET THE TEAM  (#team)
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-team">
+
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-hero-eyebrow">Meet Us · Part One</div>
+      <h1 class="page-hero-title">Meet the <span>Team</span>.</h1>
+      <p class="page-hero-lead">Eleven students, one rookie season, and no prior team to inherit anything from. Everyone below took on a real job in year one - mechanical, programming, design, drive team, or documentation - and learned it by doing it.</p>
+      <a class="page-hero-switch" href="#bot">
+        Looking for the robot instead? Meet the Bot
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">Roster</div>
+    <h2 class="section-title">The Founding Members.</h2>
+    <div class="section-rule"></div>
+    <p class="section-intro">Sorted alphabetically by last name. Each card shows the role they took on in our first season.</p>
+    <div class="team-grid">
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/aaron-sui.jpg" alt="Aaron Sui" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">AS</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Aaron Sui</div>
+          <div class="member-role">Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Helps with mechanical assembly and build support across the season.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/alexander-wang.jpg" alt="Alexander Wang" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">AW</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Alexander Wang</div>
+          <div class="member-role">Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Works on mechanical fit, structure, and keeping the robot build moving forward.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/anson-xiao.jpg" alt="Anson Xiao" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">AX</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Anson Xiao</div>
+          <div class="member-role">Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Supports the mechanical side of the build and helps turn ideas into parts that work.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/ann-xue.jpg" alt="Ann Xue" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">AX</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Ann Xue</div>
+          <div class="member-role">Mechanical &amp; Inventory</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Keeps track of parts, hardware, and the details that keep the build organized.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/charlie-shao.jpg" alt="Charlie Shao" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">CS</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Charlie Shao</div>
+          <div class="member-role">Lead Programmer</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Leads software work, autonomous testing, and the code that drives the robot.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/helios-zhang.jpg" alt="Helios Zhang" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">HZ</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Helios Zhang</div>
+          <div class="member-role">Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Contributes to mechanical work and helps solve build problems as they show up.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/justin-cao.jpg" alt="Justin Cao" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">JC</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Justin Cao</div>
+          <div class="member-role">Lead Notebooker</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Documents the season and keeps the engineering notebook organized from day one.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/owen-xie.jpg" alt="Owen Xie" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">OX</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Owen Xie</div>
+          <div class="member-role">Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Works on mechanical assembly and helps test and refine build ideas.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/ryan-ni.jpg" alt="Ryan Ni" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">RN</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Ryan Ni</div>
+          <div class="member-role">Designer &amp; Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Bridges design and build work, helping shape the robot and how it comes together.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/xuliang-sun.jpg" alt="Xuliang Sun" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">XS</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Xuliang Sun</div>
+          <div class="member-role">Designer, Mechanical, Lead Drive Team</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Works across design, mechanical, and driving so the robot and team stay coordinated.</p>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-photo-wrap">
+          <img class="img-probe" src="images/zachary-liu.jpg" alt="Zachary Liu" width="600" height="600" loading="lazy" decoding="async">
+          <div class="member-photo-placeholder">
+            <div class="member-avatar">ZL</div>
+          </div>
+        </div>
+        <div class="member-info">
+          <div class="member-name">Zachary Liu</div>
+          <div class="member-role">Mechanical</div>
+          <div class="member-grade">Founding Member</div>
+          <p class="member-bio">Supports the mechanical side of the build and helps keep the robot moving forward.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="meet-cards">
+      <a class="meet-card" href="#bot">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Meet the Bot</div>
+        <p class="meet-card-desc">See what this group actually built: photos, subsystems, match footage, and the engineering notebook.</p>
+        <span class="meet-card-more">
+          See the robot
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+      <a class="meet-card" href="#sponsors">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9z"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Support the Team</div>
+        <p class="meet-card-desc">Eleven students at the very start of their engineering journey. Founding partner spots are open.</p>
+        <span class="meet-card-more">
+          Sponsorship details
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+</div><!-- /view-team -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VIEW: MEET THE BOT  (#bot)
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-bot">
+
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-hero-eyebrow">Meet Us · Part Two</div>
+      <h1 class="page-hero-title">Meet the <span>Bot</span>.</h1>
+      <p class="page-hero-lead">The first machine this team has ever built. Nothing here is inherited from a previous season - the drivetrain, the scoring mechanism, and the code are all first attempts, and we're documenting every revision as we go.</p>
+      <a class="page-hero-switch" href="#team">
+        Looking for the people instead? Meet the Team
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="robot-section">
+    <div class="robot-inner">
+      <div class="section-label">The Machine</div>
+      <h2 class="section-title">Our First Robot.</h2>
+      <div class="section-rule"></div>
+      <!-- Robot image showcase -->
+      <div class="robot-showcase">
+        <div class="robot-img-wrap">
+          <!-- Replace src with your robot photo path e.g. src="robot-main.jpg" -->
+          <img src="images/robot-main.jpg" alt="Team 2020V Robot" class="img-probe" width="1200" height="900" loading="lazy" decoding="async">
+          <div class="robot-img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+            </svg>
+            2020V
+          </div>
+          <div class="robot-img-corner tl"></div>
+          <div class="robot-img-corner tr"></div>
+          <div class="robot-img-corner bl"></div>
+          <div class="robot-img-corner br"></div>
+        </div>
+
+        <div class="robot-gallery">
+          <!-- Add up to 4 additional robot photos below - replace src="" with your image paths -->
+          <div class="robot-gallery-thumb">
+            <img src="images/robot-1.jpg" alt="Robot detail 1" class="img-probe" width="800" height="800" loading="lazy" decoding="async">
+            <div class="robot-img-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+          </div>
+          <div class="robot-gallery-thumb">
+            <img src="images/robot-2.jpg" alt="Robot detail 2" class="img-probe" width="800" height="800" loading="lazy" decoding="async">
+            <div class="robot-img-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+          </div>
+          <div class="robot-gallery-thumb">
+            <img src="images/robot-3.jpg" alt="Robot detail 3" class="img-probe" width="800" height="800" loading="lazy" decoding="async">
+            <div class="robot-img-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+          </div>
+          <div class="robot-gallery-thumb">
+            <img src="images/robot-4.jpg" alt="Robot detail 4" class="img-probe" width="800" height="800" loading="lazy" decoding="async">
+            <div class="robot-img-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATCH VIDEO
+           To go live: delete the .video-empty div below and uncomment the iframe,
+           replacing YOUR_VIDEO_ID with the id from your YouTube URL
+           (youtube.com/watch?v=YOUR_VIDEO_ID). -->
+      <div class="video-frame reveal">
+        <!--
+        <iframe src="https://www.youtube-nocookie.com/embed/YOUR_VIDEO_ID"
+                title="2020V competition match"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"></iframe>
+        -->
+        <div class="video-empty">
+          <div class="video-play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          Match footage coming soon
+        </div>
+      </div>
+
+      <!-- Engineering notebook: replace href with your public notebook link
+           (Google Drive, Notion, or a PDF in this folder) -->
+      <div class="notebook-cta">
+        <a class="btn-outline btn-outline--icon" href="#" target="_blank" rel="noopener noreferrer">
+          <svg class="btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 3h5a2 2 0 0 1 2 2v9a1.5 1.5 0 0 0-1.5-1.5H2zM14 3H9a2 2 0 0 0-2 2v9a1.5 1.5 0 0 1 1.5-1.5H14z"/>
+          </svg>
+          Read Our Engineering Notebook
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="meet-cards">
+      <a class="meet-card" href="#team">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Meet the Team</div>
+        <p class="meet-card-desc">The eleven people who designed, built, wired, and programmed everything on this page.</p>
+        <span class="meet-card-more">
+          View the roster
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+      <a class="meet-card" href="#sponsors">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9z"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Put Your Logo On It</div>
+        <p class="meet-card-desc">Founding partners get their logo on this exact robot and on our first competition banner.</p>
+        <span class="meet-card-more">
+          Sponsorship details
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+</div><!-- /view-bot -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     VIEW: SPONSORS  (#sponsors)
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-sponsors">
+
+  <div class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-hero-eyebrow">Sponsorship</div>
+      <h1 class="page-hero-title">Back a Team From <span>Day One</span>.</h1>
+      <p class="page-hero-lead">2020V is a first-year team, and first-year teams are the ones that need help most. Every founding partner spot is still open - here's exactly what the money buys and what you get back.</p>
+    </div>
+  </div>
+
+  <div class="sponsor-section">
+    <div class="sponsor-inner">
+      <div class="section-label">Why Us</div>
+      <h2 class="section-title">What Your Support Builds.</h2>
+      <div class="section-rule"></div>
+
+      <div class="sponsor-intro">
+        <div class="sponsor-intro-text">
+          <p>Here's the honest version: <strong>2020V is a first-year team</strong>, and first-year teams are the ones that need help most. We're starting without the equipment, the spare parts, or the budget that established programs have built up over years. Every dollar at this stage goes straight into getting a competitive robot onto the field.</p>
+          <p>What your sponsorship actually pays for: the <strong>V5 control system and motors</strong>, structural metal and spare parts, tournament registration fees, and travel to events. These are the startup costs that decide whether a rookie team gets a real season or a stalled one.</p>
+          <p>In exchange you get in on the ground floor. Your logo goes on our very first robot and our first competition banner, and you'll be listed as a founding partner for as long as this team exists. We document everything publicly, so you'll be able to see precisely what your support built. Let's give it a <strong>20/20 effort.</strong></p>
+        </div>
+        <div class="sponsor-why-grid">
+          <div class="sponsor-why-cell">
+            <div class="sponsor-why-icon">FOUNDING</div>
+            <div class="sponsor-why-title">Ground Floor</div>
+            <p class="sponsor-why-desc">Be a founding partner of a brand-new team - logo on our first robot and first banner.</p>
+          </div>
+          <div class="sponsor-why-cell">
+            <div class="sponsor-why-icon">STARTUP</div>
+            <div class="sponsor-why-title">Real Startup Costs</div>
+            <p class="sponsor-why-desc">Funds go to the V5 kit, parts, and registration fees - the things that get us on the field.</p>
+          </div>
+          <div class="sponsor-why-cell">
+            <div class="sponsor-why-icon">STEM</div>
+            <div class="sponsor-why-title">Talent Pipeline</div>
+            <p class="sponsor-why-desc">Support eleven students learning engineering, coding, and design from the very beginning.</p>
+          </div>
+          <div class="sponsor-why-cell">
+            <div class="sponsor-why-icon">OPEN BOOK</div>
+            <div class="sponsor-why-title">Documented Publicly</div>
+            <p class="sponsor-why-desc">Our notebook and season updates are public, so you can see exactly what your support built.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPONSOR LOGO WALL
+           To add a real sponsor: drop the logo in a logos/ folder, then replace
+           one .sponsor-slot-empty block with:
+             <div class="sponsor-slot"><img src="logos/name.png" alt="Company Name"></div>
+           Delete any leftover empty slots you don't want shown. -->
+      <div class="sponsor-wall">
+        <p class="tiers-heading">Founding Partners</p>
+        <div class="sponsor-wall-grid">
+          <div class="sponsor-slot sponsor-slot-empty reveal">
+            <span class="plus">+</span>
+            <span class="label">Founding partner spot</span>
+          </div>
+          <div class="sponsor-slot sponsor-slot-empty reveal">
+            <span class="plus">+</span>
+            <span class="label">Founding partner spot</span>
+          </div>
+          <div class="sponsor-slot sponsor-slot-empty reveal">
+            <span class="plus">+</span>
+            <span class="label">Founding partner spot</span>
+          </div>
+          <div class="sponsor-slot sponsor-slot-empty reveal">
+            <span class="plus">+</span>
+            <span class="label">Founding partner spot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIERS -->
+      <p class="tiers-heading">Sponsorship Tiers</p>
+      <div class="tiers-grid">
+
+        <div class="tier-card tier-diamond">
+          <div class="tier-header diamond">
+            <span class="tier-name diamond">Diamond</span>
+            <span class="tier-badge-label diamond">Elite</span>
+          </div>
+          <div class="tier-body">
+            <span class="tier-price">$1000+</span>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>All Gold perks</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Logo on uniforms</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>VIP pit access at events</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Company spotlight on all channels</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Named title sponsorship option</div>
+          </div>
+        </div>
+
+        <div class="tier-card tier-gold">
+          <div class="tier-header gold">
+            <span class="tier-name gold">Gold</span>
+            <span class="tier-badge-label gold">Title Sponsor</span>
+          </div>
+          <div class="tier-body">
+            <span class="tier-price">$500 - $1000</span>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>All Silver perks</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Logo on uniforms</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>VIP pit access at events</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Company spotlight on all channels</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Named title sponsorship option</div>
+          </div>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-header silver">
+            <span class="tier-name silver">Silver</span>
+            <span class="tier-badge-label silver">Partner</span>
+          </div>
+          <div class="tier-body">
+            <span class="tier-price">$250 - $500</span>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>All Bronze perks</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Logo on robot</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Featured sponsor post</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Certificate of appreciation</div>
+          </div>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-header bronze">
+            <span class="tier-name bronze">Bronze</span>
+            <span class="tier-badge-label bronze">Entry</span>
+          </div>
+          <div class="tier-body">
+            <span class="tier-price">$100 - $250</span>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Logo on team banner</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Social media thank-you post</div>
+            <div class="tier-perk"><span class="tier-perk-check">✓</span>Season update newsletter</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA BAR -->
+      <div class="sponsor-cta">
+        <div class="sponsor-cta-text">
+          <h3>Be one of our first sponsors.</h3>
+          <p>We're a first-year team looking for founding partners. Reach out and your logo goes on our very first robot.</p>
+        </div>
+        <div class="sponsor-cta-actions">
+          <a class="btn-primary" href="#contact">Contact Us</a>
+          <a class="btn-outline" href="mailto:2020vrobotics@gmail.com">Email Directly</a>
+          <!-- RE-ENABLE once sponsorship-package.pdf exists in this folder.
+               It currently 404s, so the button is commented out rather than
+               sending sponsors to a dead link.
+          <a class="btn-outline btn-outline--icon" href="sponsorship-package.pdf" target="_blank" rel="noopener noreferrer">
+            <svg class="btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3M10 2h4v4M14 2L8 8"/>
+            </svg>
+            View Package
+          </a>
+          -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <section>
+    <div class="meet-cards">
+      <a class="meet-card" href="#team">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Meet the Team</div>
+        <p class="meet-card-desc">See who you'd be backing: eleven founding members and the roles they took on in year one.</p>
+        <span class="meet-card-more">
+          View the roster
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+      <a class="meet-card" href="#bot">
+        <div class="meet-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <div class="meet-card-title">Meet the Bot</div>
+        <p class="meet-card-desc">The robot your logo would go on - photos, subsystems, and the notebook behind it.</p>
+        <span class="meet-card-more">
+          See the robot
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+</div><!-- /view-sponsors -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     SHARED: CONTACT
+     Outside the views on purpose - it renders once and stays visible under
+     whichever view is active, so every "page" still ends with the form.
+     ══════════════════════════════════════════════════════════════════════ -->
+<div class="contact-divider"><hr></div>
+
+<section id="contact">
+  <div class="section-label">Contact &amp; Partnership</div>
+  <h2 class="section-title">Get In Touch.</h2>
+  <div class="section-rule"></div>
+  <div class="contact-grid">
+
+    <div class="contact-info">
+      <p>We're a brand-new team, so we're genuinely glad to hear from anyone - sponsors, mentors, experienced teams willing to share advice, or students thinking about joining. Questions about the robot are welcome too, even the basic ones.</p>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Team</span>
+        <span>2020V - Twenty-Twenty Vision</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Program</span>
+        <span>VEX V5 Robotics Competition</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Email</span>
+        <span>2020vrobotics@gmail.com</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Region</span>
+        <span>Markham, Ontario</span>
+      </div>
+
+      <div class="contact-sponsor-pitch">
+        <div class="section-label">Sponsorship</div>
+        <p>Interested in partnering with us? Switch to the <strong>Sponsorship Inquiry</strong> tab, or read the full <a href="#sponsors">sponsorship page</a>. As a first-year team, your support covers the startup costs - the V5 kit, parts, and registration - that get us onto the field at all.</p>
+        <div class="apply-benefit">
+          <div class="apply-benefit-dot"></div>
+          <div class="apply-benefit-text"><strong>Founding partner status</strong> - logo on our first robot, uniforms, and banner.</div>
+        </div>
+        <div class="apply-benefit">
+          <div class="apply-benefit-dot"></div>
+          <div class="apply-benefit-text"><strong>Social media coverage</strong> - season recaps, highlights, and sponsor shoutouts.</div>
+        </div>
+        <div class="apply-benefit">
+          <div class="apply-benefit-dot"></div>
+          <div class="apply-benefit-text"><strong>Direct investment</strong> in eleven students at the very start of their engineering journey.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-tabs">
+        <button class="form-tab active" data-form-tab="general">General Message</button>
+        <button class="form-tab" data-form-tab="sponsor">Sponsorship Inquiry</button>
+      </div>
+
+      <div id="tab-general" class="tab-panel is-active">
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="What's on your mind?" required></textarea>
+          </div>
+          <button class="submit-btn" type="submit">Compose Email</button>
+          <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div id="tab-sponsor" class="tab-panel">
+        <div class="sponsor-form">
+          <form id="sponsor-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="s-contact">Contact Name</label>
+                <input type="text" id="s-contact" placeholder="Your name" required>
+              </div>
+              <div class="form-group">
+                <label for="s-company">Company / Organization</label>
+                <input type="text" id="s-company" placeholder="Your company" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="s-email">Email</label>
+                <input type="email" id="s-email" placeholder="your@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="s-tier">Interested Tier</label>
+                <select id="s-tier">
+                  <option value="Exploring">Just Exploring</option>
+                  <option value="Bronze">Bronze - $100 to $250</option>
+                  <option value="Silver">Silver - $250 to $500</option>
+                  <option value="Gold">Gold - $500 to $1000</option>
+                  <option value="Diamond">Diamond - $1000+</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="s-message">Message (optional)</label>
+              <textarea id="s-message" placeholder="Tell us about your company or any questions you have..."></textarea>
+            </div>
+            <button class="sponsor-submit-btn" type="submit">Compose Sponsorship Email</button>
+            <p class="form-status" id="sponsor-status" role="status" aria-live="polite"></p>
+            <p class="form-note">We'll follow up within 2 business days with a full package.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">2020V<span class="footer-logo-sub">Twenty-Twenty Vision</span></div>
+    <p class="footer-note footer-tagline">A first-year, youth-led VEX V5 Robotics Competition team based in Markham, Ontario.</p>
+  </div>
+
+  <div>
+    <div class="footer-col-title">Explore</div>
+    <ul class="footer-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#team">Meet the Team</a></li>
+      <li><a href="#bot">Meet the Bot</a></li>
+      <li><a href="#sponsors">Sponsors</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="footer-col-title">Connect</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/2020vrobotics/" aria-label="2020V on Instagram" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="https://www.youtube.com/@TwentyTwentyVisionRobotics" aria-label="2020V on YouTube" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="mailto:2020vrobotics@gmail.com" aria-label="Email team 2020V">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="3"/><path d="M3 7l9 6 9-6"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-note">VEX Robotics Competition · Twenty-Twenty Vision · 2020V</div>
+    <div class="footer-note">&copy; <span id="year">2026</span> Team 2020V. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="nav.js"></script>
+<script src="router.js"></script>
+<!-- Last: wires the listeners that replaced the former inline handlers, so
+     the functions it references from script.js are already defined. -->
+<script src="bindings.js"></script>
+</body>
+</html>

@@ -1,16 +1,16 @@
 /* ============================================================================
-   2020V — Twenty-Twenty Vision   |   stylesheet
+   2020V - Twenty-Twenty Vision   |   stylesheet
    ----------------------------------------------------------------------------
    CONTENTS
-     01  Design tokens                 09  Section 03 — Team
-     02  Reset & base                  10  Section 04 — Goals
-     03  Accessibility                 11  Section 05 — Season timeline
-     04  Layout primitives             12  Section 06 — Sponsors
-     05  Navigation                    13  Section 07 — Contact
+     01  Design tokens                 09  Section 03 - Team
+     02  Reset & base                  10  Section 04 - Goals
+     03  Accessibility                 11  Section 05 - Season timeline
+     04  Layout primitives             12  Section 06 - Sponsors
+     05  Navigation                    13  Section 07 - Contact
      06  Hero                          14  Footer
      07  Buttons                       15  Keyframes & scroll reveal
-     08  Section 01 — About            16  Theme overrides
-         Section 02 — Robot            17  Responsive (all breakpoints)
+     08  Section 01 - About            16  Theme overrides
+         Section 02 - Robot            17  Responsive (all breakpoints)
                                        18  Reduced motion
 
    NOTE ON ORDER: every @media block lives in section 16, after all base
@@ -31,7 +31,7 @@
   --white: #f1f7fc;
   --muted: #bfd1e2;
 
-  /* Radius scale — every rounded surface picks one of these four.
+  /* Radius scale - every rounded surface picks one of these four.
      Previously the page mixed 6/8/9/12/14/16/18/20px interchangeably. */
   --r-xs: 8px;    /* small chips: icon buttons, badges, toggles */
   --r-sm: 10px;   /* inputs and primary buttons */
@@ -42,7 +42,7 @@
      inside the light bands below, where aqua measures only 1.5-1.8:1. */
   --focus-ring: var(--aqua);
 
-  /* Centred glow pools — see the CENTRED GLOWS section. */
+  /* Centred glow pools - see the CENTRED GLOWS section. */
   --glow-color: rgba(94,165,219,0.30);
   --glow-w: 720px;
   --glow-h: 420px;
@@ -77,7 +77,7 @@ select:focus-visible {
    #6d93bb only 1.53:1, both under the 3.0 minimum. Navy gives 4.38/5.20. */
 .robot-section,
 .achievements-section { --focus-ring: var(--navy); }
-/* Skip link — hidden until focused */
+/* Skip link - hidden until focused */
 .skip-link {
   position: absolute;
   top: 0; left: 50%;
@@ -524,7 +524,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 .btn-icon { width: 14px; height: 14px; flex-shrink: 0; }
 
 
-/* ══ SECTION 01 — ABOUT ══════════════════════════════════════════════════════*/
+/* ══ SECTION 01 - ABOUT ══════════════════════════════════════════════════════*/
 /* Intro copy, stat grid, rookie-year callout. */
 .about-grid {
   display: grid;
@@ -610,7 +610,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 .rookie-note p strong { color: var(--white); font-weight: 500; }
 
 
-/* ══ SECTION 02 — ROBOT ══════════════════════════════════════════════════════*/
+/* ══ SECTION 02 - ROBOT ══════════════════════════════════════════════════════*/
 /* Photo showcase, gallery, match video, notebook link. */
 .robot-section {
   max-width: 100%;
@@ -744,7 +744,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 .notebook-cta { margin-top: 2rem; text-align: center; }
 
 
-/* ══ SECTION 03 — TEAM ═══════════════════════════════════════════════════════*/
+/* ══ SECTION 03 - TEAM ═══════════════════════════════════════════════════════*/
 /* ── EXPANDED TEAM CARDS ── */
 /* Flex rather than grid so a partial final row centres itself. With 11
    members the grid left a 4/4/3 row hugging the left edge. Basis is the
@@ -821,7 +821,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 }
 
 
-/* ══ SECTION 04 — GOALS ══════════════════════════════════════════════════════*/
+/* ══ SECTION 04 - GOALS ══════════════════════════════════════════════════════*/
 /* Goal rows. badge-gold / badge-silver are kept for when
    these become real competition results. */
 .achievements-section { max-width: 100%; padding: 6rem 3rem; }
@@ -878,7 +878,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 .achievement-row:hover .achievement-badge.badge-stretch { box-shadow: none; }
 
 
-/* ══ SECTION 05 — SEASON TIMELINE ════════════════════════════════════════════*/
+/* ══ SECTION 05 - SEASON TIMELINE ════════════════════════════════════════════*/
 /* ── SEASON TIMELINE ── */
 .timeline-section {
   max-width: 100%;
@@ -949,7 +949,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 .timeline-flag.done { border-color: var(--aqua); color: var(--aqua); }
 
 
-/* ══ SECTION 06 — SPONSORS ═══════════════════════════════════════════════════*/
+/* ══ SECTION 06 - SPONSORS ═══════════════════════════════════════════════════*/
 /* Why-cells, founding-partner wall, tiers, CTA bar. */
 /* ── SPONSORSHIP SECTION ── */
 .sponsor-section {
@@ -1148,7 +1148,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 /* ── SPONSOR LOGO WALL ── */
 .sponsor-wall { margin-bottom: 4rem; }
 /* auto-fit (not auto-fill) collapses the unused tracks, and capping the
-   track width leaves slack for justify-content — together these keep the
+   track width leaves slack for justify-content - together these keep the
    tiles centred under the heading however many sponsors there are. */
 .sponsor-wall-grid {
   display: grid;
@@ -1193,7 +1193,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 }
 
 
-/* ══ SECTION 07 — CONTACT ════════════════════════════════════════════════════*/
+/* ══ SECTION 07 - CONTACT ════════════════════════════════════════════════════*/
 /* Tabbed forms, status messages, mail-app handoff controls. */
 .contact-grid {
   display: grid;
@@ -1241,7 +1241,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 }
 .form-group input:focus, .form-group textarea:focus { border-color: var(--aqua); box-shadow: 0 0 0 3px rgba(0,212,200,0.12); }
 .form-group textarea { min-height: 120px; }
-/* Tab panels — visibility is a class, toggled by switchFormTab() */
+/* Tab panels - visibility is a class, toggled by switchFormTab() */
 .tab-panel { display: none; }
 .tab-panel.is-active { display: block; }
 
@@ -1396,7 +1396,7 @@ button[disabled] { opacity: 0.55; cursor: not-allowed; }
 .footer-note { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
 /* ── FOOTER ── */
 footer {
-  /* background and top edge come from the blend gradient — see SECTION BLENDS */
+  /* background and top edge come from the blend gradient - see SECTION BLENDS */
   padding: 3rem;
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -1504,7 +1504,7 @@ html.js .reveal.in-view { opacity: 1; transform: translateY(0); }
 /* Each coloured band used to butt straight up against the page gradient,
    leaving a hard horizontal seam at every section boundary. Instead of
    hand-picking a connector colour per pair, each band now fades to
-   transparent at its own top and bottom edges — whatever sits behind
+   transparent at its own top and bottom edges - whatever sits behind
    shows through and does the blending automatically, so the seams stay
    correct even if a neighbouring section's colour changes later.
 
@@ -1589,7 +1589,7 @@ footer {
 
 /* ══ THEME OVERRIDES ═════════════════════════════════════════════════════════*/
 /* Darker fallback palette applied on top of the component rules above.
-   These MUST stay after the sections they override — moving any of them
+   These MUST stay after the sections they override - moving any of them
    earlier lets the base rule win. Kept as one block for that reason. */
 nav, .nav-panel { background: rgba(11, 31, 51, 0.96); }
 .nav-logo { color: #8bc1f2; }
@@ -1601,7 +1601,7 @@ nav, .nav-panel { background: rgba(11, 31, 51, 0.96); }
 .rookie-note, .form-group input, .form-group textarea, .form-group select,
 .form-group select option { background-color: #17344f; }
 .sponsor-form { background: #0b1f33; }
-/* footer background is the blend gradient — see SECTION BLENDS */
+/* footer background is the blend gradient - see SECTION BLENDS */
 .sponsor-form .form-note, footer .footer-note, footer .footer-links a,
 footer .footer-socials a, footer .footer-bottom { color: #c8dce8; }
 .sponsor-form label { color: #8bc1f2; }
@@ -1615,7 +1615,7 @@ footer .footer-socials a, footer .footer-bottom { color: #c8dce8; }
 
 /* ══ RESPONSIVE ══════════════════════════════════════════════════════════════*/
 /* All breakpoints together, after every base rule, widest first.
-   One block per breakpoint — these were previously split across five. */
+   One block per breakpoint - these were previously split across five. */
 
 @media (max-width: 900px) {
   nav { padding: 1rem 1.5rem; }
