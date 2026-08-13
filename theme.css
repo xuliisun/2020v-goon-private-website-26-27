@@ -1086,6 +1086,73 @@ footer::before {
 }
 
 
+/* ══ 09a · HERO LOGO HOVER ═══════════════════════════════════════════════════*/
+/* The mark is built from two layers: the element itself is transparent with a
+   2px stroke (the outline), and ::after repeats "2020V" as a solid fill
+   clipped to the top half - that clip is what makes the two-tone split.
+
+   The old hover worked against that. It switched the stroke to navy, which on
+   this background all but erased the bottom half, and ::before (a sheen that
+   was clearly meant to sweep across) was pinned at opacity 0 so it never ran.
+
+   Instead the split line is animated: the solid fill sweeps DOWN to flood the
+   whole mark, the outline brightens rather than disappearing, and a highlight
+   passes over it. One gesture, using the layers that were already there. */
+
+.hero-number {
+  transition: transform var(--dur-slow) var(--ease-out-expo),
+              filter var(--dur-slow) var(--ease-out-expo),
+              -webkit-text-stroke-color var(--dur-mid) ease;
+}
+
+.hero-number:hover {
+  /* Rises very slightly and gains a pool of light beneath it. Scale is kept
+     tiny - at this size even 1.02 is a large absolute movement. */
+  transform: translateY(-5px) scale(1.012);
+  filter: drop-shadow(0 14px 38px rgba(94, 165, 219, 0.35));
+  -webkit-text-stroke: 2px var(--aqua);   /* brighten, never hide */
+}
+
+/* The fill floods down from half to full. clip-path interpolates between
+   inset() values, so this is one smooth sweep rather than a snap. */
+.hero-number::after {
+  z-index: 1;
+  transition: clip-path var(--dur-slow) var(--ease-out-expo),
+              color var(--dur-mid) ease;
+}
+.hero-number:hover::after {
+  clip-path: inset(0 0 0% 0);
+  color: var(--aqua);
+}
+
+/* The sheen. Sits above both layers, and travels on transform rather than
+   `left` so the sweep never triggers layout. */
+.hero-number::before {
+  z-index: 2;
+  opacity: 0;
+}
+.hero-number:hover::before {
+  animation: heroSheen 0.95s var(--ease-in-out) 0.05s;
+}
+
+@keyframes heroSheen {
+  0%   { opacity: 0; transform: translateX(0); }
+  12%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(380%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-number:hover {
+    transform: none;
+    filter: none;
+  }
+  .hero-number:hover::before { animation: none; }
+  /* The fill still reveals, just without the sweep. */
+  .hero-number::after { transition: none; }
+}
+
+
 /* ══ 09b · ROSTER ALIGNMENT ══════════════════════════════════════════════════*/
 /* Most members have a one-line role, but a couple carry three ("Lead Media,
    Mechanical & Inventory"), which wraps to two lines and pushes everything
