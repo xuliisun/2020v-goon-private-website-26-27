@@ -1086,6 +1086,24 @@ footer::before {
 }
 
 
+/* ══ 09b · ROSTER ALIGNMENT ══════════════════════════════════════════════════*/
+/* Most members have a one-line role, but a couple carry three ("Lead Media,
+   Mechanical & Inventory"), which wraps to two lines and pushes everything
+   below it down - so "Founding Member" and the bio sat 13px lower on those
+   cards than on their neighbours.
+
+   Reserving two lines for every role costs one line of space on the short
+   ones and keeps the whole row on the same baselines, which is the better
+   trade in a grid this regular. */
+.member-role {
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
 /* ══ 10 · FOOTER ═════════════════════════════════════════════════════════════*/
 /* The footer had three problems that read as unfinished rather than as a
    style choice:
