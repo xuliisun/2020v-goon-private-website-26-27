@@ -96,31 +96,95 @@
     return null;                                                           // unknown: leave alone
   }
 
-  /* Changing view is a page change, so it lands instantly - animating a
-     scroll across a document that just swapped underneath the viewport reads
-     as a lurch, and from deep in a long view it is a very long animation.
-     Only a jump within the view you are already on gets smoothed.
+  /* Moves the page to wherever `target` points, once the view is up. A jump
+     inside the view you are already on is animated; anything that follows a
+     view change is not, because that scroll happens while the page is faded
+     out and animating something nobody can see just delays the fade back in.
 
      'instant' rather than 'auto' is deliberate: 'auto' defers to CSS, and
      styles.css sets `html { scroll-behavior: smooth }`, which would animate
      it after all. */
-  function go(hash, { allowSmooth = true } = {}) {
-    const target = resolve(hash);
-    if (!target) return false;
-
-    const changedView =
-      target.view && document.documentElement.getAttribute('data-view') !== target.view;
-
-    if (target.view) showView(target.view);   // forces layout before we scroll
-
-    const how = (allowSmooth && !changedView) ? behavior() : 'instant';
-
+  function settle(target, how) {
     if (target.scrollTo) {
       const el = document.getElementById(target.scrollTo);
       if (el) el.scrollIntoView({ behavior: how });
     } else {
       window.scrollTo({ top: 0, behavior: how });
     }
+  }
+
+  /* Scrolling to a section immediately after revealing a view lands slightly
+     off: the view is still carrying viewIn's opening transform, and on a cold
+     load fonts and images may not have finished settling the layout. Both
+     resolve within a few frames, so the position is simply re-asserted once
+     they have. Only needed when aiming at a section - the top of the page
+     cannot drift. */
+  let resettleTimer = null;
+
+  function settleTwice(target) {
+    clearTimeout(resettleTimer);
+    settle(target, 'instant');
+    if (!target.scrollTo) return;
+    /* Tracked so a newer navigation cancels it. Left untracked, a correction
+       queued for one target can fire after you have already moved to another
+       and drag the page back to the old position. */
+    resettleTimer = setTimeout(() => settle(target, 'instant'), 80);
+  }
+
+  /* ── View transition ──────────────────────────────────────────────
+     Switching view used to swap instantly. Now the outgoing view fades
+     down, the page jumps to the top while it is invisible, and the
+     incoming view fades up - so the scroll reset, which is the jarring
+     part, happens inside the transition where it cannot be seen.
+
+     Timings live in theme.css as --view-out / --view-in so the CSS and
+     JS cannot drift apart. */
+  const rootStyles = getComputedStyle(document.documentElement);
+  const msVar = (name, fallback) => {
+    const v = parseFloat(rootStyles.getPropertyValue(name));
+    return Number.isFinite(v) ? v : fallback;
+  };
+  const OUT_MS = msVar('--view-out', 190);
+
+  let transitionTimer = null;
+
+  function go(hash, { allowSmooth = true } = {}) {
+    const target = resolve(hash);
+    if (!target) return false;
+
+    clearTimeout(resettleTimer);   // a pending correction is now out of date
+
+    const changedView =
+      target.view && document.documentElement.getAttribute('data-view') !== target.view;
+
+    /* Same view, or first paint, or reduced motion: no cross-fade to run. */
+    if (!changedView || !allowSmooth || prefersReducedMotion.matches) {
+      if (target.view) showView(target.view);
+      settle(target, (allowSmooth && !changedView) ? behavior() : 'instant');
+      return true;
+    }
+
+    const outgoing = document.querySelector('.view.is-active');
+    if (!outgoing) {
+      showView(target.view);
+      settleTwice(target);
+      return true;
+    }
+
+    /* A second click mid-transition must not leave the old view stranded
+       half-faded, so any pending swap is cancelled and cleaned up first. */
+    clearTimeout(transitionTimer);
+    document.querySelectorAll('.view.is-leaving')
+      .forEach(v => v.classList.remove('is-leaving'));
+
+    outgoing.classList.add('is-leaving');
+
+    transitionTimer = setTimeout(() => {
+      outgoing.classList.remove('is-leaving');
+      showView(target.view);
+      settleTwice(target);                // invisible: happens behind the fade
+    }, OUT_MS);
+
     return true;
   }
 

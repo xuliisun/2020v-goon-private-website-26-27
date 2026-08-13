@@ -43,6 +43,13 @@
      like one gesture and starts feeling like a queue. */
   --stagger: 65ms;
 
+  /* View cross-fade. router.js reads these, so the two halves of the
+     transition can never drift out of sync with the CSS.
+     Out is deliberately shorter than in: leaving should feel like getting
+     out of the way, arriving should feel like settling. */
+  --view-out: 190ms;
+  --view-in:  380ms;
+
   /* ── Ink scale (see section 07) ──
      Very dark blue rather than black. All four sit on roughly the same hue
      (~215°) as the rest of the page, so they read as the bottom of one
@@ -452,10 +459,36 @@ a.nav-logo { text-decoration: none; display: inline-block; }
 
 /* ── View change ──────────────────────────────────────────────────────────
    The router swaps display, so this animation restarts every time a view is
-   shown - no JS re-trigger and no forced reflow needed to replay it. */
+   shown - no JS re-trigger and no forced reflow needed to replay it.
+
+   .is-leaving is held on the outgoing view for --view-out while it fades
+   down; the router then hides it, resets the scroll and reveals the next
+   one, which plays viewIn. The result reads as one cross-fade rather than
+   a cut. */
 .view.is-active {
-  animation: viewIn var(--dur-mid) var(--ease-out-expo) both;
+  animation: viewIn var(--view-in) var(--ease-out-expo) both;
 }
+
+.view.is-leaving {
+  display: block;
+  animation: viewOut var(--view-out) var(--ease-in-out) both;
+  pointer-events: none;   /* no clicking something on its way out */
+}
+
+@keyframes viewOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translate3d(0, -10px, 0); }
+}
+
+/* Views differ in height, so the scrollbar can appear and disappear as they
+   swap, nudging the layout sideways. scrollbar-gutter reserves the space
+   permanently instead.
+
+   Do NOT solve this with `overflow: hidden` on body during the transition:
+   html's overflow is `visible`, so body's overflow propagates to the
+   viewport and makes the page genuinely unscrollable - which silently
+   breaks the router's scroll-to-section on the far side of the fade. */
+html { scrollbar-gutter: stable; }
 
 /* Page-hero cascade. The eyebrow, headline, lead and switch link arrive as
    one gesture rather than four, which is what the small offsets buy. */
@@ -622,18 +655,21 @@ body {
 footer            { --band: var(--ink-0); }
 
 /* ── Chrome: nav, mobile panel, dropdown ────────────────────────────────── */
+/* background-COLOR, not the `background` shorthand: section 09 layers a
+   gradient on top via background-image, and the shorthand would reset it to
+   none every time .is-scrolled applied. */
 nav {
-  background: rgba(5, 15, 30, 0.82);
+  background-color: rgba(5, 15, 30, 0.82);
   border-bottom: 1px solid var(--ink-line-soft);
 }
 nav.is-scrolled {
-  background: rgba(3, 10, 21, 0.94);
+  background-color: rgba(3, 10, 21, 0.94);
   border-bottom-color: var(--ink-line);
 }
-.nav-panel { background: rgba(4, 12, 25, 0.98); }
+.nav-panel { background-color: rgba(4, 12, 25, 0.98); }
 
 .nav-drop-inner {
-  background: rgba(4, 12, 25, 0.98);
+  background-color: rgba(4, 12, 25, 0.98);
   border-color: var(--ink-line);
   box-shadow: 0 22px 50px rgba(1, 5, 12, 0.8);
 }
@@ -931,11 +967,254 @@ nav.is-scrolled {
 }
 
 
+/* ══ 09 · GRADIENTS ══════════════════════════════════════════════════════════*/
+/* One idea applied consistently: light falls from above. Every surface is
+   fractionally brighter along its top edge and settles into the ink below,
+   which is what makes a flat fill read as a lit object.
+
+   These are all `background-image` over the existing `background-color`
+   from section 07, so the colour underneath still shows if a gradient is
+   ever removed, and nothing here needs the fill repeated.
+
+   Kept deliberately faint - around 5% at the top. Gradients that announce
+   themselves are the thing that dates a page. */
+
+/* ── Raised surfaces ─────────────────────────────────────────────────── */
+.stat-cell,
+.sponsor-why-cell,
+.tier-card,
+.member-card,
+.rookie-note,
+.meet-card,
+.achievement-row,
+.sponsor-slot,
+.sponsor-cta {
+  background-image: linear-gradient(180deg,
+    rgba(140, 190, 240, 0.055) 0%,
+    rgba(140, 190, 240, 0.012) 45%,
+    rgba(140, 190, 240, 0) 100%);
+}
+
+/* Hover lifts the highlight with the card, so the two read as one motion. */
+.member-card:hover,
+.tier-card:hover,
+.sponsor-why-cell:hover,
+.meet-card:hover,
+.sponsor-slot:hover,
+.achievement-row:hover {
+  background-image: linear-gradient(180deg,
+    rgba(140, 190, 240, 0.10) 0%,
+    rgba(140, 190, 240, 0.025) 45%,
+    rgba(140, 190, 240, 0) 100%);
+}
+
+/* ── Chrome ──────────────────────────────────────────────────────────── */
+/* The nav gets a touch more weight at its top edge and a soft base, so it
+   sits over the page rather than being a flat strip laid on it. */
+nav {
+  background-image: linear-gradient(180deg,
+    rgba(140, 190, 240, 0.06) 0%,
+    rgba(140, 190, 240, 0) 60%);
+}
+.nav-drop-inner {
+  background-image: linear-gradient(180deg,
+    rgba(140, 190, 240, 0.07) 0%,
+    rgba(140, 190, 240, 0) 55%);
+}
+
+/* ── Tier headers ────────────────────────────────────────────────────── */
+/* Each tier keeps its own hue; the gradient just gives it a light source
+   consistent with everything else. */
+.tier-header.bronze  { background-image: linear-gradient(180deg, rgba(160,120,90,0.22), rgba(160,120,90,0)); }
+.tier-header.silver  { background-image: linear-gradient(180deg, rgba(143,163,177,0.20), rgba(143,163,177,0)); }
+.tier-header.gold    { background-image: linear-gradient(180deg, rgba(200,169,81,0.22), rgba(200,169,81,0)); }
+.tier-header.diamond { background-image: linear-gradient(180deg, rgba(180,130,255,0.22), rgba(180,130,255,0)); }
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+/* styles.css sets these with the `background` SHORTHAND on :hover, which
+   resets background-image - so the hover state has to restate the gradient
+   or it would flatten the moment the cursor arrives. */
+.btn-primary,
+.submit-btn,
+.sponsor-submit-btn {
+  background-image: linear-gradient(180deg, #9fccf2 0%, var(--aqua) 55%, var(--aqua-dim) 100%);
+}
+.btn-primary:hover,
+.submit-btn:hover,
+.sponsor-submit-btn:hover {
+  background-image: linear-gradient(180deg, #b3d8f7 0%, #86c0f0 55%, var(--aqua) 100%);
+}
+
+/* ── Rules and edges ─────────────────────────────────────────────────── */
+/* The section rule was a solid bar with two hard ends. Fading the tail lets
+   it trail off instead of stopping. */
+.section-rule {
+  background-image: linear-gradient(90deg, var(--aqua), rgba(121, 185, 239, 0.15));
+}
+
+/* A hairline of light along the top edge of the footer, so the page closes
+   on a line rather than a colour change. */
+footer { position: relative; }
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent, rgba(140, 190, 240, 0.22) 50%, transparent);
+}
+
+/* ── Headings ────────────────────────────────────────────────────────── */
+/* A short fall from white to pale blue across the letterforms. The plain
+   `color` is declared first and stays the fallback: if background-clip:text
+   is unsupported the heading simply renders white rather than invisible. */
+.section-title,
+.page-hero-title {
+  color: var(--white);
+  background-image: linear-gradient(175deg, #ffffff 30%, #a8cdf0 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .section-title,
+  .page-hero-title { color: transparent; }
+}
+/* The accent word inside a page-hero title keeps its own colour. */
+.page-hero-title span {
+  -webkit-text-fill-color: var(--aqua);
+  color: var(--aqua);
+}
+
+
+/* ══ 10 · FOOTER ═════════════════════════════════════════════════════════════*/
+/* The footer had three problems that read as unfinished rather than as a
+   style choice:
+
+   1. It ran edge to edge while every other section on the page is capped at
+      1200px, so its content didn't line up with the content above it. That
+      misalignment is the most visible issue.
+   2. Its columns were `1fr auto auto`, which pinned two narrow link columns
+      against the right edge and left a wide empty gap in the middle.
+   3. There was nothing in it worth reading - two link lists and a legal line.
+
+   Fixed by aligning it to the same 1200px column, giving it four balanced
+   columns, and adding a Contact column so the space carries real
+   information. */
+
+/* Centre the content on the same 1200px measure as the rest of the page
+   while the background still spans the full width. The padding does the
+   centring, so no wrapper element is needed. */
+footer {
+  /* Sections are a 1200px border-box with 3rem of padding inside it, so their
+     text starts at (100% - 1200px) / 2 + 3rem. The footer has to add that
+     same 3rem or it sits 48px to the left of everything above it. Below
+     1200px the max() falls back to a plain 3rem gutter, matching sections. */
+  padding: 4.5rem max(3rem, calc((100% - 1200px) / 2 + 3rem)) 2rem;
+  grid-template-columns: 1.6fr 1fr 1.2fr auto;
+  gap: 3rem 2.5rem;
+  align-items: start;
+}
+
+/* Brand block */
+.footer-logo { font-size: 1.15rem; }
+.footer-tagline { max-width: 32ch; }
+
+.footer-col-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--white);
+  opacity: 0.92;
+  margin-bottom: 1.1rem;
+}
+
+/* Links: a touch more space between them, and a small travel on hover so
+   the column feels responsive rather than static. */
+.footer-links { gap: 0.7rem; }
+.footer-links a,
+.footer-contact a {
+  display: inline-block;
+  transition: color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out-expo);
+}
+.footer-links a:hover,
+.footer-contact a:hover { transform: translateX(3px); }
+
+/* Contact column - plain list, same rhythm as the links beside it. */
+.footer-contact {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.footer-contact a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.footer-contact a:hover { color: var(--aqua); }
+
+/* Social buttons: the border was the same stray olive green as the robot
+   frames. Now on the shared hairline, with a filled hover. */
+.footer-socials { gap: 0.6rem; }
+.footer-socials a {
+  width: 38px; height: 38px;
+  border-radius: var(--r-sm);
+  border-color: var(--ink-line-soft);
+  background: rgba(140, 190, 240, 0.03);
+}
+.footer-socials a:hover {
+  background: rgba(140, 190, 240, 0.10);
+  border-color: rgba(140, 190, 240, 0.35);
+}
+
+/* Bottom bar */
+.footer-bottom {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink-line-soft);
+  align-items: center;
+}
+
+.footer-top-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--ink-line-soft);
+  border-radius: 999px;
+  transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease,
+              background-color var(--dur-fast) ease;
+}
+.footer-top-link:hover {
+  color: var(--white);
+  border-color: rgba(140, 190, 240, 0.3);
+  background: rgba(140, 190, 240, 0.06);
+}
+.footer-top-link svg { width: 12px; height: 12px; }
+
+
 /* ══ RESPONSIVE ══════════════════════════════════════════════════════════════*/
 @media (max-width: 900px) {
   .page-hero { padding: 8rem 1.5rem 2.5rem; }
   .contact-divider { padding: 0 1.5rem; }
   .meet-cards { grid-template-columns: 1fr; }
+
+  /* Four footer columns don't fit; two keeps it readable without becoming a
+     long single-file list. styles.css already drops it to one column, so
+     this restores a pair at tablet width and below that it collapses. */
+  footer {
+    padding: 3.5rem 1.5rem 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 2rem;
+  }
+  .footer-bottom { align-items: flex-start; }
 
   /* Single column: a per-column stagger would become a slow top-to-bottom
      queue, so drop it and let each card animate as it scrolls in. */
@@ -951,6 +1230,11 @@ nav.is-scrolled {
    (a 0.01ms animation still waits out its delay) and the transform offsets
    that would otherwise be left mid-flight. */
 @media (prefers-reduced-motion: reduce) {
+  /* router.js skips the cross-fade entirely under this setting, but the rule
+     is neutralised here too in case a view is mid-transition when the
+     preference changes. */
+  .view.is-leaving { animation: none !important; display: none !important; }
+
   .view.is-active,
   .view.is-active .page-hero-eyebrow,
   .view.is-active .page-hero-title,
